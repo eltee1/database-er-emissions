@@ -1,16 +1,15 @@
 
 
 **************************************************
-[11-03-2025 10:03:58] 
+[11-03-2025 15:02:05] 
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "postgres" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_external_sql_command.tmp" --echo-all
 **************************************************
 DROP DATABASE IF EXISTS "er-emissions_test_structure"
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_external_sql_command.tmp:1: NOTICE:  database "er-emissions_test_structure" does not exist, skipping
 DROP DATABASE
 
 
 **************************************************
-[11-03-2025 10:03:59] 
+[11-03-2025 15:02:06] 
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "postgres" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_external_sql_command.tmp" --echo-all
 **************************************************
 CREATE DATABASE "er-emissions_test_structure" WITH TEMPLATE "template0"
@@ -18,15 +17,15 @@ CREATE DATABASE
 
 
 **************************************************
-[11-03-2025 10:03:59] 
+[11-03-2025 15:02:06] 
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
-COMMENT ON DATABASE "er-emissions_test_structure" IS 'Database created on: Tuesday 11 March 2025 10:03'
+COMMENT ON DATABASE "er-emissions_test_structure" IS 'Database created on: Tuesday 11 March 2025 15:02'
 COMMENT
 
 
 **************************************************
-[11-03-2025 10:03:59] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/01-extensions.sql
+[11-03-2025 15:02:06] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/01-extensions.sql
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
@@ -38,7 +37,7 @@ CREATE EXTENSION
 
 
 **************************************************
-[11-03-2025 10:04:00] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/02-schemas.sql
+[11-03-2025 15:02:07] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/02-schemas.sql
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
@@ -58,10 +57,19 @@ CREATE SCHEMA
  */
 CREATE SCHEMA system;
 CREATE SCHEMA
+
+
+/*
+ * report
+ * ------
+ * The report schema contains tables and views used fot rapporting purposes.
+ */
+CREATE SCHEMA report;
+CREATE SCHEMA
 
 
 **************************************************
-[11-03-2025 10:04:00] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/03-constants.sql
+[11-03-2025 15:02:07] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/03-constants.sql
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
@@ -147,7 +155,7 @@ CREATE FUNCTION
 
 
 **************************************************
-[11-03-2025 10:04:00] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/04-system-constants.sql
+[11-03-2025 15:02:07] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/04-system-constants.sql
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
@@ -248,7 +256,7 @@ CREATE FUNCTION
 
 
 **************************************************
-[11-03-2025 10:04:00] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/01-general.sql
+[11-03-2025 15:02:07] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/01-general.sql
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
@@ -299,6 +307,22 @@ CREATE DOMAIN
 
 
 /*
+ * year_category_type
+ * ------------------
+ * Jaarcategorie, voor welke toepassing een jaar wordt gebruikt.
+ * source = Het jaar waarvan de bronbestanden zijn berekend.
+ * last = Achtergrond depostitie (calculator).
+ * past = Een jaar in het verleden die niet 'last' is.
+ * future = Prognosejaren.
+ * reference = Vergelijkingsjaar voor prognoses.
+ * Het referentie jaar kan hierdoor afwijken van het achtergrond-depositie jaar
+ */
+CREATE TYPE year_category_type AS ENUM
+    ('source', 'past', 'last', 'future', 'reference');
+CREATE TYPE
+
+
+/*
  * ae_key_value_rs
  * ---------------
  * Type used as a return type in the case where a key-value pair is returned.
@@ -313,7 +337,7 @@ CREATE TYPE
 
 
 **************************************************
-[11-03-2025 10:04:00] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/02-setup.sql
+[11-03-2025 15:02:07] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/02-setup.sql
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
@@ -344,7 +368,7 @@ CREATE TYPE
 
 
 **************************************************
-[11-03-2025 10:04:00] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/01-general.sql
+[11-03-2025 15:02:07] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/01-general.sql
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
@@ -475,7 +499,7 @@ CREATE FUNCTION
 
 
 **************************************************
-[11-03-2025 10:04:01] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/02-aggregate.sql
+[11-03-2025 15:02:08] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/02-aggregate.sql
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
@@ -703,7 +727,7 @@ CREATE AGGREGATE
 
 
 **************************************************
-[11-03-2025 10:04:01] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/03-build.sql
+[11-03-2025 15:02:08] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/03-build.sql
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
@@ -1099,7 +1123,7 @@ CREATE FUNCTION
 
 
 **************************************************
-[11-03-2025 10:04:01] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/04-load_store_data.sql
+[11-03-2025 15:02:08] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/04-load_store_data.sql
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
@@ -1257,7 +1281,7 @@ CREATE FUNCTION
 
 
 **************************************************
-[11-03-2025 10:04:01] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/05-type_conversion.sql
+[11-03-2025 15:02:08] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/05-type_conversion.sql
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
@@ -1311,7 +1335,965 @@ CREATE FUNCTION
 
 
 **************************************************
-[11-03-2025 10:04:01] 
+[11-03-2025 15:02:08] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/01-general.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/01-general.sql -- -- --
+
+/*
+ * scenarios
+ * ---------
+ * 
+ */
+CREATE TABLE scenarios (
+	scenario_id integer NOT NULL,
+	scenario_naam text NOT NULL,
+	omschrijving text NOT NULL,
+
+	CONSTRAINT scenarios_pkey PRIMARY KEY (scenario_id)
+);
+CREATE TABLE
+
+
+/*
+ * years
+ * -----
+ * 
+ */
+CREATE TABLE years (
+	year integer NOT NULL,
+	year_category year_category_type NOT NULL,
+	scenario_id integer NOT NULL,
+
+	CONSTRAINT years_pkey PRIMARY KEY (year, year_category, scenario_id),
+	CONSTRAINT years_fkey_scenarios FOREIGN KEY (scenario_id) REFERENCES scenarios
+);
+CREATE TABLE
+
+
+/*
+ * sectors
+ * -------
+ * Table containing AERIUS sectors.
+ */
+CREATE TABLE sectors (
+	sector_id integer NOT NULL,
+	description text NOT NULL,
+
+	CONSTRAINT sectors_pkey PRIMARY KEY (sector_id)
+);
+CREATE TABLE
+
+
+/*
+ * gcn_sectors
+ * -----------
+ * Sectorindeling van het RIVM.
+ * Elke GCN-sector is gekoppeld aan een AERIUS-sector. Hierdoor weten we aan welke AERIUS-sector de depositie van de RIVM-bronnen toegekend moet worden).
+ */
+CREATE TABLE gcn_sectors (
+	gcn_sector_id integer NOT NULL,
+	sector_id integer NOT NULL,
+	description text NOT NULL,
+	er_indeling_code text,
+	er_er_indeling_naam text,
+
+	CONSTRAINT gcn_sectors_pkey PRIMARY KEY (gcn_sector_id),
+	CONSTRAINT gcn_sectors_fkey_sectors FOREIGN KEY (sector_id) REFERENCES sectors
+);
+CREATE TABLE
+
+
+/*
+ * sectorgroups
+ * ------------
+ *Koppeltabel voor sector en sectorgroep.
+ */
+CREATE TABLE sectorgroups (
+	sector_id integer NOT NULL,
+	sectorgroup text NOT NULL,
+
+	CONSTRAINT sectorgroups_pkey PRIMARY KEY (sector_id)
+);
+CREATE TABLE
+
+
+/*
+ * pbl_sectors
+ * -----------
+ * Koppeltabel tussen GCN sectoren en de sector indeling die het PlanBureau voor de Leefomgevening hanteert.
+ */
+CREATE TABLE pbl_sectors (
+	gcn_sector_id integer NOT NULL,
+	pbl_sector text NOT NULL,
+
+	CONSTRAINT pbl_sectors_pkey PRIMARY KEY (gcn_sector_id),
+	CONSTRAINT pbl_sectors_gcn_sectors_fkey_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors
+);
+CREATE TABLE
+
+
+/*
+ * substances
+ * ----------
+ * De stoffen beschikbaar in de database.
+ */
+CREATE TABLE substances (
+	substance_id smallint NOT NULL,
+	substance_name text NOT NULL,
+	er_stof_code text NOT NULL,
+	er_stof_naam text NOT NULL, 
+	gcn_stof_code text NOT NULL,
+
+	CONSTRAINT substances_pkey PRIMARY KEY (substance_id)
+);
+CREATE TABLE
+
+
+/*
+ * dataset
+ * -------
+ * De beschikbare datasets in de database.
+ */
+CREATE TABLE dataset (
+	dataset_id integer NOT NULL,
+	dataset_omschrijving text NOT NULL,
+	datum_levering date NOT NULL,
+
+	CONSTRAINT dataset_pkey primary key (dataset_id)
+);
+CREATE TABLE
+
+
+**************************************************
+[11-03-2025 15:02:08] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql -- -- --
+
+/*
+ * er_emissie_nationaal_erc
+ * ------------------------
+ * 
+ */
+CREATE TABLE er_emissie_nationaal_erc (
+	dataset_id  integer NOT NULL,
+	emissiejaar int NOT NULL,
+	er_stof_code text NOT NULL,
+	er_indeling_code text NOT NULL, 
+	ind_erc text NOT NULL,
+	emissie_kg double precision NOT NULL,
+
+	CONSTRAINT er_emissie_nationaal_erc_pkey PRIMARY KEY (dataset_id, emissiejaar, er_stof_code, er_indeling_code, ind_erc)
+ );
+CREATE TABLE
+
+
+/*
+ * er_emissie_nationaal_eri
+ * ------------------------
+ * 
+ */ 
+CREATE TABLE er_emissie_nationaal_eri (
+	dataset_id integer NOT NULL,
+	emissiejaar int NOT NULL,
+	er_stof_code text NOT NULL,
+	er_indeling_code text NOT NULL, 
+	ind_erc text NOT NULL,
+	emissie_kg double precision NOT NULL,
+
+	CONSTRAINT er_emissie_nationaal_eri_pkey PRIMARY KEY (dataset_id, emissiejaar, er_stof_code, er_indeling_code, ind_erc)
+ );
+CREATE TABLE
+
+
+/*
+ * er_emissie_per_emissieoorzaak
+ * -----------------------------
+ * 
+ */ 
+CREATE TABLE er_emissie_per_emissieoorzaak (
+	dataset_id integer NOT NULL,
+	er_indeling_naam text NOT NULL,
+	emissiejaar integer NOT NULL,
+	emissieoorzaak_code text NOT NULL,
+	proces_omschrijving text NOT NULL,
+	er_indeling_code text NOT NULL, 
+	er_stof_code text NOT NULL,
+	emissie_kg double precision NOT NULL,
+
+	CONSTRAINT er_emissie_per_emissieoorzaak_pkey PRIMARY KEY (dataset_id, er_indeling_naam, emissiejaar, emissieoorzaak_code, proces_omschrijving, er_indeling_code, er_stof_code)
+ );
+CREATE TABLE
+ 
+
+/*
+ * emissieoorzaken
+ * ---------------
+ * 
+ */ 
+CREATE TABLE emissieoorzaken ( 
+	emissieoorzaak_code text NOT NULL,
+	proces_omschrijving text NOT NULL,
+	gcn_sector_id integer NOT NULL,
+	dataset_id integer NOT NULL,
+
+	CONSTRAINT emissieoorzaken_pkey PRIMARY KEY (emissieoorzaak_code),
+	CONSTRAINT emissieoorzaken_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors
+  );
+CREATE TABLE
+
+
+/*
+ * er_emissie_vierkanten
+ * ---------------------
+ * 
+ */ 
+CREATE TABLE er_emissie_vierkanten (
+	tle_id integer NOT NULL,
+	ai_code text NOT NULL,
+	emissiejaar integer NOT NULL,
+	gcn_sector_id integer NOT NULL,
+	er_stof_code text NOT NULL,
+	emissie_kg double precision NOT NULL,
+
+	CONSTRAINT er_emissie_vierkanten_pkey PRIMARY KEY (tle_id),
+	CONSTRAINT er_emissie_vierkanten_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors
+ );
+CREATE TABLE
+
+
+/*
+ * er_emissie_verfijnd
+ * -------------------
+ * 
+ */ 
+CREATE TABLE er_emissie_verfijnd (
+	tle_id integer NOT NULL,
+	ai_code text NOT NULL,
+	emissiejaar integer NOT NULL,
+	gcn_sector_id integer NOT NULL,
+	er_stof_code text NOT NULL,
+	emissie_kg double precision NOT NULL,
+
+	CONSTRAINT er_emissie_verfijnd_pkey PRIMARY KEY (tle_id),
+	CONSTRAINT scale_factors_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors
+ );
+CREATE TABLE
+
+CREATE UNIQUE INDEX idx_er_emissie_verfijnd_1 ON er_emissie_verfijnd (ai_code, tle_id, gcn_sector_id, er_stof_code, emissiejaar);
+CREATE INDEX
+CREATE INDEX idx_er_emissie_verfijnd_2 ON er_emissie_verfijnd (ai_code, tle_id);
+CREATE INDEX
+
+
+/*
+ * er_emissie_individueel
+ * ----------------------
+ * 
+ */ 
+CREATE TABLE er_emissie_individueel (
+	tle_id integer NOT NULL,
+	ai_code text NOT NULL,
+	emissiejaar integer NOT NULL,
+	gcn_sector_id integer NOT NULL,
+	er_stof_code text NOT NULL,
+	emissie_kg double precision NOT NULL,
+
+	CONSTRAINT er_emissie_individueel_pkey PRIMARY KEY (tle_id),
+	CONSTRAINT er_emissie_individueel_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors
+ );
+CREATE TABLE
+
+
+/*
+ * er_emissie_vliegvelden
+ * ----------------------
+ * 
+ */ 
+CREATE TABLE er_emissie_vliegvelden (
+	tle_id integer NOT NULL,
+	ai_code text NOT NULL,
+	emissiejaar integer NOT NULL,
+	gcn_sector_id integer NOT NULL,
+	er_stof_code text NOT NULL,
+	emissie_kg double precision NOT NULL,
+
+	CONSTRAINT er_emissie_vliegvelden_pkey PRIMARY KEY (tle_id),
+	CONSTRAINT er_emissie_vliegvelden_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors
+ );
+CREATE TABLE
+
+
+/*
+ * emissie_totalen
+ * ---------------
+ * 
+ */ 
+CREATE TABLE emissie_totalen (
+    dataset_id integer NOT NULL,
+    gcn_sector_id integer NOT NULL,
+    substance_id integer NOT NULL,
+    jaar integer NOT NULL,
+    emissie_kg double precision NOT NULL,
+
+    CONSTRAINT emissie_totalen_pkey PRIMARY KEY (dataset_id),
+    CONSTRAINT emissie_totalen_fkey_dataset FOREIGN KEY (dataset_id) REFERENCES dataset,
+    CONSTRAINT emissie_totalen_fkey_substances FOREIGN KEY (substance_id) REFERENCES substances,
+    CONSTRAINT emissie_totalen_fkey_gcn_sectorss FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors
+);
+CREATE TABLE
+
+
+**************************************************
+[11-03-2025 15:02:08] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/03-scale_factors.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/03-scale_factors.sql -- -- --
+
+/*
+ * scale_factors
+ * -------------
+ * 
+ */
+CREATE TABLE scale_factors (
+    year_from year_type NOT NULL,
+    year_to year_type NOT NULL,
+    gcn_sector_id integer NOT NULL,
+    substance_id integer NOT NULL,
+    emissie_from double precision NOT NULL,
+    emissie_to double precision NOT NULL,
+    scale_factor double precision NOT NULL,
+    scenario_id integer NOT NULL,
+
+    CONSTRAINT scale_factors_pkey PRIMARY KEY (year_from, year_to, gcn_sector_id, substance_id, scenario_id),
+    CONSTRAINT scale_factors_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors,
+    CONSTRAINT scale_factorss_fkey_substances FOREIGN KEY (substance_id) REFERENCES substances,
+    CONSTRAINT scale_factors_fkey_scenarios FOREIGN KEY (scenario_id) REFERENCES scenarios
+);
+CREATE TABLE
+
+
+**************************************************
+[11-03-2025 15:02:08] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/04-gcn_sector_source_characteristics.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/04-gcn_sector_source_characteristics.sql -- -- --
+
+/*
+ * gcn_sector_source_characteristics
+ * ---------------------------------
+ * 
+ */
+CREATE TABLE gcn_sector_source_characteristics (
+	gcn_sector_id integer NOT NULL,
+	substance_id smallint NOT NULL,
+	heat_content real NOT NULL,
+	height real NOT NULL,
+	spread real NOT NULL,
+	emission_diurnal_variation_id integer NOT NULL,
+	particle_size_distribution integer NOT NULL,
+
+	CONSTRAINT gcn_sector_source_characteristics_pkey PRIMARY KEY (gcn_sector_id, substance_id),
+	CONSTRAINT gcn_sector_source_characteristics_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES public.gcn_sectors (gcn_sector_id),
+    CONSTRAINT gcn_sector_source_characteristics_fkey_gcn_substances FOREIGN KEY (substance_id) REFERENCES public.substances (substance_id) 
+);
+CREATE TABLE
+
+--CREATE UNIQUE INDEX idx_gcn_sector_source_characteristics ON gcn_sector_source_characteristics (gcn_sector_id, substance_id); -- is dubbel, er is ook al een PKEY met dezelfde kolommen.
+
+
+CREATE TABLE emission_diurnal_variations (
+	emission_diurnal_variation_id integer  NOT NULL,
+	code text NOT NULL,
+	name text NOT NULL,
+	description text NOT NULL,
+
+	CONSTRAINT emission_diurnal_variations_pkey PRIMARY KEY (emission_diurnal_variation_id)
+);
+CREATE TABLE
+
+
+**************************************************
+[11-03-2025 15:02:09] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/05-spatial.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/05-spatial.sql -- -- --
+
+/*
+ * geo_vierkanten
+ * --------------
+ * -
+ */
+CREATE TABLE geo_vierkanten (
+	tle_id integer NOT NULL,
+	ai_code text NOT NULL,
+	r_m integer NOT NULL,
+	geometry geometry NOT NULL,
+
+	CONSTRAINT geo_vierkanten_pkey PRIMARY KEY (ai_code)
+);
+CREATE TABLE
+
+
+/*
+ * geo_verfijnd
+ * ------------
+ * 
+ */
+CREATE TABLE geo_verfijnd (
+	tle_id integer NOT NULL,
+	ai_code text NOT NULL,
+	geometry geometry NOT NULL,
+
+	CONSTRAINT geo_verfijnd_pkey PRIMARY KEY (ai_code)
+
+);
+CREATE TABLE
+
+CREATE UNIQUE INDEX idx_geo_verfijnd ON geo_verfijnd (tle_id,ai_code);
+CREATE INDEX
+CREATE INDEX idx_geo_verfijnd_gist ON geo_verfijnd USING GIST (geometry);
+CREATE INDEX
+
+
+/*
+ * geo_eri
+ * -------
+ * 
+ */
+CREATE TABLE geo_eri (
+	tle_id integer NOT NULL, 
+	ai_code text NOT NULL,
+	emissiebrontype text NOT NULL,
+	nic_naam text NOT NULL,
+	emissiepunt_naam text NOT NULL,
+	nic text NOT NULL,
+	volgnummer integer NOT NULL,
+	xmidden integer NOT NULL,
+	ymidden integer NOT NULL,
+	hoogte integer NOT NULL,
+	lengte integer NOT NULL,
+	breedte integer NOT NULL,
+	hoek double precision NOT NULL,
+	beginjaar integer NOT NULL,
+	eindjaar integer NOT NULL,
+	uitstroomopening_m2 integer NOT NULL,
+	geometry geometry NOT NULL,
+
+	CONSTRAINT geo_eri_pkey PRIMARY KEY (ai_code)
+);
+CREATE TABLE
+
+
+/*
+ * geo_vliegvelden
+ * ---------------
+ * 
+ */
+CREATE TABLE geo_vliegvelden (
+	tle_id integer NOT NULL, 
+	ai_code text NOT NULL, 
+	naam text NOT NULL, 
+	nic  text NOT NULL, 
+	volgnummer integer NOT NULL,
+	soort text NOT NULL, 
+	lengte integer NOT NULL,
+	breedte integer NOT NULL,
+	hoogte integer NOT NULL,
+	xmidden integer NOT NULL,
+	ymidden integer NOT NULL,
+	geometry geometry NOT NULL,
+
+	CONSTRAINT geo_vliegvelden_pkey PRIMARY KEY (ai_code)
+);
+CREATE TABLE
+
+
+/*
+ * verfijning_type
+ * ---------------
+ * 
+ */
+CREATE TABLE verfijning_type (
+	tle_id integer NOT NULL,
+	geo_layer text NOT NULL, 
+	geo_fclass_er text NOT NULL,
+	geo_set_type text NOT NULL,
+	levering text NOT NULL--,
+
+	--CONSTRAINT verfijning_type_pkey PRIMARY KEY () --UNIEKE IDENTITY kolom aanmaken voor PKEY?
+);
+CREATE TABLE
+
+
+/*
+ * wegen
+ * -----
+ * 
+ */
+CREATE TABLE wegen (
+	tle_id integer NOT NULL,
+	ai_code text NOT NULL,
+	nummer integer NOT NULL,
+	vak text NOT NULL,
+	naam text NOT NULL,
+	soort text NOT NULL,
+	shape_length double precision NOT NULL,
+	geometry geometry NOT NULL,
+
+	CONSTRAINT wegen_pkey PRIMARY KEY (ai_code)
+);
+CREATE TABLE
+
+
+/*
+ * giab
+ * ----
+ * 
+ */
+CREATE TABLE giab (
+	tle_id  integer NOT NULL,
+	ai_code text NOT NULL,
+	xco integer NOT NULL,
+	yco integer NOT NULL,
+	relnr integer NOT NULL,
+	giabnr integer NOT NULL,
+	nge integer NOT NULL,
+	ubn bigint NOT NULL,
+	relnr_pch_lbt_pch_nw_ubn_rav text NOT NULL,
+	so double precision NOT NULL,
+	giabstatus text NOT NULL,
+	geometry geometry NOT NULL,
+
+	CONSTRAINT giab_pkey PRIMARY KEY (ai_code)
+);
+CREATE TABLE
+
+
+
+/*
+ * initiator
+ * ---------
+ * 
+ */
+CREATE TABLE initiator (
+	tle_id  integer NOT NULL,
+	ai_code text NOT NULL,
+	zone_12_mijl text NOT NULL,
+	r_m integer NOT NULL,
+	geometry geometry NOT NULL,
+
+	CONSTRAINT initiator_key PRIMARY KEY (ai_code)
+)
+;
+CREATE TABLE
+
+
+/*
+ * mestverwerkers
+ * --------------
+ * 
+ */
+CREATE TABLE mestverwerkers (
+	tle_id  integer NOT NULL,
+	ai_code text NOT NULL,
+	nummer integer NOT NULL,
+	vnr integer NOT NULL,
+	naam text NOT NULL,
+	type text NOT NULL,
+	adres text NOT NULL,
+	huisnr text NOT NULL,
+	huisnr_toev text NOT NULL,
+	postcode text NOT NULL,
+	plaats text NOT NULL,
+	aantal_werknemers double precision NOT NULL,
+	opname_instantie text NOT NULL,
+	code_instantie text NOT NULL,
+	sbi_code text NOT NULL,
+	geometry geometry NOT NULL,
+
+	CONSTRAINT mestverwerkers_key PRIMARY KEY (ai_code)
+);
+CREATE TABLE
+
+
+
+/*
+ * spoorwegen
+ * ----------
+ * 
+ */
+CREATE TABLE spoorwegen (
+	tle_id  integer NOT NULL,
+	ai_code text NOT NULL,
+	shape_length double precision NOT NULL,
+	geometry geometry NOT NULL,
+
+	CONSTRAINT spoorwegen_key PRIMARY KEY (ai_code)
+);
+CREATE TABLE
+
+
+
+/*
+ * binnenvaart
+ * -----------
+ * 
+ */
+CREATE TABLE binnenvaart (
+	tle_id integer NOT NULL,
+	ai_code text NOT NULL,
+	vaarweg_id integer NOT NULL,
+	vaarwegnaam text NOT NULL,
+	shape_length double precision NOT NULL,
+	geometry geometry NOT NULL,
+
+	CONSTRAINT binnenvaart_key PRIMARY KEY (ai_code)
+);
+CREATE TABLE
+
+
+/*
+ * recreatievaart
+ * --------------
+ * 
+ */
+CREATE TABLE recreatievaart (
+	tle_id integer NOT NULL,
+	ai_code text NOT NULL,
+	vwk_id integer NOT NULL,
+	vrt_id integer NOT NULL,
+	vwg_nr integer NOT NULL,
+	richting text NOT NULL,
+	vaktype text NOT NULL,
+	vaklengte double precision NOT NULL,
+	shape_length double precision NOT NULL,
+	vwv_naam text NOT NULL,
+	geometry geometry NOT NULL,
+
+	CONSTRAINT recreatievaart_key PRIMARY KEY (ai_code)
+);
+CREATE TABLE
+
+
+
+**************************************************
+[11-03-2025 15:02:09] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/02-views/01-general.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/02-views/01-general.sql -- -- --
+
+/*
+ * verfijnde_emissies_geregionaliseerd_view
+ * ----------------------------------------
+ * View die
+ */
+CREATE OR REPLACE VIEW verfijnde_emissies_geregionaliseerd_view AS
+SELECT 
+   tle_id,
+   ai_code,
+   substance_id,
+   gcn_stof_code,
+   er_stof_code,
+   gcn_sector_id,
+   emissiejaar,
+   emissie_kg,
+   geometry
+
+   FROM er_emissie_verfijnd AS em
+      INNER JOIN substances USING (er_stof_code)
+      INNER JOIN geo_verfijnd USING (tle_id, ai_code)
+;
+CREATE VIEW
+
+
+/*
+ * check_totals_view
+ * -----------------
+ * View die
+ */ 
+CREATE OR REPLACE VIEW check_totals_view AS
+SELECT 
+   emissiejaar,
+   gcn_sector_id,
+   er_stof_code,
+   substance_id,
+   gcn_stof_code,
+   em_nt,
+   em_reg,
+   (em_nt - em_reg) AS verschil
+
+   FROM 
+      (SELECT 
+         emissiejaar,
+         er_stof_code,
+         "left"(er_indeling_code, 4)::integer AS gcn_sector_id,
+         round(emissie_kg::numeric, 3) AS em_nt
+      
+         FROM er_emissie_nationaal_erc
+      ) AS nt
+
+      INNER JOIN 
+         (SELECT 
+            emissiejaar,
+            gcn_sector_id,
+            er_stof_code,
+            round(sum(emissie_kg)::numeric, 3) AS em_reg
+         
+            FROM verfijnde_emissies_geregionaliseerd_view
+            
+            GROUP BY emissiejaar, gcn_sector_id, er_stof_code
+         )AS reg USING (emissiejaar, gcn_sector_id, er_stof_code)
+   
+      INNER JOIN substances USING (er_stof_code)
+;
+CREATE VIEW
+
+
+/*
+ * source_characteristics_view
+ * ---------------------------
+ * View die
+ */  
+CREATE OR REPLACE VIEW source_characteristics_view AS
+SELECT 
+   gcn_sector_id,
+   substance_id,
+   heat_content,
+   height,
+   spread,
+   emission_diurnal_variation_id,
+   particle_size_distribution,
+   code AS diurnal_variation_code
+
+   FROM gcn_sector_source_characteristics
+      LEFT JOIN emission_diurnal_variations USING (emission_diurnal_variation_id)
+;
+CREATE VIEW
+
+
+**************************************************
+[11-03-2025 15:02:09] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/02-views/02-report.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/02-views/02-report.sql -- -- --
+
+/*
+ * emissions_ammonia_agriculture_nl
+ * --------------------------------
+ * View die de stikstof-emissie van de landbouwsector retourneert, uitgesplitst in 9 (deels samengestelde) deelsectoren. 
+ * De emissies worden weergegeven in kton per jaar per sector, voor de jaren 2005 t/m 2022. 
+ */
+CREATE OR REPLACE VIEW report.emissions_ammonia_agriculture_nl AS
+WITH 
+sector_emissions_per_sector AS (
+	SELECT 
+		dataset_omschrijving AS dataset,
+		jaar AS emission_year,
+		CASE 
+			WHEN gcn_sectors.sector_id = 4130 THEN 'Beweiding'
+			WHEN gcn_sectors.sector_id = 4140 THEN 'Mestaanwending'
+			WHEN gcn_sectors.sector_id IN (4120, 4150) THEN 'Mestopslag & mestbewerking'
+			WHEN gcn_sectors.sector_id = 4160 THEN 'Particuliere landbouwactiviteiten'
+			WHEN gcn_sectors.sector_id IN (4600, 4320) THEN 'Overige landbouw'
+			WHEN gcn_sectors.sector_id = 4114 THEN 'Stallen Overig vee'
+			WHEN gcn_sectors.sector_id = 4113 THEN 'Stallen Pluimvee'
+			WHEN gcn_sectors.sector_id = 4111 THEN 'Stallen Rundvee'
+			WHEN gcn_sectors.sector_id = 4112 THEN 'Stallen Varkens'
+			ELSE CAST(gcn_sectors.sector_id AS text)
+		END AS sector,
+		SUM(emissie_kg) AS summed_emission 
+		
+		FROM emissie_totalen 
+			INNER JOIN gcn_sectors USING (gcn_sector_id)
+			INNER JOIN pbl_sectors USING (gcn_sector_id)
+			INNER JOIN dataset USING (dataset_id)
+			
+		WHERE 
+			pbl_sectors.pbl_sector = 'Landbouw'
+			AND jaar > 2004
+			AND substance_id = 17
+			
+		GROUP BY dataset_omschrijving, jaar, gcn_sectors.sector_id, substance_id
+
+),
+
+total_emissions AS (
+	SELECT 
+		dataset,
+		emission_year,
+		'Totaal' AS sector,
+		SUM(summed_emission) AS total_summed_emission
+
+		FROM sector_emissions_per_sector
+
+		WHERE sector IS NOT NULL
+
+		GROUP BY dataset, emission_year
+)
+SELECT 
+	dataset,
+	emission_year,
+	sector,
+	'NH3' AS substance,
+	SUM(summed_emission) / 1000000 AS emissie_in_kton
+
+	FROM sector_emissions_per_sector
+
+	WHERE sector IS NOT NULL
+
+	GROUP BY dataset, emission_year, sector
+
+UNION
+
+SELECT 
+	dataset,
+	emission_year,
+	sector,
+	'NH3' AS substance,
+	total_summed_emission / 1000000  AS emissie_in_kton
+
+	FROM total_emissions
+
+	ORDER BY emission_year, sector
+;
+CREATE VIEW
+
+
+/*
+ * emissions_ammonia_nl
+ * --------------------
+ * View die de ammoniak-emissie in kton per PBL-sector, jaar en substance retourneert vanaf 2005 t/m 2040. 
+ */
+CREATE OR REPLACE VIEW report.emissions_ammonia_nl AS
+WITH emissions_all_sectors AS (
+	SELECT 
+		dataset_omschrijving AS dataset,
+		jaar AS emission_year,
+		pbl_sectors.pbl_sector AS sector,
+		substance_id,
+		sum(emissie_kg) AS summed_emission
+
+		FROM emissie_totalen
+			INNER JOIN pbl_sectors USING (gcn_sector_id)
+			INNER JOIN dataset USING (dataset_id)
+			
+		WHERE 
+			jaar > 2004
+			AND substance_id = 17
+			
+		GROUP BY dataset_omschrijving, jaar, pbl_sectors.pbl_sector, substance_id
+),
+total_emissions AS (
+	SELECT 
+		dataset,
+		emission_year,
+		'Totaal' AS sector,
+		SUM(summed_emission) AS total_summed_emission
+
+		FROM emissions_all_sectors
+			
+		GROUP BY dataset, emission_year
+)
+SELECT 
+	dataset,
+	emission_year,
+	sector,
+	'NH3' AS substance,
+	SUM(summed_emission) / 1000000 AS emissie_in_kton
+
+	FROM emissions_all_sectors
+
+	GROUP BY dataset, emission_year, sector
+
+UNION
+
+SELECT 
+	dataset,
+	emission_year,
+	sector,
+	'NH3' AS substance,
+	total_summed_emission / 1000000 AS emissie_in_kton
+
+	FROM total_emissions
+
+	ORDER BY emission_year, sector
+;
+CREATE VIEW
+
+
+/*
+ * emissions_nitrogen_oxides_nl
+ * ----------------------------
+ * View die de stikstofoxiden-emissie in kton per PBL-sector, jaar en substance retourneert vanaf 2005 t/m 2022. 
+ */
+CREATE OR REPLACE VIEW report.emissions_nitrogen_oxides_nl AS
+WITH emissions_all_sectors AS (
+	SELECT 
+		dataset_omschrijving AS dataset,
+		jaar AS emission_year,
+		pbl_sectors.pbl_sector AS sector,
+		substance_id,
+		sum(emissie_kg) AS summed_emission
+
+		FROM emissie_totalen
+			INNER JOIN pbl_sectors USING (gcn_sector_id)
+			INNER JOIN dataset USING (dataset_id)
+		
+		WHERE 
+			jaar > 2004
+			AND substance_id = 11
+			
+		GROUP BY dataset_omschrijving, jaar, pbl_sectors.pbl_sector, substance_id
+),
+total_emissions AS (
+	SELECT 
+		dataset,
+		emission_year,
+		'Totaal' AS sector,
+		SUM(summed_emission) AS total_summed_emission
+
+		FROM emissions_all_sectors
+			
+		GROUP BY dataset, emission_year
+)
+SELECT 
+	dataset,
+	emission_year,
+	sector,
+	'NOx' AS substance,
+	SUM(summed_emission) / 1000000 AS emissie_in_kton
+
+	FROM emissions_all_sectors
+
+	GROUP BY dataset, emission_year, sector
+
+UNION
+
+SELECT 
+	dataset,
+	emission_year,
+	sector,
+	'NOx' AS substance,
+	total_summed_emission / 1000000 AS emissie_in_kton
+
+	FROM total_emissions
+
+	ORDER BY emission_year, sector
+;
+CREATE VIEW
+
+
+**************************************************
+[11-03-2025 15:02:09] 
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 COMMENT ON SCHEMA setup IS 'The setup schema contains basic tables, queries and functions to create derived AERIUS tables.
@@ -1323,9 +2305,23 @@ COMMENT ON SCHEMA system IS 'The system schema contains basic tables for the AER
 
 @file main/sql/common/essentials/00-init/02-schemas.sql';
 COMMENT
+COMMENT ON SCHEMA report IS 'The report schema contains tables and views used fot rapporting purposes.
+
+@file main/sql/common/essentials/00-init/02-schemas.sql';
+COMMENT
 COMMENT ON TYPE constant_type IS 'Specifies the type of a constant.
 
 @file main/sql/common/essentials/00-init/03-constants.sql';
+COMMENT
+COMMENT ON TYPE year_category_type IS 'Jaarcategorie, voor welke toepassing een jaar wordt gebruikt.
+source = Het jaar waarvan de bronbestanden zijn berekend.
+last = Achtergrond depostitie (calculator).
+past = Een jaar in het verleden die niet ''last'' is.
+future = Prognosejaren.
+reference = Vergelijkingsjaar voor prognoses.
+Het referentie jaar kan hierdoor afwijken van het achtergrond-depositie jaar
+
+@file main/sql/common/essentials/01-types/01-general.sql';
 COMMENT
 COMMENT ON TYPE ae_key_value_rs IS 'Type used as a return type in the case where a key-value pair is returned.
 Intended for use by the aggregate function ae_max_with_key, but can be used for other means as well.
@@ -1348,6 +2344,83 @@ COMMENT
 COMMENT ON TABLE system.constants IS 'System table for constants used by the web application.
 
 @file main/sql/common/essentials/00-init/04-system-constants.sql';
+COMMENT
+COMMENT ON TABLE scenarios IS '@file main/sql/er-emissions/10-public/01-tables/01-general.sql';
+COMMENT
+COMMENT ON TABLE years IS '@file main/sql/er-emissions/10-public/01-tables/01-general.sql';
+COMMENT
+COMMENT ON TABLE sectors IS 'Table containing AERIUS sectors.
+
+@file main/sql/er-emissions/10-public/01-tables/01-general.sql';
+COMMENT
+COMMENT ON TABLE gcn_sectors IS 'Sectorindeling van het RIVM.
+Elke GCN-sector is gekoppeld aan een AERIUS-sector. Hierdoor weten we aan welke AERIUS-sector de depositie van de RIVM-bronnen toegekend moet worden).
+
+@file main/sql/er-emissions/10-public/01-tables/01-general.sql';
+COMMENT
+COMMENT ON TABLE sectorgroups IS 'Koppeltabel voor sector en sectorgroep.
+
+@file main/sql/er-emissions/10-public/01-tables/01-general.sql';
+COMMENT
+COMMENT ON TABLE pbl_sectors IS 'Koppeltabel tussen GCN sectoren en de sector indeling die het PlanBureau voor de Leefomgevening hanteert.
+
+@file main/sql/er-emissions/10-public/01-tables/01-general.sql';
+COMMENT
+COMMENT ON TABLE substances IS 'De stoffen beschikbaar in de database.
+
+@file main/sql/er-emissions/10-public/01-tables/01-general.sql';
+COMMENT
+COMMENT ON TABLE dataset IS 'De beschikbare datasets in de database.
+
+@file main/sql/er-emissions/10-public/01-tables/01-general.sql';
+COMMENT
+COMMENT ON TABLE er_emissie_nationaal_erc IS '@file main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql';
+COMMENT
+COMMENT ON TABLE er_emissie_nationaal_eri IS '@file main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql';
+COMMENT
+COMMENT ON TABLE er_emissie_per_emissieoorzaak IS '@file main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql';
+COMMENT
+COMMENT ON TABLE emissieoorzaken IS '@file main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql';
+COMMENT
+COMMENT ON TABLE er_emissie_vierkanten IS '@file main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql';
+COMMENT
+COMMENT ON TABLE er_emissie_verfijnd IS '@file main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql';
+COMMENT
+COMMENT ON TABLE er_emissie_individueel IS '@file main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql';
+COMMENT
+COMMENT ON TABLE er_emissie_vliegvelden IS '@file main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql';
+COMMENT
+COMMENT ON TABLE emissie_totalen IS '@file main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql';
+COMMENT
+COMMENT ON TABLE scale_factors IS '@file main/sql/er-emissions/10-public/01-tables/03-scale_factors.sql';
+COMMENT
+COMMENT ON TABLE gcn_sector_source_characteristics IS '@file main/sql/er-emissions/10-public/01-tables/04-gcn_sector_source_characteristics.sql';
+COMMENT
+COMMENT ON TABLE geo_vierkanten IS '-
+
+@file main/sql/er-emissions/10-public/01-tables/05-spatial.sql';
+COMMENT
+COMMENT ON TABLE geo_verfijnd IS '@file main/sql/er-emissions/10-public/01-tables/05-spatial.sql';
+COMMENT
+COMMENT ON TABLE geo_eri IS '@file main/sql/er-emissions/10-public/01-tables/05-spatial.sql';
+COMMENT
+COMMENT ON TABLE geo_vliegvelden IS '@file main/sql/er-emissions/10-public/01-tables/05-spatial.sql';
+COMMENT
+COMMENT ON TABLE verfijning_type IS '@file main/sql/er-emissions/10-public/01-tables/05-spatial.sql';
+COMMENT
+COMMENT ON TABLE wegen IS '@file main/sql/er-emissions/10-public/01-tables/05-spatial.sql';
+COMMENT
+COMMENT ON TABLE giab IS '@file main/sql/er-emissions/10-public/01-tables/05-spatial.sql';
+COMMENT
+COMMENT ON TABLE initiator IS '@file main/sql/er-emissions/10-public/01-tables/05-spatial.sql';
+COMMENT
+COMMENT ON TABLE mestverwerkers IS '@file main/sql/er-emissions/10-public/01-tables/05-spatial.sql';
+COMMENT
+COMMENT ON TABLE spoorwegen IS '@file main/sql/er-emissions/10-public/01-tables/05-spatial.sql';
+COMMENT
+COMMENT ON TABLE binnenvaart IS '@file main/sql/er-emissions/10-public/01-tables/05-spatial.sql';
+COMMENT
+COMMENT ON TABLE recreatievaart IS '@file main/sql/er-emissions/10-public/01-tables/05-spatial.sql';
 COMMENT
 COMMENT ON FUNCTION ae_constant(constant_key text) IS 'Function returning the value of a database constant.
 When the constant does not exist in the constants table, an exception is raised.
@@ -1554,6 +2627,31 @@ COMMENT
 COMMENT ON VIEW system.constants_view IS 'View containing the union of web application (system) and database (public) constants.
 
 @file main/sql/common/essentials/00-init/04-system-constants.sql';
+COMMENT
+COMMENT ON VIEW verfijnde_emissies_geregionaliseerd_view IS 'View die
+
+@file main/sql/er-emissions/10-public/02-views/01-general.sql';
+COMMENT
+COMMENT ON VIEW check_totals_view IS 'View die
+
+@file main/sql/er-emissions/10-public/02-views/01-general.sql';
+COMMENT
+COMMENT ON VIEW source_characteristics_view IS 'View die
+
+@file main/sql/er-emissions/10-public/02-views/01-general.sql';
+COMMENT
+COMMENT ON VIEW report.emissions_ammonia_agriculture_nl IS 'View die de stikstof-emissie van de landbouwsector retourneert, uitgesplitst in 9 (deels samengestelde) deelsectoren.
+De emissies worden weergegeven in kton per jaar per sector, voor de jaren 2005 t/m 2022.
+
+@file main/sql/er-emissions/10-public/02-views/02-report.sql';
+COMMENT
+COMMENT ON VIEW report.emissions_ammonia_nl IS 'View die de ammoniak-emissie in kton per PBL-sector, jaar en substance retourneert vanaf 2005 t/m 2040.
+
+@file main/sql/er-emissions/10-public/02-views/02-report.sql';
+COMMENT
+COMMENT ON VIEW report.emissions_nitrogen_oxides_nl IS 'View die de stikstofoxiden-emissie in kton per PBL-sector, jaar en substance retourneert vanaf 2005 t/m 2022.
+
+@file main/sql/er-emissions/10-public/02-views/02-report.sql';
 COMMENT
 COMMENT ON DOMAIN posint IS 'Integer value type which can only be positive or 0.
 Used for the diameter of a source for example.

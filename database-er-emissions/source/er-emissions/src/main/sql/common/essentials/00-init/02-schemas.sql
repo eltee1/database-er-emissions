@@ -10,3 +10,11 @@ CREATE SCHEMA setup;
  * The system schema contains basic tables for the AERIUS application.
  */
 CREATE SCHEMA system;
+
+
+/*
+ * report
+ * ------
+ * The report schema contains tables and views used fot rapporting purposes.
+ */
+CREATE SCHEMA report;

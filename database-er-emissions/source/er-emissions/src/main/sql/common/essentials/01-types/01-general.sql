@@ -39,6 +39,21 @@ CREATE DOMAIN year_type AS smallint
 
 
 /*
+ * year_category_type
+ * ------------------
+ * Jaarcategorie, voor welke toepassing een jaar wordt gebruikt.
+ * source = Het jaar waarvan de bronbestanden zijn berekend.
+ * last = Achtergrond depostitie (calculator).
+ * past = Een jaar in het verleden die niet 'last' is.
+ * future = Prognosejaren.
+ * reference = Vergelijkingsjaar voor prognoses.
+ * Het referentie jaar kan hierdoor afwijken van het achtergrond-depositie jaar
+ */
+CREATE TYPE year_category_type AS ENUM
+    ('source', 'past', 'last', 'future', 'reference');
+
+
+/*
  * ae_key_value_rs
  * ---------------
  * Type used as a return type in the case where a key-value pair is returned.

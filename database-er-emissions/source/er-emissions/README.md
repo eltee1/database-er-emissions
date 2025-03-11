@@ -1,8 +1,6 @@
-# database-er
+# er-emissions database
 
-From here, the base ER-emissions database (pretty much empty) is built on top of which various addon-builds can take place. 
-These addon-builds are built from modules and can be started from "ER-aggregation\source\database-er-addon\database\ [module_name] \
-For further information, see the Readme.md in "ER-aggregation\source\database-er-addon\ "
+This is the emissions database, based on the data from the "emissie registratie" (er).
 
 ## File structure
 
@@ -14,15 +12,14 @@ For further information, see the Readme.md in "ER-aggregation\source\database-er
 
 With `database-build` project checked out relative to this project, Ruby correctly installed and the `database-build` `*.User.rb` -settings files created, it should be possible to build this database.
 This can be done with the following commands (might have to change `/` to `\` if working on Windows).
-Monitor is currently working with the `1.2.0` version of the `database-build`.
 
 
 Build database:
-From the folder `/ER-aggregation/source/database-er/`:
+From the folder `/database-er-emissions/source/er-emissions/`:
 
-Standard datbase name (adjusted in default.rb: add line: [default_database_name "database_name"]) is "ER-aggregation": 
+Standard datbase name (adjusted in default.rb: add line: [default_database_name "database_name"]) is "aggregation": 
 ```sh
-ruby ../../../database-build-1.2.0/bin/Build.rb default.rb ./settings.rb
+ruby ../../../database-build/bin/Build.rb default.rb ./settings.rb
 ```
 
 Explanation: 
