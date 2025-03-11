@@ -1,0 +1,1598 @@
+
+
+**************************************************
+[11-03-2025 10:03:58] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "postgres" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_external_sql_command.tmp" --echo-all
+**************************************************
+DROP DATABASE IF EXISTS "er-emissions_test_structure"
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_external_sql_command.tmp:1: NOTICE:  database "er-emissions_test_structure" does not exist, skipping
+DROP DATABASE
+
+
+**************************************************
+[11-03-2025 10:03:59] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "postgres" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_external_sql_command.tmp" --echo-all
+**************************************************
+CREATE DATABASE "er-emissions_test_structure" WITH TEMPLATE "template0"
+CREATE DATABASE
+
+
+**************************************************
+[11-03-2025 10:03:59] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+COMMENT ON DATABASE "er-emissions_test_structure" IS 'Database created on: Tuesday 11 March 2025 10:03'
+COMMENT
+
+
+**************************************************
+[11-03-2025 10:03:59] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/01-extensions.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/01-extensions.sql -- -- --
+
+-- Load PostGIS
+CREATE EXTENSION postgis;
+CREATE EXTENSION
+
+
+**************************************************
+[11-03-2025 10:04:00] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/02-schemas.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/02-schemas.sql -- -- --
+
+/*
+ * The setup schema contains basic tables, queries and functions to create derived AERIUS tables.
+ * In the setup schema, several (derived) intermediate tables are created for performance reasons.
+ */
+CREATE SCHEMA setup;
+CREATE SCHEMA
+
+/*
+ * system
+ * ------
+ * The system schema contains basic tables for the AERIUS application.
+ */
+CREATE SCHEMA system;
+CREATE SCHEMA
+
+
+**************************************************
+[11-03-2025 10:04:00] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/03-constants.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/03-constants.sql -- -- --
+
+/*
+ * constant_type
+ * -------------
+ * Specifies the type of a constant.
+ */
+CREATE TYPE constant_type AS ENUM
+	('string', 'integer', 'float', 'boolean', 'wkt');
+CREATE TYPE
+
+
+/*
+ * constants
+ * ---------
+ * Table for database constants.
+ */
+CREATE TABLE constants (
+	key text NOT NULL,
+	value text NOT NULL,
+	description text,
+	type constant_type,
+
+	CONSTRAINT constants_pkey PRIMARY KEY (key)
+);
+CREATE TABLE
+
+
+/*
+ * ae_constant
+ * -----------
+ * Function returning the value of a database constant.
+ * When the constant does not exist in the constants table, an exception is raised.
+ */
+CREATE OR REPLACE FUNCTION ae_constant(constant_key text)
+	RETURNS text AS
+$BODY$
+DECLARE
+	constant_value text;
+BEGIN
+	SELECT value INTO constant_value FROM constants WHERE key = constant_key;
+	IF constant_value IS NULL THEN
+		RAISE EXCEPTION 'Could not find a public constant value for ''%''!', constant_key;
+	END IF;
+	RETURN constant_value;
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE;
+CREATE FUNCTION
+
+
+/*
+ * ae_get_srid
+ * -----------
+ * Function returning the default SRID value.
+ */
+CREATE OR REPLACE FUNCTION ae_get_srid()
+	RETURNS integer AS
+$BODY$
+	SELECT ae_constant('SRID')::integer;
+$BODY$
+LANGUAGE sql IMMUTABLE;
+CREATE FUNCTION
+
+
+/*
+ * ae_get_calculator_grid_boundary_box
+ * -----------------------------------
+ * Function returning the bounding box for calculator, based on the CALCULATOR_GRID_BOUNDARY_BOX constant value.
+ */
+CREATE OR REPLACE FUNCTION ae_get_calculator_grid_boundary_box()
+	RETURNS Box2D AS
+$BODY$
+BEGIN
+	RETURN Box2D(ST_GeomFromText(ae_constant('CALCULATOR_GRID_BOUNDARY_BOX'), ae_get_srid()));
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE;
+CREATE FUNCTION
+
+
+**************************************************
+[11-03-2025 10:04:00] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/04-system-constants.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/04-system-constants.sql -- -- --
+
+/*
+ * constants
+ * ---------
+ * System table for constants used by the web application.
+ */
+CREATE TABLE system.constants (
+	key text NOT NULL,
+	value text NOT NULL,
+	description text,
+	type constant_type,
+
+	CONSTRAINT constants_pkey PRIMARY KEY (key)
+);
+CREATE TABLE
+
+
+/*
+ * constants_view
+ * --------------
+ * View containing the union of web application (system) and database (public) constants.
+ */
+CREATE OR REPLACE VIEW system.constants_view AS
+SELECT key, value, description, type FROM constants
+UNION ALL
+SELECT key, value, description, type FROM system.constants
+;
+CREATE VIEW
+
+
+/*
+ * ae_constant
+ * -----------
+ * Function returning the value of a database or web application constant.
+ * When the constant does not exist in the view system.constants_view, an exception is raised.
+ */
+CREATE OR REPLACE FUNCTION system.ae_constant(constant_key text)
+	RETURNS text AS
+$BODY$
+DECLARE
+	constant_value text;
+BEGIN
+	SELECT value INTO constant_value FROM system.constants_view WHERE key = constant_key;
+	IF constant_value IS NULL THEN
+		RAISE EXCEPTION 'Could not find a public or system constant value for ''%''!', constant_key;
+	END IF;
+	RETURN constant_value;
+END;
+$BODY$
+LANGUAGE plpgsql STABLE;
+CREATE FUNCTION
+
+
+/*
+ * ae_set_constant
+ * ---------------
+ * Function to change the value of a web application constant.
+ * When the constant does not yet exist in the system.constants table, an exception is raised.
+ */
+CREATE OR REPLACE FUNCTION system.ae_set_constant(constant_key text, constant_value text)
+	RETURNS void AS
+$BODY$
+BEGIN
+	IF NOT EXISTS(SELECT value FROM system.constants WHERE key = constant_key) THEN
+		RAISE EXCEPTION 'Could not find a system constant value for ''%''!', constant_key;
+	END IF;
+
+	UPDATE system.constants SET value = constant_value WHERE key = constant_key;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+CREATE FUNCTION
+
+
+/*
+ * ae_get_git_revision
+ * -------------------
+ * Function returning the revision value, which is stored as a web application constant.
+ */
+CREATE OR REPLACE FUNCTION system.ae_get_git_revision()
+	RETURNS text AS
+$BODY$
+	SELECT CASE
+	WHEN EXISTS (SELECT 1 FROM system.constants WHERE key = 'CURRENT_GIT_REVISION') THEN
+		system.ae_constant('CURRENT_GIT_REVISION')
+	WHEN EXISTS (SELECT 1 FROM system.constants WHERE key = 'CURRENT_DATABASE_VERSION') THEN
+		reverse(split_part(reverse(system.ae_constant('CURRENT_DATABASE_VERSION')), '_', 1))
+	ELSE
+		reverse(split_part(reverse(system.ae_constant('CURRENT_DATABASE_NAME')), '_', 1))
+	END;
+$BODY$
+LANGUAGE SQL STABLE;
+CREATE FUNCTION
+
+
+**************************************************
+[11-03-2025 10:04:00] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/01-general.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/01-general.sql -- -- --
+
+/*
+ * posint
+ * ------
+ * Integer value type which can only be positive or 0.
+ * Used for the diameter of a source for example.
+ */
+CREATE DOMAIN posint AS integer
+	CHECK (VALUE >= 0::integer);
+CREATE DOMAIN
+
+
+/*
+ * posreal
+ * -------
+ * Real (decimal) value type which can only be positive or 0.
+ * Used for depositions for example.
+ */
+CREATE DOMAIN posreal AS real
+	CHECK (VALUE >= 0::real);
+CREATE DOMAIN
+
+
+/*
+ * fraction
+ * --------
+ * Real (decimal) value type between 0 and 1 (inclusive), specifying fractions.
+ * Used for the habitat coverage factor for example.
+ */
+CREATE DOMAIN fraction AS real
+	CHECK ((VALUE >= 0::real) AND (VALUE <= 1::real));
+CREATE DOMAIN
+
+
+/*
+ * year_type
+ * ---------
+ * Small integer value type which can only be valid years (2000-2050 currently).
+ * Used for background years for example.
+ */
+CREATE DOMAIN year_type AS smallint
+	CHECK ((VALUE >= 2000::smallint) AND (VALUE <= 2050::smallint));
+CREATE DOMAIN
+
+
+/*
+ * ae_key_value_rs
+ * ---------------
+ * Type used as a return type in the case where a key-value pair is returned.
+ * Intended for use by the aggregate function ae_max_with_key, but can be used for other means as well.
+ */
+CREATE TYPE ae_key_value_rs AS
+(
+	key numeric,
+	value numeric
+);
+CREATE TYPE
+
+
+**************************************************
+[11-03-2025 10:04:00] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/02-setup.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/02-setup.sql -- -- --
+
+/*
+ * validation_result_type
+ * ----------------------
+ * Enum type for the different validation results.
+ * The order of this enum is important, and runs from low to high.
+ */
+CREATE TYPE setup.validation_result_type AS ENUM
+	('success', 'hint', 'warning', 'error');
+CREATE TYPE
+
+
+/*
+ * validation_result
+ * -----------------
+ * Type used as a return type for validation results.
+ */
+CREATE TYPE setup.validation_result AS (
+	result setup.validation_result_type,
+	object text,
+	message text
+);
+CREATE TYPE
+
+
+**************************************************
+[11-03-2025 10:04:00] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/01-general.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/01-general.sql -- -- --
+
+/*
+ * ae_protect_table
+ * ----------------
+ * Simple trigger function to make a table readonly.
+ * Useful for 'abstract base tables'.
+ */
+CREATE OR REPLACE FUNCTION ae_protect_table()
+	RETURNS trigger AS
+$BODY$
+BEGIN
+	RAISE EXCEPTION '%.% is a protected/readonly table!', TG_TABLE_SCHEMA, TG_TABLE_NAME;
+END;
+$BODY$
+LANGUAGE plpgsql;
+CREATE FUNCTION
+
+
+/*
+ * ae_raise_notice
+ * ---------------
+ * Function for showing report messages, mainly during a database build.
+ * This is a wrapper around the plpgsql notice function, so this can be called from normal SQL (outside a function).
+ */
+CREATE OR REPLACE FUNCTION ae_raise_notice(message text)
+	RETURNS void AS
+$BODY$
+DECLARE
+BEGIN
+	RAISE NOTICE '%', message;
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE;
+CREATE FUNCTION
+
+
+/*
+ * ae_linear_interpolate
+ * ---------------------
+ * Linear interpolation function.
+ *
+ * xb, yb = Start point
+ * xe, ye = End point
+ * xi = the x value to interpolate the y value for.
+ * Expects a float for each value, and returns a float.
+ */
+CREATE OR REPLACE FUNCTION ae_linear_interpolate(xb float, xe float, yb float, ye float, xi float)
+	RETURNS float AS
+$BODY$
+DECLARE
+BEGIN
+	IF xe - xb = 0 THEN
+		RETURN yb;
+	ELSE
+		RETURN yb + ( (xi - xb) / (xe - xb) ) * (ye - yb);
+	END IF;
+
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE;
+CREATE FUNCTION
+
+
+/*
+ * ae_linear_interpolate
+ * ---------------------
+ * Linear interpolation function.
+ *
+ * xb, yb = Start point
+ * xe, ye = End point
+ * xi = the x value to interpolate the y value for.
+ * Expects integer values for xb,xe and xi.
+ * Expects real values for yb and ye.
+ * Returns a real value.
+ */
+CREATE OR REPLACE FUNCTION ae_linear_interpolate(xb integer, xe integer, yb real, ye real, xi integer)
+	RETURNS real AS
+$BODY$
+DECLARE
+BEGIN
+	IF xe - xb = 0 THEN
+		RETURN yb;
+	ELSE
+		RETURN yb + ( (xi - xb)::real / (xe - xb) ) * (ye - yb);
+	END IF;
+
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE;
+CREATE FUNCTION
+
+
+/*
+ * ae_array_index
+ * --------------
+ * Helper function which returns the index (of the first match) of anyelement in anyarray.
+ */
+CREATE OR REPLACE FUNCTION ae_array_index(anyarray, anyelement)
+	RETURNS INT AS
+$BODY$
+	SELECT i
+		FROM (SELECT generate_series(array_lower($1,1), array_upper($1,1))) g(i)
+
+		WHERE $1[i] = $2
+
+		LIMIT 1
+$BODY$
+LANGUAGE sql IMMUTABLE;
+CREATE FUNCTION
+
+
+/*
+ * ae_abs_threshold
+ * ----------------
+ * Helper function which returns the x value as an absolute value when it is above the threshold, otherwise returns NULL.
+ */
+CREATE OR REPLACE FUNCTION ae_abs_threshold(x real, threshold real)
+	RETURNS REAL AS
+$BODY$
+	SELECT CASE WHEN ABS(x) > threshold THEN x ELSE NULL END;
+$BODY$
+LANGUAGE SQL IMMUTABLE;
+CREATE FUNCTION
+
+
+**************************************************
+[11-03-2025 10:04:01] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/02-aggregate.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/02-aggregate.sql -- -- --
+
+/*
+ * ae_percentile_sorted_array
+ * --------------------------
+ * Function to calculate the percentile based on a sorted array.
+ */
+CREATE OR REPLACE FUNCTION ae_percentile_sorted_array(sorted_array numeric[], percentile int)
+	RETURNS numeric AS
+$BODY$
+DECLARE
+	array_size 		int;
+	index 			int;
+	percentile_by_index 	real;
+BEGIN
+	IF array_length(sorted_array, 1) IS NULL THEN -- No empty arrays
+		RETURN NULL;
+	END IF;
+
+	array_size = array_length(sorted_array, 1);
+	index = FLOOR( (array_size - 1) * percentile / 100.0) + 1;
+
+	-- an array of n elements starts with array[1] and ends with array[n].
+	IF index >= array_size THEN
+		RETURN sorted_array[array_size];
+
+	ELSE
+		percentile_by_index = (index - 1) * 100.0 / (array_size - 1);
+
+		RETURN sorted_array[index] + (array_size - 1) *
+				((percentile - percentile_by_index) / 100.0) *
+				(sorted_array[index + 1] - sorted_array[index]);
+
+	END IF;
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE RETURNS NULL ON NULL INPUT;
+CREATE FUNCTION
+
+
+/*
+ * ae_percentile
+ * -------------
+ * Function to calculate the percentile based on an unsorted list.
+ * Remark: there is no aggregate version of this function due to very bad performance.
+ */
+CREATE OR REPLACE FUNCTION ae_percentile(unsorted_array numeric[], percentile int)
+	RETURNS numeric AS
+$BODY$
+BEGIN
+	RETURN ae_percentile_sorted_array((SELECT array_agg(v) FROM (SELECT v FROM unnest(unsorted_array) AS v WHERE v IS NOT NULL ORDER BY 1) AS t), percentile);
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE RETURNS NULL ON NULL INPUT;
+CREATE FUNCTION
+
+
+/*
+ * ae_median
+ * ---------
+ * Function to calculate the median based on an unsorted list. Identical to 50% percentile.
+ * Remark: there is no aggregate version of this function due to very bad performance.
+ */
+CREATE OR REPLACE FUNCTION ae_median(unsorted_array numeric[])
+	RETURNS numeric AS
+$BODY$
+BEGIN
+	RETURN ae_percentile(unsorted_array, 50);
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE RETURNS NULL ON NULL INPUT;
+CREATE FUNCTION
+
+---------------------------------------------------------------------------------------------
+
+/*
+ * ae_max_with_key_sfunc
+ * ---------------------
+ * State function for 'ae_max_with_key'.
+ */
+CREATE OR REPLACE FUNCTION ae_max_with_key_sfunc(state numeric[2], e1 numeric, e2 numeric)
+	RETURNS numeric[2] AS
+$BODY$
+BEGIN
+	IF state[2] > e2 OR e2 IS NULL THEN
+		RETURN state;
+	ELSE
+		RETURN ARRAY[e1, e2];
+	END IF;
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE;
+CREATE FUNCTION
+
+
+/*
+ * ae_max_with_key_ffunc
+ * ---------------------
+ * Final function for 'ae_max_with_key'.
+ * This function is used to shape the endresult into the correct type.
+ */
+CREATE OR REPLACE FUNCTION ae_max_with_key_ffunc(state numeric[2])
+	RETURNS ae_key_value_rs AS
+$BODY$
+BEGIN
+	RETURN (state[1], state[2]);
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE;
+CREATE FUNCTION
+
+
+/*
+ * ae_max_with_key
+ * ---------------
+ * Aggregate function to determine the maximum value in a list of key-values, returning both the key and the value.
+ * Input consists of 2 numeric arguments, first should be the key, second should be the value.
+ * Output is of the type ae_key_value_rs (which also consists of a numeric key and numeric value).
+ */
+CREATE AGGREGATE ae_max_with_key(numeric, numeric) (
+	SFUNC = ae_max_with_key_sfunc,
+	STYPE = numeric[2],
+	FINALFUNC = ae_max_with_key_ffunc,
+	INITCOND = '{NULL,NULL}'
+);
+CREATE AGGREGATE
+
+---------------------------------------------------------------------------------------------
+
+/*
+ * ae_weighted_avg_sfunc
+ * ---------------------
+ * State function for the weighted average function 'ae_weighted_avg'.
+ * Collects the total of weighted values and the total of weights in an array with 2 values.
+ */
+CREATE OR REPLACE FUNCTION ae_weighted_avg_sfunc(state numeric[], value numeric, weight numeric)
+	RETURNS numeric[] AS
+$BODY$
+BEGIN
+	RETURN ARRAY[COALESCE(state[1], 0) + (value * weight), COALESCE(state[2], 0) + weight];
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE RETURNS NULL ON NULL INPUT;
+CREATE FUNCTION
+
+
+/*
+ * ae_weighted_avg_ffunc
+ * ---------------------
+ * Final function for the weighted average function 'ae_weighted_avg'.
+ * Divides the total of the weighted values by the total of the weights (which were collected in an array with 2 values).
+ */
+CREATE OR REPLACE FUNCTION ae_weighted_avg_ffunc(state numeric[])
+	RETURNS numeric AS
+$BODY$
+BEGIN
+	IF state[2] = 0 THEN
+		RETURN 0;
+	ELSE
+		RETURN state[1] / state[2];
+	END IF;
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE RETURNS NULL ON NULL INPUT;
+CREATE FUNCTION
+
+
+/*
+ * ae_weighted_avg
+ * ---------------
+ * Aggregate function to determine a weighted average.
+ * First parameter is the value, second parameter is the weight.
+ * NULL values are skipped, and if there are no non-NULL values, NULL will be returned.
+ */
+CREATE AGGREGATE ae_weighted_avg(numeric, numeric) (
+	SFUNC = ae_weighted_avg_sfunc,
+	STYPE = numeric[],
+	FINALFUNC = ae_weighted_avg_ffunc,
+	INITCOND = '{NULL,NULL}'
+);
+CREATE AGGREGATE
+
+---------------------------------------------------------------------------------------------
+
+/*
+ * ae_distribute_enum_sfunc
+ * ------------------------
+ * State function for enum distribution function 'ae_distribute_enum'.
+ * Tracks an array with an element for each value in the enum, and sums the weight according to the supplied enum values.
+ */
+CREATE OR REPLACE FUNCTION ae_distribute_enum_sfunc(state numeric[], key anyenum, weight numeric)
+	RETURNS numeric[] AS
+$BODY$
+BEGIN
+	IF array_length(state, 1) IS NULL THEN
+		state := array_fill(0, ARRAY[array_length(enum_range(key), 1)]);
+	END IF;
+	state[ae_enum_to_index(key)] := state[ae_enum_to_index(key)] + weight;
+	RETURN state;
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE RETURNS NULL ON NULL INPUT;
+CREATE FUNCTION
+
+
+/*
+ * ae_distribute_enum
+ * ------------------
+ * Aggregate function to count the occurrence of values in an enum, weighted if need be.
+ * First parameter is an enum value, second parameter is the weight which should be summed for that enum value.
+ * As an example, the weight can be 1 to count the number of occurrences of each enum value, or a 'surface' column to sum the surface per enum value.
+ * The return value is an array with as many elements as there are values in the enum, in same order as the enum is defined.
+ * Each element consists of the summed value for each respective enum value.
+ * NULL values are skipped, and if there are no non-NULL values, NULL will be returned.
+ */
+CREATE AGGREGATE ae_distribute_enum(anyenum, numeric) (
+	SFUNC = ae_distribute_enum_sfunc,
+	STYPE = numeric[],
+	INITCOND = '{}'
+);
+CREATE AGGREGATE
+
+
+**************************************************
+[11-03-2025 10:04:01] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/03-build.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/03-build.sql -- -- --
+
+/*
+ * ae_synchronize_all_serials
+ * --------------------------
+ * Function to synchronize serials/sequences.
+ * All functions with naming convention tablename_columnname_seq are set to the max value of that column in that table.
+ *
+ * Serials/sequences can get out of sync with the actual content of the database after bulk loads, COPY FROMs and INSERTs without defaults.
+ * This function makes sure sequences match the content once again.
+ * This is for instance used after a database build.
+ */
+CREATE OR REPLACE FUNCTION setup.ae_synchronize_all_serials()
+	RETURNS void AS
+$BODY$
+DECLARE
+	sequences record;
+	sql text;
+BEGIN
+	FOR sequences IN
+		SELECT
+			seqs.sequence_schema || '.' || seqs.sequence_name AS sequence_name,
+			cols.table_schema || '.' || cols.table_name::text AS table_name,
+			cols.column_name::text
+
+			FROM information_schema.columns AS cols
+				INNER JOIN information_schema.sequences AS seqs
+					ON ( (cols.table_schema || '.' || cols.table_name || '_' || cols.column_name || '_seq') = (seqs.sequence_schema || '.' || seqs.sequence_name) )
+	LOOP
+		sql := 'SELECT SETVAL(''' || sequences.sequence_name || ''', (SELECT COALESCE(MAX(' || sequences.column_name || '), 0) FROM ' || sequences.table_name || ') + 1, false)';
+		RAISE NOTICE '%', sql;
+		EXECUTE sql;
+	END LOOP;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+CREATE FUNCTION
+
+
+/*
+ * ae_cluster_all_tables
+ * ---------------------
+ * Function to cluster all tables in the database based on their primary key.
+ * Once the constraint (in this case the primary key) has been set, in the future clustering can be done by using: CLUSTER databasname.
+ */
+CREATE OR REPLACE FUNCTION setup.ae_cluster_all_tables()
+	RETURNS void AS
+$BODY$
+DECLARE
+	pkey_constraints record;
+	sql text;
+BEGIN
+	FOR pkey_constraints IN
+		SELECT
+			(nspname || '.' || relname)::regclass::text AS tablename,
+			conname::text AS pkey_name
+
+			FROM pg_constraint
+				INNER JOIN pg_class ON (pg_class.oid = pg_constraint.conrelid)
+				INNER JOIN pg_namespace ON (pg_namespace.oid = pg_class.relnamespace)
+
+			WHERE pg_class.relkind = 'r' AND pg_constraint.contype = 'p' AND pg_class.relisshared IS FALSE AND relname NOT LIKE 'pg_%'
+
+			ORDER BY tablename
+	LOOP
+		sql := 'CLUSTER ' || pkey_constraints.tablename || ' USING ' || pkey_constraints.pkey_name;
+		RAISE NOTICE '%', sql;
+		EXECUTE sql;
+	END LOOP;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+CREATE FUNCTION
+
+
+/*
+ * ae_validate_all
+ * ---------------
+ * Empty (default) ae_validate_all function.
+ *
+ * Called during build by ruby build script.
+ * Can be overwritten by each product to perform some actual validations.
+ */
+CREATE OR REPLACE FUNCTION setup.ae_validate_all()
+	RETURNS TABLE (validaton_result_id integer, validation_run_id integer, name regproc, result setup.validation_result_type) AS
+$BODY$
+BEGIN
+	RAISE NOTICE '** Empty validating function...';
+
+	PERFORM setup.ae_current_validation_run_id();
+
+	RETURN;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+CREATE FUNCTION
+
+
+/*
+ * ae_list_unittest_functions
+ * --------------------------
+ * Function that returns a list of all functions starting with the supplied prefix.
+ * Functions that are part of an extension or part of the PostgreSQL catalog are not returned.
+ * Returns the function name (including schema), the arguments and the return value of the function.
+ */
+CREATE OR REPLACE FUNCTION setup.ae_list_unittest_functions(v_prefix text)
+	RETURNS TABLE(name regproc, args text, returns text) AS
+$BODY$
+DECLARE
+	data_table regclass;
+	noncatalog_objects oid[];
+	extension_objects oid[];
+BEGIN
+	noncatalog_objects := (SELECT array_agg(objid) || array_agg(DISTINCT pg_namespace.oid) FROM pg_depend INNER JOIN pg_namespace ON (refobjid = pg_namespace.oid) WHERE pg_namespace.oid <> pg_my_temp_schema() AND NOT pg_is_other_temp_schema(pg_namespace.oid) AND NOT nspname IN ('information_schema', 'pg_catalog', 'pg_toast'));
+	extension_objects := (SELECT array_agg(objid) || array_agg(DISTINCT pg_extension.oid) FROM pg_depend INNER JOIN pg_extension ON (refobjid = pg_extension.oid));
+
+	RETURN QUERY SELECT
+		pg_proc.oid::regproc AS name,
+		pg_get_function_arguments(pg_proc.oid),
+		pg_get_function_result(pg_proc.oid)
+
+		FROM pg_proc
+
+		WHERE
+			proname ILIKE (replace(v_prefix, '_', '\_') || '%')
+			AND pg_proc.oid NOT IN (SELECT aggfnoid FROM pg_aggregate)
+			AND pg_proc.oid = ANY(noncatalog_objects)
+			AND NOT pg_proc.oid = ANY(extension_objects)
+	;
+	RETURN;
+END;
+$BODY$
+LANGUAGE plpgsql STABLE;
+CREATE FUNCTION
+
+
+/*
+ * ae_execute_unittest
+ * -------------------
+ * Function to execute the supplied (unit test) function.
+ * In case of an exception (which should be the case when an assert in the unit test fails), the exception is caught, parsed,
+ * and the exception message, line number and first context line number are all returned in a record.
+ * A unit test should fail on the first exception, so this function should never return more than 1 record.
+ * When no records are returned, the unit test was succesfull.
+ */
+CREATE OR REPLACE FUNCTION setup.ae_execute_unittest(v_function regproc)
+	RETURNS TABLE(errcode text, message text, linenr integer, context text) AS
+$BODY$
+DECLARE
+	v_context text;
+	v_line integer;
+BEGIN
+	EXECUTE 'SELECT ' || v_function || '()';
+	RETURN;
+EXCEPTION WHEN OTHERS THEN
+	GET STACKED DIAGNOSTICS v_context = PG_EXCEPTION_CONTEXT;
+	v_line = substring(v_context from 'line (\d+) at')::integer;
+	RETURN QUERY SELECT SQLSTATE, SQLERRM, v_line, (string_to_array(v_context, E'\n'))[1];
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+CREATE FUNCTION
+
+
+/*
+ * ae_checksum_all
+ * ---------------
+ * Function to generate checksums for all important database objects.
+ * In the case of tables, a separate checksum is made for the structure and the data.
+ * For the data checksums some tables can be skipped, for example when the content is dynamic and it does not make sense to check/compare checksums.
+ *
+ * The (sorted) result of the function can be saved to compare it with another database.
+ * For example after patching a production database, to check if it matches the last build.
+ *
+ * Catalog objects and objects of extensions like PostGIS are automatically filtered out.
+ *
+ * @param v_excluded_data_tables List of tables for which no data checksum should be generated.
+ * @return Per object type a name or description of the object, and the checksum of the definiton/data of that object
+ */
+CREATE OR REPLACE FUNCTION setup.ae_checksum_all(v_excluded_data_tables regclass[] = NULL)
+	RETURNS TABLE(objecttype text, description text, checksum bigint) AS
+$BODY$
+DECLARE
+	data_table regclass;
+	noncatalog_objects oid[];
+	extension_objects oid[];
+BEGIN
+	noncatalog_objects := (SELECT array_agg(objid) || array_agg(DISTINCT pg_namespace.oid) FROM pg_depend INNER JOIN pg_namespace ON (refobjid = pg_namespace.oid) WHERE pg_namespace.oid <> pg_my_temp_schema() AND NOT pg_is_other_temp_schema(pg_namespace.oid) AND NOT nspname IN ('information_schema', 'pg_catalog', 'pg_toast'));
+	extension_objects := (SELECT array_agg(objid) || array_agg(DISTINCT pg_extension.oid) FROM pg_depend INNER JOIN pg_extension ON (refobjid = pg_extension.oid));
+
+	-- Loop all non-catalog non-temporary tables in the database, except for the tables in the given array parameter.
+	-- For each table, stringify the contents, hash it and return it.
+	FOR data_table IN
+		SELECT pg_class.oid::regclass
+			FROM pg_class
+			WHERE
+				relkind = 'r'
+				AND NOT pg_class.oid::regclass = ANY(COALESCE(v_excluded_data_tables, ARRAY[]::regclass[]))
+				AND pg_class.oid = ANY(noncatalog_objects)
+				AND NOT pg_class.oid = ANY(extension_objects)
+	LOOP
+		RETURN QUERY EXECUTE $$ SELECT 'table data'::text, $1::text, COALESCE(SUM(hashtext((tbl.*)::text)), 0) AS checksum FROM $$ || data_table || $$ AS tbl $$ USING data_table;
+	END LOOP;
+
+	-- Generate checksums for the entire database structure. The query hashes the definitions of tables, views, functions, aggregate functions,
+	-- triggers, constraints and indexes. This type is returned as well as a description, which may sometimes be the same as the definition that
+	-- was hashed.
+	-- Again applies only to non-catalog non-temporary objects. Also the PostGIS functions prefixed with ST_ are filtered out.
+	RETURN QUERY SELECT
+		objtype::text AS objecttype,
+		COALESCE(objdescription, objdefinition)::text AS objdescription,
+		hashtext(objdefinition)::bigint AS checksum
+
+		FROM (
+			SELECT
+				objtype,
+				regexp_replace(objdescription, '[\n\r]+', ' ', 'g' ) AS objdescription,
+				regexp_replace(objdefinition, '[\n\r]+', ' ', 'g' ) AS objdefinition
+
+				FROM
+					(SELECT
+						'table structure' AS objtype,
+						NULL AS objdescription,
+						format('%s.%s (%s,%s,%s,%s,%s,%s)', pg_class.oid::regclass, attname, typname, attlen, attnum, attnotnull, atthasdef, pg_get_expr(adbin, pg_class.oid)) AS objdefinition
+
+						FROM pg_attribute
+							INNER JOIN pg_type ON (atttypid = pg_type.oid)
+							INNER JOIN pg_class ON (attrelid = pg_class.oid)
+							LEFT JOIN pg_attrdef ON (adrelid = attrelid AND adnum = attnum)
+
+						WHERE
+							relkind = 'r'
+							AND relpersistence <> 't'
+							AND attnum > 0
+							AND pg_class.oid = ANY(noncatalog_objects)
+							AND NOT pg_class.oid = ANY(extension_objects)
+					UNION ALL
+					SELECT
+						'view' AS objtype,
+						pg_class.oid::regclass::text AS objdescription,
+						pg_get_viewdef(pg_class.oid) AS objdefinition
+
+						FROM pg_class
+
+						WHERE
+							relkind = 'v'
+							AND pg_class.oid = ANY(noncatalog_objects)
+							AND NOT pg_class.oid = ANY(extension_objects)
+					UNION ALL
+					SELECT
+						'function' AS objtype,
+						format('%s(%s) RETURNS %s', pg_proc.oid::regproc, pg_get_function_arguments(pg_proc.oid), pg_get_function_result(pg_proc.oid)) AS objdescription,
+						pg_get_functiondef(pg_proc.oid) AS objdefinition
+
+						FROM pg_proc
+
+						WHERE
+							pg_proc.oid NOT IN (SELECT aggfnoid FROM pg_aggregate)
+							AND pg_proc.oid = ANY(noncatalog_objects)
+							AND NOT pg_proc.oid = ANY(extension_objects)
+					UNION ALL
+					SELECT
+						'aggregate function' AS objtype,
+						NULL AS objdescription,
+						format('%s (%s, %s)', pg_proc.oid::regproc, aggtransfn, aggfinalfn) AS objdefinition
+
+						FROM pg_aggregate
+							INNER JOIN pg_proc ON (aggfnoid = pg_proc.oid)
+
+						WHERE
+							pg_proc.oid = ANY(noncatalog_objects)
+							AND NOT pg_proc.oid = ANY(extension_objects)
+					UNION ALL
+					SELECT
+						'trigger' AS objtype,
+						NULL AS objdescription,
+						pg_get_triggerdef(pg_trigger.oid) AS objdefinition
+
+						FROM pg_trigger
+							INNER JOIN pg_class ON (tgrelid = pg_class.oid)
+
+						WHERE
+							NOT tgisinternal
+							AND pg_class.oid = ANY(noncatalog_objects)
+							AND NOT pg_class.oid = ANY(extension_objects)
+					UNION ALL
+					SELECT
+						'constraint' AS objtype,
+						NULL AS objdescription,
+						format('%s.%s = %s', pg_class.oid::regclass, conname, pg_get_constraintdef(pg_constraint.oid)) AS objdefinition
+
+						FROM pg_constraint
+							INNER JOIN pg_class ON (conrelid = pg_class.oid)
+
+						WHERE
+							pg_class.oid = ANY(noncatalog_objects)
+							AND NOT pg_class.oid = ANY(extension_objects)
+					UNION ALL
+					SELECT
+						'index' AS objtype,
+						NULL AS objdescription,
+						pg_get_indexdef(pg_class_index.oid) AS objdefinition
+
+						FROM pg_index
+							INNER JOIN pg_class AS pg_class_index ON (indexrelid = pg_class_index.oid)
+							INNER JOIN pg_class AS pg_class_table ON (indrelid = pg_class_table.oid)
+
+						WHERE
+							pg_class_table.relkind IN ('r', 'm')
+							AND pg_class_index.relkind = 'i'
+							AND pg_class_table.oid = ANY(noncatalog_objects)
+							AND NOT pg_class_table.oid = ANY(extension_objects)
+					UNION ALL
+		 			SELECT
+						'type' AS objtype,
+						NULL AS objdescription,
+						format('%s (%s,%s,%s,%s,%s,%s,%s,%s)', pg_type.oid::regtype, typlen, typtype, typcategory, typnotnull, pg_class.relname, format_type(typarray, NULL), format_type(typbasetype, NULL), typndims) AS objdefinition
+
+						FROM pg_type
+							LEFT JOIN pg_class ON (typrelid = pg_class.oid)
+
+						WHERE
+							typisdefined
+							AND typelem = 0
+							AND (relkind IS NULL OR relkind = 'c')
+							AND pg_type.oid = ANY(noncatalog_objects)
+							AND NOT pg_type.oid = ANY(extension_objects)
+					UNION ALL
+					SELECT
+						'enum values' AS objtype,
+						NULL AS objdescription,
+						format('%s (%s)', pg_type.oid::regtype, array_to_string(array_agg(enumlabel::text), ',')) AS objdefinition
+
+						FROM (SELECT * FROM pg_enum ORDER BY enumtypid, enumsortorder) AS pg_enum
+							INNER JOIN pg_type ON (enumtypid = pg_type.oid)
+
+						WHERE
+							pg_type.oid = ANY(noncatalog_objects)
+							AND NOT pg_type.oid = ANY(extension_objects)
+
+						GROUP BY pg_type.oid
+					UNION ALL
+					SELECT
+						'cast' AS objtype,
+						NULL AS objdescription,
+						format('%s AS %s (%s,%s,%s)', format_type(castsource, NULL), format_type(casttarget, NULL), castfunc::regproc, castcontext, castmethod) AS objdefinition
+
+						FROM pg_cast
+							INNER JOIN pg_type AS pg_type_src ON (castsource = pg_type_src.oid)
+
+						WHERE
+							pg_type_src.oid = ANY(noncatalog_objects)
+							AND NOT pg_type_src.oid = ANY(extension_objects)
+					UNION ALL
+					SELECT
+						'cast' AS objtype,
+						NULL AS objdescription,
+						format('%s AS %s (%s,%s,%s)', format_type(castsource, NULL), format_type(casttarget, NULL), castfunc::regproc, castcontext, castmethod) AS objdefinition
+
+						FROM pg_cast
+							INNER JOIN pg_type AS pg_type_src ON (castsource = pg_type_src.oid)
+							INNER JOIN pg_type AS pg_type_tgt ON (casttarget = pg_type_tgt.oid)
+
+						WHERE
+							pg_type_tgt.oid = ANY(noncatalog_objects)
+							AND NOT pg_type_tgt.oid = ANY(extension_objects)
+							AND NOT (pg_type_src.oid = ANY(noncatalog_objects) AND NOT pg_type_src.oid = ANY(extension_objects))
+					UNION ALL
+					SELECT
+						'comment' AS objtype,
+						pg_describe_object(classoid, objoid, objsubid) AS objdescription,
+						pg_description.description AS objdefinition
+
+						FROM pg_description
+
+						WHERE
+							objsubid = 0
+							AND objoid = ANY(noncatalog_objects)
+							AND NOT objoid = ANY(extension_objects)
+				) AS raw_definitions
+
+		) AS definitions
+	;
+
+	RETURN;
+END;
+$BODY$
+LANGUAGE plpgsql STABLE;
+CREATE FUNCTION
+
+
+**************************************************
+[11-03-2025 10:04:01] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/04-load_store_data.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/04-load_store_data.sql -- -- --
+
+/*
+ * ae_load_table
+ * -------------
+ * Function to copy the data of the supplied file to the supplied table.
+ * The file should contain tab-separated text without a header, or tab-separated text with a header when the optional parameter is set to true.
+ *
+ * @param tablename The table to copy to.
+ * @param filespec The file to copy from
+ * @param use_pretty_csv_format Optional parameter to specify if file contains a header (true) or not (false). Default false.
+ */
+CREATE OR REPLACE FUNCTION setup.ae_load_table(tablename regclass, filespec text, use_pretty_csv_format boolean = FALSE)
+	RETURNS void AS
+$BODY$
+DECLARE
+	current_encoding text;
+	filename text;
+	extra_options text = '';
+	delimiter_to_use text = E'\t';
+	sql text;
+BEGIN
+	-- set encoding
+	EXECUTE 'SHOW client_encoding' INTO current_encoding;
+	EXECUTE 'SET client_encoding TO UTF8';
+
+	filename := replace(filespec, '{tablename}', tablename::text);
+	filename := replace(filename, '{datesuffix}', to_char(current_timestamp, 'YYYYMMDD'));
+
+	IF filename LIKE '%{revision}%' THEN
+		filename := replace(filename, '{revision}', system.ae_get_git_revision());
+	END IF;
+
+	IF use_pretty_csv_format THEN
+		extra_options := 'HEADER';
+	END IF;
+
+	sql := 'COPY ' || tablename || ' FROM ''' || filename || E''' DELIMITER ''' || delimiter_to_use || ''' CSV ' || extra_options;
+
+	RAISE NOTICE '% Starting @ %', sql, timeofday();
+	EXECUTE sql;
+	RAISE NOTICE '% Done @ %', sql, timeofday();
+
+	-- reset encoding
+	EXECUTE 'SET client_encoding TO ' || current_encoding;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+CREATE FUNCTION
+
+
+/*
+ * ae_store_query
+ * --------------
+ * Function to store the results of the supplied query string to the supplied file.
+ * In the filename the parts {tablename} or {queryname} can be used, these will be replaced by the supplied queryname.
+ * Additionally, the part {datesuffix} can be used, which will be replaced with the current date in YYYYMMDD format.
+ *
+ * The export is tab-separated CSV.
+ * The optional parameter use_pretty_csv_format can be used to generate a file with (true) or without (false) a header.
+ *
+ * @param queryname The name of the query.
+ * @param sql_in The actual query string to export the results for.
+ * @param filespec The file to export to.
+ * @param use_pretty_csv_format Optional parameter to specify if file is generated with a header (true) or not (false). Default false.
+ */
+CREATE OR REPLACE FUNCTION setup.ae_store_query(queryname text, sql_in text, filespec text, use_pretty_csv_format boolean = FALSE)
+	RETURNS void AS
+$BODY$
+DECLARE
+	current_encoding text;
+	filename text;
+	extra_options text = '';
+	delimiter_to_use text = E'\t';
+	sql text;
+BEGIN
+	-- set encoding
+	EXECUTE 'SHOW client_encoding' INTO current_encoding;
+	EXECUTE 'SET client_encoding TO UTF8';
+
+	filename := replace(filespec, '{queryname}', queryname);
+	filename := replace(filename, '{tablename}', queryname);
+	filename := replace(filename, '{datesuffix}', to_char(current_timestamp, 'YYYYMMDD'));
+
+	IF filename LIKE '%{revision}%' THEN
+		filename := replace(filename, '{revision}', system.ae_get_git_revision());
+	END IF;
+
+	filename := '''' || filename || '''';
+
+	IF use_pretty_csv_format THEN
+		extra_options := 'HEADER';
+	END IF;
+
+	sql := 'COPY (' || sql_in || ') TO ' || filename || E' DELIMITER ''' || delimiter_to_use || ''' CSV ' || extra_options;
+
+	RAISE NOTICE '%', sql;
+
+	EXECUTE sql;
+
+	-- reset encoding
+	EXECUTE 'SET client_encoding TO ' || current_encoding;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+CREATE FUNCTION
+
+
+/*
+ * ae_store_table
+ * --------------
+ * Copies the data of the supplied table to the supplied file.
+ * In the filename the parts {tablename} or {queryname} can be used, these will be replaced by the supplied table name.
+ * Additionally, the part {datesuffix} can be used, which will be replaced with the current date in YYYYMMDD format.
+ *
+ * The export is tab-separated CSV.
+ * The optional parameter use_pretty_csv_format can be used to generate a file with (true) or without (false) a header. The default is false.
+ *
+ * @param tablename The name of the table to export.
+ * @param filespec The file to export to.
+ * @param ordered Optional parameter to indicate if export should be ordered or not. If true, the table is sorted by all columns, starting with the first column. Default false.
+ * @param use_pretty_csv_format Optional parameter to specify if file is generated with a header (true) or not (false). Default false.
+ */
+CREATE OR REPLACE FUNCTION setup.ae_store_table(tablename regclass, filespec text, ordered bool = FALSE, use_pretty_csv_format boolean = FALSE)
+	RETURNS void AS
+$BODY$
+DECLARE
+	ordered_columns_string text;
+	tableselect text;
+BEGIN
+	tableselect := 'SELECT * FROM ' || tablename;
+
+	IF ordered THEN
+		SELECT
+			array_to_string(array_agg(column_name::text), ', ')
+			INTO ordered_columns_string
+			FROM
+				(SELECT column_name
+					FROM information_schema.columns
+					WHERE (CASE WHEN table_schema = 'public' THEN table_name ELSE table_schema || '.' || table_name END)::text = tablename::text
+					ORDER BY ordinal_position
+				) ordered_columns;
+
+		tableselect := tableselect || ' ORDER BY ' || ordered_columns_string || '';
+	END IF;
+
+	PERFORM setup.ae_store_query(tablename::text, tableselect, filespec, use_pretty_csv_format);
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+CREATE FUNCTION
+
+
+**************************************************
+[11-03-2025 10:04:01] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/05-type_conversion.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/05-type_conversion.sql -- -- --
+
+/*
+ * ae_array_to_index
+ * -----------------
+ * Index (starting by 1, standard postgres) of the first element in anyarray that is equal to anyelement.
+ * Returns NULL when anylement is not present in anyarray.
+ */
+CREATE OR REPLACE FUNCTION ae_array_to_index(anyarray anyarray, anyelement anyelement)
+	RETURNS integer AS
+$BODY$
+	SELECT index
+		FROM generate_subscripts($1, 1) AS index
+		WHERE $1[index] = $2
+		ORDER BY index
+$BODY$
+LANGUAGE sql IMMUTABLE;
+CREATE FUNCTION
+
+
+/*
+ * ae_enum_to_index
+ * ----------------
+ * Index (starting by 1, standard postgres) of anyenum in the type definition of it's enum type.
+ */
+CREATE OR REPLACE FUNCTION ae_enum_to_index(anyenum anyenum)
+	RETURNS integer AS
+$BODY$
+	SELECT ae_array_to_index(enum_range($1), $1);
+$BODY$
+LANGUAGE sql IMMUTABLE;
+CREATE FUNCTION
+
+
+/*
+ * ae_enum_by_index
+ * ----------------
+ * Anynum on index position (starting by 1, standard postgres) in the type definition of its enum type.
+ * Returns NULL when the index is invalid.
+ */
+CREATE OR REPLACE FUNCTION ae_enum_by_index(anyenum anyenum, index integer)
+	RETURNS anyenum AS
+$BODY$
+	SELECT (enum_range($1))[$2];
+$BODY$
+LANGUAGE sql IMMUTABLE;
+CREATE FUNCTION
+
+
+**************************************************
+[11-03-2025 10:04:01] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+COMMENT ON SCHEMA setup IS 'The setup schema contains basic tables, queries and functions to create derived AERIUS tables.
+In the setup schema, several (derived) intermediate tables are created for performance reasons.
+
+@file main/sql/common/essentials/00-init/02-schemas.sql';
+COMMENT
+COMMENT ON SCHEMA system IS 'The system schema contains basic tables for the AERIUS application.
+
+@file main/sql/common/essentials/00-init/02-schemas.sql';
+COMMENT
+COMMENT ON TYPE constant_type IS 'Specifies the type of a constant.
+
+@file main/sql/common/essentials/00-init/03-constants.sql';
+COMMENT
+COMMENT ON TYPE ae_key_value_rs IS 'Type used as a return type in the case where a key-value pair is returned.
+Intended for use by the aggregate function ae_max_with_key, but can be used for other means as well.
+
+@file main/sql/common/essentials/01-types/01-general.sql';
+COMMENT
+COMMENT ON TYPE setup.validation_result_type IS 'Enum type for the different validation results.
+The order of this enum is important, and runs from low to high.
+
+@file main/sql/common/essentials/01-types/02-setup.sql';
+COMMENT
+COMMENT ON TYPE setup.validation_result IS 'Type used as a return type for validation results.
+
+@file main/sql/common/essentials/01-types/02-setup.sql';
+COMMENT
+COMMENT ON TABLE constants IS 'Table for database constants.
+
+@file main/sql/common/essentials/00-init/03-constants.sql';
+COMMENT
+COMMENT ON TABLE system.constants IS 'System table for constants used by the web application.
+
+@file main/sql/common/essentials/00-init/04-system-constants.sql';
+COMMENT
+COMMENT ON FUNCTION ae_constant(constant_key text) IS 'Function returning the value of a database constant.
+When the constant does not exist in the constants table, an exception is raised.
+
+@file main/sql/common/essentials/00-init/03-constants.sql';
+COMMENT
+COMMENT ON FUNCTION ae_get_srid() IS 'Function returning the default SRID value.
+
+@file main/sql/common/essentials/00-init/03-constants.sql';
+COMMENT
+COMMENT ON FUNCTION ae_get_calculator_grid_boundary_box() IS 'Function returning the bounding box for calculator, based on the CALCULATOR_GRID_BOUNDARY_BOX constant value.
+
+@file main/sql/common/essentials/00-init/03-constants.sql';
+COMMENT
+COMMENT ON FUNCTION system.ae_constant(constant_key text) IS 'Function returning the value of a database or web application constant.
+When the constant does not exist in the view system.constants_view, an exception is raised.
+
+@file main/sql/common/essentials/00-init/04-system-constants.sql';
+COMMENT
+COMMENT ON FUNCTION system.ae_set_constant(constant_key text, constant_value text) IS 'Function to change the value of a web application constant.
+When the constant does not yet exist in the system.constants table, an exception is raised.
+
+@file main/sql/common/essentials/00-init/04-system-constants.sql';
+COMMENT
+COMMENT ON FUNCTION system.ae_get_git_revision() IS 'Function returning the revision value, which is stored as a web application constant.
+
+@file main/sql/common/essentials/00-init/04-system-constants.sql';
+COMMENT
+COMMENT ON FUNCTION ae_protect_table() IS 'Simple trigger function to make a table readonly.
+Useful for ''abstract base tables''.
+
+@file main/sql/common/essentials/03-functions/01-general.sql';
+COMMENT
+COMMENT ON FUNCTION ae_raise_notice(message text) IS 'Function for showing report messages, mainly during a database build.
+This is a wrapper around the plpgsql notice function, so this can be called from normal SQL (outside a function).
+
+@file main/sql/common/essentials/03-functions/01-general.sql';
+COMMENT
+COMMENT ON FUNCTION ae_linear_interpolate(xb float, xe float, yb float, ye float, xi float) IS 'Linear interpolation function.
+
+xb, yb = Start point
+xe, ye = End point
+xi = the x value to interpolate the y value for.
+Expects a float for each value, and returns a float.
+
+@file main/sql/common/essentials/03-functions/01-general.sql';
+COMMENT
+COMMENT ON FUNCTION ae_linear_interpolate(xb integer, xe integer, yb real, ye real, xi integer) IS 'Linear interpolation function.
+
+xb, yb = Start point
+xe, ye = End point
+xi = the x value to interpolate the y value for.
+Expects integer values for xb,xe and xi.
+Expects real values for yb and ye.
+Returns a real value.
+
+@file main/sql/common/essentials/03-functions/01-general.sql';
+COMMENT
+COMMENT ON FUNCTION ae_array_index(anyarray, anyelement) IS 'Helper function which returns the index (of the first match) of anyelement in anyarray.
+
+@file main/sql/common/essentials/03-functions/01-general.sql';
+COMMENT
+COMMENT ON FUNCTION ae_abs_threshold(x real, threshold real) IS 'Helper function which returns the x value as an absolute value when it is above the threshold, otherwise returns NULL.
+
+@file main/sql/common/essentials/03-functions/01-general.sql';
+COMMENT
+COMMENT ON FUNCTION ae_percentile_sorted_array(sorted_array numeric[], percentile int) IS 'Function to calculate the percentile based on a sorted array.
+
+@file main/sql/common/essentials/03-functions/02-aggregate.sql';
+COMMENT
+COMMENT ON FUNCTION ae_percentile(unsorted_array numeric[], percentile int) IS 'Function to calculate the percentile based on an unsorted list.
+Remark: there is no aggregate version of this function due to very bad performance.
+
+@file main/sql/common/essentials/03-functions/02-aggregate.sql';
+COMMENT
+COMMENT ON FUNCTION ae_median(unsorted_array numeric[]) IS 'Function to calculate the median based on an unsorted list. Identical to 50% percentile.
+Remark: there is no aggregate version of this function due to very bad performance.
+
+@file main/sql/common/essentials/03-functions/02-aggregate.sql';
+COMMENT
+COMMENT ON FUNCTION ae_max_with_key_sfunc(state numeric[2], e1 numeric, e2 numeric) IS 'State function for ''ae_max_with_key''.
+
+@file main/sql/common/essentials/03-functions/02-aggregate.sql';
+COMMENT
+COMMENT ON FUNCTION ae_max_with_key_ffunc(state numeric[2]) IS 'Final function for ''ae_max_with_key''.
+This function is used to shape the endresult into the correct type.
+
+@file main/sql/common/essentials/03-functions/02-aggregate.sql';
+COMMENT
+COMMENT ON FUNCTION ae_weighted_avg_sfunc(state numeric[], value numeric, weight numeric) IS 'State function for the weighted average function ''ae_weighted_avg''.
+Collects the total of weighted values and the total of weights in an array with 2 values.
+
+@file main/sql/common/essentials/03-functions/02-aggregate.sql';
+COMMENT
+COMMENT ON FUNCTION ae_weighted_avg_ffunc(state numeric[]) IS 'Final function for the weighted average function ''ae_weighted_avg''.
+Divides the total of the weighted values by the total of the weights (which were collected in an array with 2 values).
+
+@file main/sql/common/essentials/03-functions/02-aggregate.sql';
+COMMENT
+COMMENT ON FUNCTION ae_distribute_enum_sfunc(state numeric[], key anyenum, weight numeric) IS 'State function for enum distribution function ''ae_distribute_enum''.
+Tracks an array with an element for each value in the enum, and sums the weight according to the supplied enum values.
+
+@file main/sql/common/essentials/03-functions/02-aggregate.sql';
+COMMENT
+COMMENT ON FUNCTION setup.ae_synchronize_all_serials() IS 'Function to synchronize serials/sequences.
+All functions with naming convention tablename_columnname_seq are set to the max value of that column in that table.
+
+Serials/sequences can get out of sync with the actual content of the database after bulk loads, COPY FROMs and INSERTs without defaults.
+This function makes sure sequences match the content once again.
+This is for instance used after a database build.
+
+@file main/sql/common/essentials/03-functions/03-build.sql';
+COMMENT
+COMMENT ON FUNCTION setup.ae_cluster_all_tables() IS 'Function to cluster all tables in the database based on their primary key.
+Once the constraint (in this case the primary key) has been set, in the future clustering can be done by using: CLUSTER databasname.
+
+@file main/sql/common/essentials/03-functions/03-build.sql';
+COMMENT
+COMMENT ON FUNCTION setup.ae_validate_all() IS 'Empty (default) ae_validate_all function.
+
+Called during build by ruby build script.
+Can be overwritten by each product to perform some actual validations.
+
+@file main/sql/common/essentials/03-functions/03-build.sql';
+COMMENT
+COMMENT ON FUNCTION setup.ae_list_unittest_functions(v_prefix text) IS 'Function that returns a list of all functions starting with the supplied prefix.
+Functions that are part of an extension or part of the PostgreSQL catalog are not returned.
+Returns the function name (including schema), the arguments and the return value of the function.
+
+@file main/sql/common/essentials/03-functions/03-build.sql';
+COMMENT
+COMMENT ON FUNCTION setup.ae_execute_unittest(v_function regproc) IS 'Function to execute the supplied (unit test) function.
+In case of an exception (which should be the case when an assert in the unit test fails), the exception is caught, parsed, and the exception message, line number and first context line number are all returned in a record.
+A unit test should fail on the first exception, so this function should never return more than 1 record.
+When no records are returned, the unit test was succesfull.
+
+@file main/sql/common/essentials/03-functions/03-build.sql';
+COMMENT
+COMMENT ON FUNCTION setup.ae_checksum_all(v_excluded_data_tables regclass[]) IS 'Function to generate checksums for all important database objects.
+In the case of tables, a separate checksum is made for the structure and the data.
+For the data checksums some tables can be skipped, for example when the content is dynamic and it does not make sense to check/compare checksums.
+
+The (sorted) result of the function can be saved to compare it with another database.
+For example after patching a production database, to check if it matches the last build.
+
+Catalog objects and objects of extensions like PostGIS are automatically filtered out.
+
+@param v_excluded_data_tables List of tables for which no data checksum should be generated.
+@return Per object type a name or description of the object, and the checksum of the definiton/data of that object
+
+@file main/sql/common/essentials/03-functions/03-build.sql';
+COMMENT
+COMMENT ON FUNCTION setup.ae_load_table(tablename regclass, filespec text, use_pretty_csv_format boolean) IS 'Function to copy the data of the supplied file to the supplied table.
+The file should contain tab-separated text without a header, or tab-separated text with a header when the optional parameter is set to true.
+
+@param tablename The table to copy to.
+@param filespec The file to copy from
+@param use_pretty_csv_format Optional parameter to specify if file contains a header (true) or not (false). Default false.
+
+@file main/sql/common/essentials/03-functions/04-load_store_data.sql';
+COMMENT
+COMMENT ON FUNCTION setup.ae_store_query(queryname text, sql_in text, filespec text, use_pretty_csv_format boolean) IS 'Function to store the results of the supplied query string to the supplied file.
+In the filename the parts {tablename} or {queryname} can be used, these will be replaced by the supplied queryname.
+Additionally, the part {datesuffix} can be used, which will be replaced with the current date in YYYYMMDD format.
+
+The export is tab-separated CSV.
+The optional parameter use_pretty_csv_format can be used to generate a file with (true) or without (false) a header.
+
+@param queryname The name of the query.
+@param sql_in The actual query string to export the results for.
+@param filespec The file to export to.
+@param use_pretty_csv_format Optional parameter to specify if file is generated with a header (true) or not (false). Default false.
+
+@file main/sql/common/essentials/03-functions/04-load_store_data.sql';
+COMMENT
+COMMENT ON FUNCTION setup.ae_store_table(tablename regclass, filespec text, ordered bool, use_pretty_csv_format boolean) IS 'Copies the data of the supplied table to the supplied file.
+In the filename the parts {tablename} or {queryname} can be used, these will be replaced by the supplied table name.
+Additionally, the part {datesuffix} can be used, which will be replaced with the current date in YYYYMMDD format.
+
+The export is tab-separated CSV.
+The optional parameter use_pretty_csv_format can be used to generate a file with (true) or without (false) a header. The default is false.
+
+@param tablename The name of the table to export.
+@param filespec The file to export to.
+@param ordered Optional parameter to indicate if export should be ordered or not. If true, the table is sorted by all columns, starting with the first column. Default false.
+@param use_pretty_csv_format Optional parameter to specify if file is generated with a header (true) or not (false). Default false.
+
+@file main/sql/common/essentials/03-functions/04-load_store_data.sql';
+COMMENT
+COMMENT ON FUNCTION ae_array_to_index(anyarray anyarray, anyelement anyelement) IS 'Index (starting by 1, standard postgres) of the first element in anyarray that is equal to anyelement.
+Returns NULL when anylement is not present in anyarray.
+
+@file main/sql/common/essentials/03-functions/05-type_conversion.sql';
+COMMENT
+COMMENT ON FUNCTION ae_enum_to_index(anyenum anyenum) IS 'Index (starting by 1, standard postgres) of anyenum in the type definition of it''s enum type.
+
+@file main/sql/common/essentials/03-functions/05-type_conversion.sql';
+COMMENT
+COMMENT ON FUNCTION ae_enum_by_index(anyenum anyenum, index integer) IS 'Anynum on index position (starting by 1, standard postgres) in the type definition of its enum type.
+Returns NULL when the index is invalid.
+
+@file main/sql/common/essentials/03-functions/05-type_conversion.sql';
+COMMENT
+COMMENT ON VIEW system.constants_view IS 'View containing the union of web application (system) and database (public) constants.
+
+@file main/sql/common/essentials/00-init/04-system-constants.sql';
+COMMENT
+COMMENT ON DOMAIN posint IS 'Integer value type which can only be positive or 0.
+Used for the diameter of a source for example.
+
+@file main/sql/common/essentials/01-types/01-general.sql';
+COMMENT
+COMMENT ON DOMAIN posreal IS 'Real (decimal) value type which can only be positive or 0.
+Used for depositions for example.
+
+@file main/sql/common/essentials/01-types/01-general.sql';
+COMMENT
+COMMENT ON DOMAIN fraction IS 'Real (decimal) value type between 0 and 1 (inclusive), specifying fractions.
+Used for the habitat coverage factor for example.
+
+@file main/sql/common/essentials/01-types/01-general.sql';
+COMMENT
+COMMENT ON DOMAIN year_type IS 'Small integer value type which can only be valid years (2000-2050 currently).
+Used for background years for example.
+
+@file main/sql/common/essentials/01-types/01-general.sql';
+COMMENT
+COMMENT ON AGGREGATE ae_max_with_key(numeric, numeric) IS 'Aggregate function to determine the maximum value in a list of key-values, returning both the key and the value.
+Input consists of 2 numeric arguments, first should be the key, second should be the value.
+Output is of the type ae_key_value_rs (which also consists of a numeric key and numeric value).
+
+@file main/sql/common/essentials/03-functions/02-aggregate.sql';
+COMMENT
+COMMENT ON AGGREGATE ae_weighted_avg(numeric, numeric) IS 'Aggregate function to determine a weighted average.
+First parameter is the value, second parameter is the weight.
+NULL values are skipped, and if there are no non-NULL values, NULL will be returned.
+
+@file main/sql/common/essentials/03-functions/02-aggregate.sql';
+COMMENT
+COMMENT ON AGGREGATE ae_distribute_enum(anyenum, numeric) IS 'Aggregate function to count the occurrence of values in an enum, weighted if need be.
+First parameter is an enum value, second parameter is the weight which should be summed for that enum value.
+As an example, the weight can be 1 to count the number of occurrences of each enum value, or a ''surface'' column to sum the surface per enum value.
+The return value is an array with as many elements as there are values in the enum, in same order as the enum is defined.
+Each element consists of the summed value for each respective enum value.
+NULL values are skipped, and if there are no non-NULL values, NULL will be returned.
+
+@file main/sql/common/essentials/03-functions/02-aggregate.sql';
+COMMENT

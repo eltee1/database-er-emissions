@@ -1,0 +1,36 @@
+[11-03-2025 10:03:58] Database name = er-emissions_test_structure
+[11-03-2025 10:03:58] Dropping database er-emissions_test_structure if it exists...
+[11-03-2025 10:03:58] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "postgres" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_external_sql_command.tmp" --echo-all
+[11-03-2025 10:03:59] Creating database er-emissions_test_structure...
+[11-03-2025 10:03:59] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "postgres" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_external_sql_command.tmp" --echo-all
+[11-03-2025 10:03:59] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:03:59] Importing all SQL from 'C:/git/database-er-emissions/source/er-emissions/src/main/sql/'...
+[11-03-2025 10:03:59] FILE: C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/01-extensions.sql
+[11-03-2025 10:03:59] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:04:00] FILE: C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/02-schemas.sql
+[11-03-2025 10:04:00] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:04:00] FILE: C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/03-constants.sql
+[11-03-2025 10:04:00] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:04:00] FILE: C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/04-system-constants.sql
+[11-03-2025 10:04:00] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:04:00] FILE: C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/01-general.sql
+[11-03-2025 10:04:00] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:04:00] FILE: C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/02-setup.sql
+[11-03-2025 10:04:00] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:04:00] FILE: C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/01-general.sql
+[11-03-2025 10:04:00] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:04:01] FILE: C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/02-aggregate.sql
+[11-03-2025 10:04:01] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:04:01] FILE: C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/03-build.sql
+[11-03-2025 10:04:01] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:04:01] FILE: C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/04-load_store_data.sql
+[11-03-2025 10:04:01] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:04:01] FILE: C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/05-type_conversion.sql
+[11-03-2025 10:04:01] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:04:01] Scanning for comments in 'C:/git/database-er-emissions/source/er-emissions/src/main/sql/'...
+[11-03-2025 10:04:01] Updating comments in er-emissions_test_structure...
+[11-03-2025 10:04:01] CMD: "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "er-emissions_test_structure" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[11-03-2025 10:04:01] Deleting C:/git/database-er-emissions/source/er-emissions/target/temp/...
+[11-03-2025 10:04:01] 
+[11-03-2025 10:04:01] Build completed at 11-03-2025 10:04:01 (3s)
+====================================================================================================
