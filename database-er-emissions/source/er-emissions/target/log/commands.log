@@ -1,34 +1,34 @@
 
 
 **************************************************
-[14-03-2025 09:20:18] 
+[14-03-2025 14:51:29] 
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "postgres" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_external_sql_command.tmp" --echo-all
 **************************************************
-DROP DATABASE IF EXISTS "AERIUS-er-emissions-fa7b481"
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_external_sql_command.tmp:1: NOTICE:  database "AERIUS-er-emissions-fa7b481" does not exist, skipping
+DROP DATABASE IF EXISTS "AERIUS-er-emissions-4a97531"
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_external_sql_command.tmp:1: NOTICE:  database "AERIUS-er-emissions-4a97531" does not exist, skipping
 DROP DATABASE
 
 
 **************************************************
-[14-03-2025 09:20:18] 
+[14-03-2025 14:51:29] 
 "D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "postgres" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_external_sql_command.tmp" --echo-all
 **************************************************
-CREATE DATABASE "AERIUS-er-emissions-fa7b481" WITH TEMPLATE "template0"
+CREATE DATABASE "AERIUS-er-emissions-4a97531" WITH TEMPLATE "template0"
 CREATE DATABASE
 
 
 **************************************************
-[14-03-2025 09:20:18] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:30] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
-COMMENT ON DATABASE "AERIUS-er-emissions-fa7b481" IS 'fa7b481
-Database created on: Friday 14 March 2025 09:20'
+COMMENT ON DATABASE "AERIUS-er-emissions-4a97531" IS '4a97531
+Database created on: Friday 14 March 2025 14:51'
 COMMENT
 
 
 **************************************************
-[14-03-2025 09:20:18] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/01-extensions.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:30] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/01-extensions.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/01-extensions.sql -- -- --
@@ -39,8 +39,8 @@ CREATE EXTENSION
 
 
 **************************************************
-[14-03-2025 09:20:19] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/02-schemas.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:30] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/02-schemas.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/02-schemas.sql -- -- --
@@ -71,8 +71,8 @@ CREATE SCHEMA
 
 
 **************************************************
-[14-03-2025 09:20:19] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/03-constants.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:30] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/03-constants.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/03-constants.sql -- -- --
@@ -157,8 +157,8 @@ CREATE FUNCTION
 
 
 **************************************************
-[14-03-2025 09:20:19] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/04-system-constants.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:31] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/04-system-constants.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/00-init/04-system-constants.sql -- -- --
@@ -258,8 +258,8 @@ CREATE FUNCTION
 
 
 **************************************************
-[14-03-2025 09:20:19] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/01-general.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:31] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/01-general.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/01-general.sql -- -- --
@@ -339,8 +339,8 @@ CREATE TYPE
 
 
 **************************************************
-[14-03-2025 09:20:20] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/02-setup.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:31] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/02-setup.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/01-types/02-setup.sql -- -- --
@@ -370,8 +370,8 @@ CREATE TYPE
 
 
 **************************************************
-[14-03-2025 09:20:20] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/02-tables/01-general.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:31] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/02-tables/01-general.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/02-tables/01-general.sql -- -- --
@@ -395,8 +395,8 @@ CREATE TABLE
 
 
 **************************************************
-[14-03-2025 09:20:20] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/01-general.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:31] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/01-general.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/01-general.sql -- -- --
@@ -562,8 +562,8 @@ CREATE FUNCTION
 
 
 **************************************************
-[14-03-2025 09:20:20] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/02-aggregate.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:31] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/02-aggregate.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/02-aggregate.sql -- -- --
@@ -790,8 +790,8 @@ CREATE AGGREGATE
 
 
 **************************************************
-[14-03-2025 09:20:20] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/03-build.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:31] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/03-build.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/03-build.sql -- -- --
@@ -1186,8 +1186,8 @@ CREATE FUNCTION
 
 
 **************************************************
-[14-03-2025 09:20:20] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/04-load_store_data.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:31] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/04-load_store_data.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/04-load_store_data.sql -- -- --
@@ -1357,8 +1357,8 @@ CREATE FUNCTION
 
 
 **************************************************
-[14-03-2025 09:20:20] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/05-type_conversion.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:32] C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/05-type_conversion.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/common/essentials/03-functions/05-type_conversion.sql -- -- --
@@ -1411,8 +1411,8 @@ CREATE FUNCTION
 
 
 **************************************************
-[14-03-2025 09:20:20] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/01-general.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:32] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/01-general.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/01-general.sql -- -- --
@@ -1543,8 +1543,8 @@ CREATE TABLE
 
 
 **************************************************
-[14-03-2025 09:20:21] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:32] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/02-er_emissions.sql -- -- --
@@ -1724,8 +1724,8 @@ CREATE TABLE
 
 
 **************************************************
-[14-03-2025 09:20:21] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/03-scale_factors.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:32] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/03-scale_factors.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/03-scale_factors.sql -- -- --
@@ -1754,8 +1754,8 @@ CREATE TABLE
 
 
 **************************************************
-[14-03-2025 09:20:21] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/04-gcn_sector_source_characteristics.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:32] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/04-gcn_sector_source_characteristics.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/04-gcn_sector_source_characteristics.sql -- -- --
@@ -1795,8 +1795,8 @@ CREATE TABLE
 
 
 **************************************************
-[14-03-2025 09:20:21] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/05-spatial.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:32] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/05-spatial.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/01-tables/05-spatial.sql -- -- --
@@ -2060,8 +2060,8 @@ CREATE TABLE
 
 
 **************************************************
-[14-03-2025 09:20:21] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/02-views/01-general.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:32] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/02-views/01-general.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/02-views/01-general.sql -- -- --
@@ -2156,8 +2156,8 @@ CREATE VIEW
 
 
 **************************************************
-[14-03-2025 09:20:21] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/02-views/02-report.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:33] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/02-views/02-report.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/02-views/02-report.sql -- -- --
@@ -2445,8 +2445,62 @@ CREATE VIEW
 
 
 **************************************************
-[14-03-2025 09:20:22] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:33] C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/03-functions/01-general.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/main/sql/er-emissions/10-public/03-functions/01-general.sql -- -- --
+
+/*
+ * checksum_table
+ * --------------
+ * Functie die een checksum-waarde retourneert voor een gegeven table_name. 
+ * Wordt gebruikt door system.fill_metadata_checksum, om tabellen op inhoud en structuur te kunnen vergelijk tussen databases op verschillende locaties.
+ * @param v_table De tabelnaam waarvan de checksum moet worden gegenereerd.
+ */
+CREATE OR REPLACE FUNCTION system.checksum_table(v_table text)
+	RETURNS SETOF bigint AS
+$BODY$
+BEGIN
+	RETURN QUERY EXECUTE
+		format('SELECT COALESCE(SUM(hashtext((checksum_table.*)::text)), 0)::bigint AS checksum FROM %I AS checksum_table', v_table);
+END;
+	
+$BODY$
+LANGUAGE plpgsql IMMUTABLE;
+CREATE FUNCTION
+
+
+/*
+ * fill_metadata_checksum
+ * ----------------------
+ * Functie die de checksum_hash- kolomn in de metadata-tabel vult aan de hand van de corresponderende table_name kolom, met de waarde zoals gegeven door de functie system.checksum_table.
+ */
+CREATE OR REPLACE FUNCTION system.fill_metadata_checksum()
+	RETURNS VOID AS
+$BODY$
+DECLARE
+	v_table text;
+	v_checksum bigint;
+BEGIN
+	FOR v_table IN 
+		SELECT table_name FROM metadata
+	LOOP
+		v_checksum:= system.checksum_table(v_table);
+		
+		UPDATE metadata SET checksum_hash = v_checksum 
+			WHERE table_name = v_table;
+	END LOOP;
+
+END;
+$BODY$
+	LANGUAGE plpgsql volatile;
+CREATE FUNCTION
+
+
+**************************************************
+[14-03-2025 14:51:33] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 COMMENT ON SCHEMA setup IS 'The setup schema contains basic tables, queries and functions to create derived AERIUS tables.
 In the setup schema, several (derived) intermediate tables are created for performance reasons.
@@ -2787,6 +2841,16 @@ Returns NULL when the index is invalid.
 
 @file main/sql/common/essentials/03-functions/05-type_conversion.sql';
 COMMENT
+COMMENT ON FUNCTION system.checksum_table(v_table text) IS 'Functie die een checksum-waarde retourneert voor een gegeven table_name.
+Wordt gebruikt door system.fill_metadata_checksum, om tabellen op inhoud en structuur te kunnen vergelijk tussen databases op verschillende locaties.
+@param v_table De tabelnaam waarvan de checksum moet worden gegenereerd.
+
+@file main/sql/er-emissions/10-public/03-functions/01-general.sql';
+COMMENT
+COMMENT ON FUNCTION system.fill_metadata_checksum() IS 'Functie die de checksum_hash- kolomn in de metadata-tabel vult aan de hand van de corresponderende table_name kolom, met de waarde zoals gegeven door de functie system.checksum_table.
+
+@file main/sql/er-emissions/10-public/03-functions/01-general.sql';
+COMMENT
 COMMENT ON VIEW system.constants_view IS 'View containing the union of web application (system) and database (public) constants.
 
 @file main/sql/common/essentials/00-init/04-system-constants.sql';
@@ -2865,72 +2929,72 @@ COMMENT
 
 
 **************************************************
-[14-03-2025 09:20:22] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:33] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
-INSERT INTO "system".constants(key, value) VALUES ('CURRENT_DATABASE_NAME', 'AERIUS-er-emissions-fa7b481')
+INSERT INTO "system".constants(key, value) VALUES ('CURRENT_DATABASE_NAME', 'AERIUS-er-emissions-4a97531')
 INSERT 0 1
 
 
 **************************************************
-[14-03-2025 09:20:22] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:33] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
-INSERT INTO "system".constants(key, value) VALUES ('CURRENT_DATABASE_VERSION', 'fa7b481')
+INSERT INTO "system".constants(key, value) VALUES ('CURRENT_DATABASE_VERSION', '4a97531')
 INSERT 0 1
 
 
 **************************************************
-[14-03-2025 09:20:22] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:33] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 INSERT INTO "system".constants(key, value) VALUES ('CURRENT_DATABASE_PRODUCT', 'er-emissions')
 INSERT 0 1
 
 
 **************************************************
-[14-03-2025 09:20:22] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:33] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
-INSERT INTO "system".constants(key, value) VALUES ('CURRENT_GIT_REVISION', 'fa7b481')
+INSERT INTO "system".constants(key, value) VALUES ('CURRENT_GIT_REVISION', '4a97531')
 INSERT 0 1
 
 
 **************************************************
-[14-03-2025 09:20:22] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:33] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
-INSERT INTO "system".constants(key, value) VALUES ('CURRENT_DATABASE_BUILD_DATE', '14-03-2025 09:20:22')
+INSERT INTO "system".constants(key, value) VALUES ('CURRENT_DATABASE_BUILD_DATE', '14-03-2025 14:51:33')
 INSERT 0 1
 
 
 **************************************************
-[14-03-2025 09:20:22] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:33] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 INSERT INTO "system".constants(key, value) VALUES ('CURRENT_DATABASE_BUILD_USER', 'luitvm')
 INSERT 0 1
 
 
 **************************************************
-[14-03-2025 09:20:22] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:34] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 INSERT INTO "system".constants(key, value) VALUES ('CURRENT_DATABASE_BUILD_NODE', 'PC190633.int.ssc-campus.nl')
 INSERT 0 1
 
 
 **************************************************
-[14-03-2025 09:20:23] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:34] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 INSERT INTO "system".constants(key, value) VALUES ('CURRENT_DATABASE_BUILD_VERSION', '1.4-SNAPSHOT')
 INSERT 0 1
 
 
 **************************************************
-[14-03-2025 09:20:23] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:34] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 SELECT system.cluster_all_tables()
 psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:1: NOTICE:  CLUSTER binnenvaart USING binnenvaart_key
@@ -2976,8 +3040,8 @@ psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_co
 
 
 **************************************************
-[14-03-2025 09:20:23] C:/git/database-er-emissions/source/er-emissions/src/data/sql/er-emissions/er-emissions.sql
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:34] C:/git/database-er-emissions/source/er-emissions/src/data/sql/er-emissions/er-emissions.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
 
 -- -- -- C:/git/database-er-emissions/source/er-emissions/src/data/sql/er-emissions/er-emissions.sql -- -- --
@@ -2987,9 +3051,9 @@ psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_co
 --sectors
 BEGIN; SELECT system.load_table('sectors', 'C:/dbdata/er-emissions/sectors_export-m25-er-verdeling.txt', TRUE, TRUE); COMMIT;
 BEGIN
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:7: NOTICE:  COPY sectors FROM 'C:/dbdata/er-emissions/sectors_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Starting @ Fri Mar 14 09:20:23.746218 2025 CET
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:7: NOTICE:  COPY sectors FROM 'C:/dbdata/er-emissions/sectors_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Done @ Fri Mar 14 09:20:23.747861 2025 CET
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:7: NOTICE:  COPY sectors FROM 'C:/dbdata/er-emissions/sectors_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Insert new or update existing imported file in metadata table @ Fri Mar 14 09:20:23.747949 2025 CET
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:7: NOTICE:  COPY sectors FROM 'C:/dbdata/er-emissions/sectors_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Starting @ Fri Mar 14 14:51:34.835851 2025 CET
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:7: NOTICE:  COPY sectors FROM 'C:/dbdata/er-emissions/sectors_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Done @ Fri Mar 14 14:51:34.837465 2025 CET
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:7: NOTICE:  COPY sectors FROM 'C:/dbdata/er-emissions/sectors_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Insert new or update existing imported file in metadata table @ Fri Mar 14 14:51:34.837542 2025 CET
  load_table 
 ------------
  
@@ -2998,9 +3062,9 @@ psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_co
 COMMIT
 BEGIN; SELECT system.load_table('gcn_sectors', 'C:/dbdata/er-emissions/gcn_sectors_export-m25-er-verdeling.txt', TRUE, TRUE); COMMIT;
 BEGIN
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:8: NOTICE:  COPY gcn_sectors FROM 'C:/dbdata/er-emissions/gcn_sectors_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Starting @ Fri Mar 14 09:20:23.750834 2025 CET
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:8: NOTICE:  COPY gcn_sectors FROM 'C:/dbdata/er-emissions/gcn_sectors_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Done @ Fri Mar 14 09:20:23.753892 2025 CET
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:8: NOTICE:  COPY gcn_sectors FROM 'C:/dbdata/er-emissions/gcn_sectors_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Insert new or update existing imported file in metadata table @ Fri Mar 14 09:20:23.753935 2025 CET
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:8: NOTICE:  COPY gcn_sectors FROM 'C:/dbdata/er-emissions/gcn_sectors_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Starting @ Fri Mar 14 14:51:34.840042 2025 CET
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:8: NOTICE:  COPY gcn_sectors FROM 'C:/dbdata/er-emissions/gcn_sectors_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Done @ Fri Mar 14 14:51:34.842946 2025 CET
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:8: NOTICE:  COPY gcn_sectors FROM 'C:/dbdata/er-emissions/gcn_sectors_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Insert new or update existing imported file in metadata table @ Fri Mar 14 14:51:34.842987 2025 CET
  load_table 
 ------------
  
@@ -3009,9 +3073,9 @@ psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_co
 COMMIT
 BEGIN; SELECT system.load_table('sectorgroups', 'C:/dbdata/er-emissions/sectorgroups_export-m25-er-verdeling.txt', TRUE, TRUE); COMMIT;
 BEGIN
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:9: NOTICE:  COPY sectorgroups FROM 'C:/dbdata/er-emissions/sectorgroups_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Starting @ Fri Mar 14 09:20:23.754768 2025 CET
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:9: NOTICE:  COPY sectorgroups FROM 'C:/dbdata/er-emissions/sectorgroups_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Done @ Fri Mar 14 09:20:23.755956 2025 CET
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:9: NOTICE:  COPY sectorgroups FROM 'C:/dbdata/er-emissions/sectorgroups_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Insert new or update existing imported file in metadata table @ Fri Mar 14 09:20:23.755998 2025 CET
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:9: NOTICE:  COPY sectorgroups FROM 'C:/dbdata/er-emissions/sectorgroups_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Starting @ Fri Mar 14 14:51:34.843834 2025 CET
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:9: NOTICE:  COPY sectorgroups FROM 'C:/dbdata/er-emissions/sectorgroups_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Done @ Fri Mar 14 14:51:34.844952 2025 CET
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:9: NOTICE:  COPY sectorgroups FROM 'C:/dbdata/er-emissions/sectorgroups_export-m25-er-verdeling.txt' DELIMITER '	' CSV HEADER Insert new or update existing imported file in metadata table @ Fri Mar 14 14:51:34.844993 2025 CET
  load_table 
 ------------
  
@@ -3020,9 +3084,9 @@ psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_co
 COMMIT
 BEGIN; SELECT system.load_table('pbl_sectors', 'C:/dbdata/er-emissions/pbl_sectors_20241025.txt', TRUE, TRUE); COMMIT;
 BEGIN
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:10: NOTICE:  COPY pbl_sectors FROM 'C:/dbdata/er-emissions/pbl_sectors_20241025.txt' DELIMITER '	' CSV HEADER Starting @ Fri Mar 14 09:20:23.756749 2025 CET
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:10: NOTICE:  COPY pbl_sectors FROM 'C:/dbdata/er-emissions/pbl_sectors_20241025.txt' DELIMITER '	' CSV HEADER Done @ Fri Mar 14 09:20:23.758994 2025 CET
-psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:10: NOTICE:  COPY pbl_sectors FROM 'C:/dbdata/er-emissions/pbl_sectors_20241025.txt' DELIMITER '	' CSV HEADER Insert new or update existing imported file in metadata table @ Fri Mar 14 09:20:23.759036 2025 CET
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:10: NOTICE:  COPY pbl_sectors FROM 'C:/dbdata/er-emissions/pbl_sectors_20241025.txt' DELIMITER '	' CSV HEADER Starting @ Fri Mar 14 14:51:34.845764 2025 CET
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:10: NOTICE:  COPY pbl_sectors FROM 'C:/dbdata/er-emissions/pbl_sectors_20241025.txt' DELIMITER '	' CSV HEADER Done @ Fri Mar 14 14:51:34.847942 2025 CET
+psql:C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp:10: NOTICE:  COPY pbl_sectors FROM 'C:/dbdata/er-emissions/pbl_sectors_20241025.txt' DELIMITER '	' CSV HEADER Insert new or update existing imported file in metadata table @ Fri Mar 14 14:51:34.847984 2025 CET
  load_table 
 ------------
  
@@ -3032,8 +3096,24 @@ COMMIT
 
 
 **************************************************
-[14-03-2025 09:20:23] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --tuples-only --expanded
+[14-03-2025 14:51:34] C:/git/database-er-emissions/source/er-emissions/src/data/sql/er-emissions/checksum.sql
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+**************************************************
+
+-- -- -- C:/git/database-er-emissions/source/er-emissions/src/data/sql/er-emissions/checksum.sql -- -- --
+
+--vul de checksum_hash kolommen voor alle tabelnamen in de tabel metadata
+SELECT * FROM system.fill_metadata_checksum();
+ fill_metadata_checksum 
+------------------------
+ 
+(1 row)
+
+
+
+**************************************************
+[14-03-2025 14:51:35] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --tuples-only --expanded
 **************************************************
 Output:
 schema | public
@@ -3048,8 +3128,8 @@ Exit code: 0
 
 
 **************************************************
-[14-03-2025 09:20:24] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --tuples-only --expanded
+[14-03-2025 14:51:35] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --tuples-only --expanded
 **************************************************
 Output:
 relkind             | r
@@ -3058,8 +3138,8 @@ identifier_noschema | constants
 schema              | public
 columns             | key#text,value#text,description#text,type#constant_type
 class_oid           | 1259
-object_oid          | 2683625
-dependencies        | 1247,2683614
+object_oid          | 2685409
+dependencies        | 1247,2685398
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | system.constants
@@ -3067,8 +3147,8 @@ identifier_noschema | constants
 schema              | system
 columns             | key#text,value#text,description#text,type#constant_type
 class_oid           | 1259
-object_oid          | 2683635
-dependencies        | 1247,2683614
+object_oid          | 2685419
+dependencies        | 1247,2685398
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | v
 identifier          | system.constants_view
@@ -3076,8 +3156,8 @@ identifier_noschema | constants_view
 schema              | system
 columns             | key#text,value#text,description#text,type#constant_type
 class_oid           | 1259
-object_oid          | 2683642
-dependencies        | 1247,2683614#1259,2683625#1259,2683635
+object_oid          | 2685426
+dependencies        | 1247,2685398#1259,2685409#1259,2685419
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | metadata
@@ -3085,7 +3165,7 @@ identifier_noschema | metadata
 schema              | public
 columns             | table_name#text,filename#text,timestamp#text,remarks#text,checksum_hash#bigint
 class_oid           | 1259
-object_oid          | 2683707
+object_oid          | 2685472
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3094,7 +3174,7 @@ identifier_noschema | scenarios
 schema              | public
 columns             | scenario_id#integer,scenario_naam#text,omschrijving#text
 class_oid           | 1259
-object_oid          | 2683746
+object_oid          | 2685529
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3103,8 +3183,8 @@ identifier_noschema | years
 schema              | public
 columns             | year#integer,year_category#year_category_type,scenario_id#integer
 class_oid           | 1259
-object_oid          | 2683753
-dependencies        | 1247,2683662#1259,2683746
+object_oid          | 2685536
+dependencies        | 1247,2685446#1259,2685529
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | sectors
@@ -3112,7 +3192,7 @@ identifier_noschema | sectors
 schema              | public
 columns             | sector_id#integer,description#text
 class_oid           | 1259
-object_oid          | 2683763
+object_oid          | 2685546
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3121,8 +3201,8 @@ identifier_noschema | gcn_sectors
 schema              | public
 columns             | gcn_sector_id#integer,sector_id#integer,description#text
 class_oid           | 1259
-object_oid          | 2683770
-dependencies        | 1259,2683763
+object_oid          | 2685553
+dependencies        | 1259,2685546
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | sectorgroups
@@ -3130,7 +3210,7 @@ identifier_noschema | sectorgroups
 schema              | public
 columns             | sector_id#integer,sectorgroup#text
 class_oid           | 1259
-object_oid          | 2683782
+object_oid          | 2685565
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3139,8 +3219,8 @@ identifier_noschema | pbl_sectors
 schema              | public
 columns             | gcn_sector_id#integer,pbl_sector#text
 class_oid           | 1259
-object_oid          | 2683789
-dependencies        | 1259,2683770
+object_oid          | 2685572
+dependencies        | 1259,2685553
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | substances
@@ -3148,7 +3228,7 @@ identifier_noschema | substances
 schema              | public
 columns             | substance_id#smallint,substance_name#text,er_stof_code#text,er_stof_naam#text,gcn_stof_code#text
 class_oid           | 1259
-object_oid          | 2683801
+object_oid          | 2685585
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3157,7 +3237,7 @@ identifier_noschema | dataset
 schema              | public
 columns             | dataset_id#integer,dataset_omschrijving#text,datum_levering#date
 class_oid           | 1259
-object_oid          | 2683808
+object_oid          | 2685592
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3166,7 +3246,7 @@ identifier_noschema | er_emissie_nationaal_erc
 schema              | public
 columns             | dataset_id#integer,emissiejaar#integer,er_stof_code#text,er_indeling_code#text,ind_erc#text,emissie_kg#double precision
 class_oid           | 1259
-object_oid          | 2683815
+object_oid          | 2685599
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3175,7 +3255,7 @@ identifier_noschema | er_emissie_nationaal_eri
 schema              | public
 columns             | dataset_id#integer,emissiejaar#integer,er_stof_code#text,er_indeling_code#text,ind_erc#text,emissie_kg#double precision
 class_oid           | 1259
-object_oid          | 2683822
+object_oid          | 2685606
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3184,7 +3264,7 @@ identifier_noschema | er_emissie_per_emissieoorzaak
 schema              | public
 columns             | dataset_id#integer,er_indeling_naam#text,emissiejaar#integer,emissieoorzaak_code#text,proces_omschrijving#text,er_indeling_code#text,er_stof_code#text,emissie_kg#double precision
 class_oid           | 1259
-object_oid          | 2683829
+object_oid          | 2685613
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3193,8 +3273,8 @@ identifier_noschema | emissieoorzaken
 schema              | public
 columns             | emissieoorzaak_code#text,proces_omschrijving#text,gcn_sector_id#integer,dataset_id#integer
 class_oid           | 1259
-object_oid          | 2683836
-dependencies        | 1259,2683770
+object_oid          | 2685620
+dependencies        | 1259,2685553
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | er_emissie_vierkanten
@@ -3202,8 +3282,8 @@ identifier_noschema | er_emissie_vierkanten
 schema              | public
 columns             | tle_id#integer,ai_code#text,emissiejaar#integer,gcn_sector_id#integer,er_stof_code#text,emissie_kg#double precision
 class_oid           | 1259
-object_oid          | 2683848
-dependencies        | 1259,2683770
+object_oid          | 2685632
+dependencies        | 1259,2685553
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | er_emissie_verfijnd
@@ -3211,8 +3291,8 @@ identifier_noschema | er_emissie_verfijnd
 schema              | public
 columns             | tle_id#integer,ai_code#text,emissiejaar#integer,gcn_sector_id#integer,er_stof_code#text,emissie_kg#double precision
 class_oid           | 1259
-object_oid          | 2683860
-dependencies        | 1259,2683770
+object_oid          | 2685644
+dependencies        | 1259,2685553
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | er_emissie_individueel
@@ -3220,8 +3300,8 @@ identifier_noschema | er_emissie_individueel
 schema              | public
 columns             | tle_id#integer,ai_code#text,emissiejaar#integer,gcn_sector_id#integer,er_stof_code#text,emissie_kg#double precision
 class_oid           | 1259
-object_oid          | 2683874
-dependencies        | 1259,2683770
+object_oid          | 2685658
+dependencies        | 1259,2685553
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | er_emissie_vliegvelden
@@ -3229,8 +3309,8 @@ identifier_noschema | er_emissie_vliegvelden
 schema              | public
 columns             | tle_id#integer,ai_code#text,emissiejaar#integer,gcn_sector_id#integer,er_stof_code#text,emissie_kg#double precision
 class_oid           | 1259
-object_oid          | 2683886
-dependencies        | 1259,2683770
+object_oid          | 2685670
+dependencies        | 1259,2685553
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | emissie_totalen
@@ -3238,8 +3318,8 @@ identifier_noschema | emissie_totalen
 schema              | public
 columns             | dataset_id#integer,gcn_sector_id#integer,substance_id#integer,jaar#integer,emissie_kg#double precision
 class_oid           | 1259
-object_oid          | 2683898
-dependencies        | 1259,2683770#1259,2683801#1259,2683808
+object_oid          | 2685682
+dependencies        | 1259,2685553#1259,2685585#1259,2685592
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | scale_factors
@@ -3247,8 +3327,8 @@ identifier_noschema | scale_factors
 schema              | public
 columns             | year_from#year_type,year_to#year_type,gcn_sector_id#integer,substance_id#integer,emissie_from#double precision,emissie_to#double precision,scale_factor#double precision,scenario_id#integer
 class_oid           | 1259
-object_oid          | 2683918
-dependencies        | 1247,2683659#1259,2683746#1259,2683770#1259,2683801
+object_oid          | 2685702
+dependencies        | 1247,2685443#1259,2685529#1259,2685553#1259,2685585
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | gcn_sector_source_characteristics
@@ -3256,8 +3336,8 @@ identifier_noschema | gcn_sector_source_characteristics
 schema              | public
 columns             | gcn_sector_id#integer,substance_id#smallint,heat_content#real,height#real,spread#real,emission_diurnal_variation_id#integer,particle_size_distribution#integer
 class_oid           | 1259
-object_oid          | 2683938
-dependencies        | 1259,2683770#1259,2683801
+object_oid          | 2685722
+dependencies        | 1259,2685553#1259,2685585
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
 identifier          | emission_diurnal_variations
@@ -3265,7 +3345,7 @@ identifier_noschema | emission_diurnal_variations
 schema              | public
 columns             | emission_diurnal_variation_id#integer,code#text,name#text,description#text
 class_oid           | 1259
-object_oid          | 2683953
+object_oid          | 2685737
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3274,7 +3354,7 @@ identifier_noschema | geo_vierkanten
 schema              | public
 columns             | tle_id#integer,ai_code#text,r_m#integer,geometry#geometry
 class_oid           | 1259
-object_oid          | 2683960
+object_oid          | 2685744
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3283,7 +3363,7 @@ identifier_noschema | geo_verfijnd
 schema              | public
 columns             | tle_id#integer,ai_code#text,geometry#geometry
 class_oid           | 1259
-object_oid          | 2683967
+object_oid          | 2685751
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3292,7 +3372,7 @@ identifier_noschema | geo_eri
 schema              | public
 columns             | tle_id#integer,ai_code#text,emissiebrontype#text,nic_naam#text,emissiepunt_naam#text,nic#text,volgnummer#integer,xmidden#integer,ymidden#integer,hoogte#integer,lengte#integer,breedte#integer,hoek#double precision,beginjaar#integer,eindjaar#integer,uitstroomopening_m2#integer,geometry#geometry
 class_oid           | 1259
-object_oid          | 2683976
+object_oid          | 2685760
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3301,7 +3381,7 @@ identifier_noschema | geo_vliegvelden
 schema              | public
 columns             | tle_id#integer,ai_code#text,naam#text,nic#text,volgnummer#integer,soort#text,lengte#integer,breedte#integer,hoogte#integer,xmidden#integer,ymidden#integer,geometry#geometry
 class_oid           | 1259
-object_oid          | 2683983
+object_oid          | 2685767
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3310,7 +3390,7 @@ identifier_noschema | verfijning_type
 schema              | public
 columns             | tle_id#integer,geo_layer#text,geo_fclass_er#text,geo_set_type#text,levering#text
 class_oid           | 1259
-object_oid          | 2683990
+object_oid          | 2685774
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3319,7 +3399,7 @@ identifier_noschema | wegen
 schema              | public
 columns             | tle_id#integer,ai_code#text,nummer#integer,vak#text,naam#text,soort#text,shape_length#double precision,geometry#geometry
 class_oid           | 1259
-object_oid          | 2683995
+object_oid          | 2685779
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3328,7 +3408,7 @@ identifier_noschema | giab
 schema              | public
 columns             | tle_id#integer,ai_code#text,xco#integer,yco#integer,relnr#integer,giabnr#integer,nge#integer,ubn#bigint,relnr_pch_lbt_pch_nw_ubn_rav#text,so#double precision,giabstatus#text,geometry#geometry
 class_oid           | 1259
-object_oid          | 2684002
+object_oid          | 2685786
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3337,7 +3417,7 @@ identifier_noschema | initiator
 schema              | public
 columns             | tle_id#integer,ai_code#text,zone_12_mijl#text,r_m#integer,geometry#geometry
 class_oid           | 1259
-object_oid          | 2684009
+object_oid          | 2685793
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3346,7 +3426,7 @@ identifier_noschema | mestverwerkers
 schema              | public
 columns             | tle_id#integer,ai_code#text,nummer#integer,vnr#integer,naam#text,type#text,adres#text,huisnr#text,huisnr_toev#text,postcode#text,plaats#text,aantal_werknemers#double precision,opname_instantie#text,code_instantie#text,sbi_code#text,geometry#geometry
 class_oid           | 1259
-object_oid          | 2684016
+object_oid          | 2685800
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3355,7 +3435,7 @@ identifier_noschema | spoorwegen
 schema              | public
 columns             | tle_id#integer,ai_code#text,shape_length#double precision,geometry#geometry
 class_oid           | 1259
-object_oid          | 2684023
+object_oid          | 2685807
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3364,7 +3444,7 @@ identifier_noschema | binnenvaart
 schema              | public
 columns             | tle_id#integer,ai_code#text,vaarweg_id#integer,vaarwegnaam#text,shape_length#double precision,geometry#geometry
 class_oid           | 1259
-object_oid          | 2684030
+object_oid          | 2685814
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | r
@@ -3373,7 +3453,7 @@ identifier_noschema | recreatievaart
 schema              | public
 columns             | tle_id#integer,ai_code#text,vwk_id#integer,vrt_id#integer,vwg_nr#integer,richting#text,vaktype#text,vaklengte#double precision,shape_length#double precision,vwv_naam#text,geometry#geometry
 class_oid           | 1259
-object_oid          | 2684037
+object_oid          | 2685821
 dependencies        | 
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | v
@@ -3382,8 +3462,8 @@ identifier_noschema | verfijnde_emissies_geregionaliseerd_view
 schema              | public
 columns             | tle_id#integer,ai_code#text,substance_id#smallint,gcn_stof_code#text,er_stof_code#text,gcn_sector_id#integer,emissiejaar#integer,emissie_kg#double precision,geometry#geometry
 class_oid           | 1259
-object_oid          | 2684044
-dependencies        | 1259,2683801#1259,2683860#1259,2683967
+object_oid          | 2685828
+dependencies        | 1259,2685585#1259,2685644#1259,2685751
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | v
 identifier          | check_totals_view
@@ -3391,8 +3471,8 @@ identifier_noschema | check_totals_view
 schema              | public
 columns             | emissiejaar#integer,gcn_sector_id#integer,er_stof_code#text,substance_id#smallint,gcn_stof_code#text,em_nt#numeric,em_reg#numeric,verschil#numeric
 class_oid           | 1259
-object_oid          | 2684048
-dependencies        | 1259,2683801#1259,2683815#1259,2684044
+object_oid          | 2685833
+dependencies        | 1259,2685585#1259,2685599#1259,2685828
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | v
 identifier          | source_characteristics_view
@@ -3400,8 +3480,8 @@ identifier_noschema | source_characteristics_view
 schema              | public
 columns             | gcn_sector_id#integer,substance_id#smallint,heat_content#real,height#real,spread#real,emission_diurnal_variation_id#integer,particle_size_distribution#integer,diurnal_variation_code#text
 class_oid           | 1259
-object_oid          | 2684053
-dependencies        | 1259,2683938#1259,2683953
+object_oid          | 2685838
+dependencies        | 1259,2685722#1259,2685737
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | v
 identifier          | report.emissions_ammonia_agriculture_nl
@@ -3409,8 +3489,8 @@ identifier_noschema | emissions_ammonia_agriculture_nl
 schema              | report
 columns             | dataset#text,emission_year#integer,sector#text,substance#text,emissie_in_kton#double precision
 class_oid           | 1259
-object_oid          | 2684057
-dependencies        | 1259,2683770#1259,2683789#1259,2683808#1259,2683898
+object_oid          | 2685842
+dependencies        | 1259,2685553#1259,2685572#1259,2685592#1259,2685682
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | v
 identifier          | report.emissions_nitrogen_oxides_mobility_nl
@@ -3418,8 +3498,8 @@ identifier_noschema | emissions_nitrogen_oxides_mobility_nl
 schema              | report
 columns             | dataset#text,emissiejaar#integer,sector#text,substance#text,emissie_in_kton#double precision
 class_oid           | 1259
-object_oid          | 2684062
-dependencies        | 1259,2683770#1259,2683789#1259,2683808#1259,2683898
+object_oid          | 2685847
+dependencies        | 1259,2685553#1259,2685572#1259,2685592#1259,2685682
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | v
 identifier          | report.emissions_ammonia_nl
@@ -3427,8 +3507,8 @@ identifier_noschema | emissions_ammonia_nl
 schema              | report
 columns             | dataset#text,emission_year#integer,sector#text,substance#text,emissie_in_kton#double precision
 class_oid           | 1259
-object_oid          | 2684067
-dependencies        | 1259,2683789#1259,2683808#1259,2683898
+object_oid          | 2685852
+dependencies        | 1259,2685572#1259,2685592#1259,2685682
 --------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 relkind             | v
 identifier          | report.emissions_nitrogen_oxides_nl
@@ -3436,15 +3516,15 @@ identifier_noschema | emissions_nitrogen_oxides_nl
 schema              | report
 columns             | dataset#text,emission_year#integer,sector#text,substance#text,emissie_in_kton#double precision
 class_oid           | 1259
-object_oid          | 2684072
-dependencies        | 1259,2683789#1259,2683808#1259,2683898
+object_oid          | 2685857
+dependencies        | 1259,2685572#1259,2685592#1259,2685682
 
 Exit code: 0
 
 
 **************************************************
-[14-03-2025 09:20:24] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --tuples-only --expanded
+[14-03-2025 14:51:35] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --tuples-only --expanded
 **************************************************
 Output:
 prokind             | f
@@ -3458,7 +3538,7 @@ paramnames          | constant_key
 parammodes          | 
 paramtypes          | text
 class_oid           | 1255
-object_oid          | 2683632
+object_oid          | 2685416
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3472,7 +3552,7 @@ paramnames          |
 parammodes          | 
 paramtypes          | 
 class_oid           | 1255
-object_oid          | 2683633
+object_oid          | 2685417
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3486,7 +3566,7 @@ paramnames          |
 parammodes          | 
 paramtypes          | 
 class_oid           | 1255
-object_oid          | 2683634
+object_oid          | 2685418
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3500,7 +3580,7 @@ paramnames          | constant_key
 parammodes          | 
 paramtypes          | text
 class_oid           | 1255
-object_oid          | 2683646
+object_oid          | 2685430
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3514,7 +3594,7 @@ paramnames          | constant_key,constant_value
 parammodes          | 
 paramtypes          | text,text
 class_oid           | 1255
-object_oid          | 2683647
+object_oid          | 2685431
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3528,7 +3608,7 @@ paramnames          |
 parammodes          | 
 paramtypes          | 
 class_oid           | 1255
-object_oid          | 2683648
+object_oid          | 2685432
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3542,7 +3622,7 @@ paramnames          |
 parammodes          | 
 paramtypes          | 
 class_oid           | 1255
-object_oid          | 2683715
+object_oid          | 2685480
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3556,7 +3636,7 @@ paramnames          | message
 parammodes          | 
 paramtypes          | text
 class_oid           | 1255
-object_oid          | 2683716
+object_oid          | 2685481
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3570,7 +3650,7 @@ paramnames          | xb,xe,yb,ye,xi
 parammodes          | 
 paramtypes          | double precision,double precision,double precision,double precision,double precision
 class_oid           | 1255
-object_oid          | 2683717
+object_oid          | 2685482
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3584,7 +3664,7 @@ paramnames          | xb,xe,yb,ye,xi
 parammodes          | 
 paramtypes          | integer,integer,real,real,integer
 class_oid           | 1255
-object_oid          | 2683718
+object_oid          | 2685483
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3598,7 +3678,7 @@ paramnames          |
 parammodes          | 
 paramtypes          | anyarray,anyelement
 class_oid           | 1255
-object_oid          | 2683719
+object_oid          | 2685484
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3612,7 +3692,7 @@ paramnames          | x,threshold
 parammodes          | 
 paramtypes          | real,real
 class_oid           | 1255
-object_oid          | 2683720
+object_oid          | 2685485
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3626,7 +3706,7 @@ paramnames          |
 parammodes          | 
 paramtypes          | 
 class_oid           | 1255
-object_oid          | 2683721
+object_oid          | 2685486
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3640,7 +3720,7 @@ paramnames          | sorted_array,percentile
 parammodes          | 
 paramtypes          | numeric[],integer
 class_oid           | 1255
-object_oid          | 2683722
+object_oid          | 2685487
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3654,7 +3734,7 @@ paramnames          | unsorted_array,percentile
 parammodes          | 
 paramtypes          | numeric[],integer
 class_oid           | 1255
-object_oid          | 2683723
+object_oid          | 2685488
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3668,7 +3748,7 @@ paramnames          | unsorted_array
 parammodes          | 
 paramtypes          | numeric[]
 class_oid           | 1255
-object_oid          | 2683724
+object_oid          | 2685489
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3682,7 +3762,7 @@ paramnames          | state,e1,e2
 parammodes          | 
 paramtypes          | numeric[],numeric,numeric
 class_oid           | 1255
-object_oid          | 2683725
+object_oid          | 2685490
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3696,8 +3776,8 @@ paramnames          | state
 parammodes          | 
 paramtypes          | numeric[]
 class_oid           | 1255
-object_oid          | 2683726
-dependencies        | 1247,2683675
+object_oid          | 2685491
+dependencies        | 1247,2685459
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | a
 identifier          | ae_max_with_key
@@ -3710,8 +3790,8 @@ paramnames          |
 parammodes          | 
 paramtypes          | numeric,numeric
 class_oid           | 1255
-object_oid          | 2683727
-dependencies        | 1247,2683675#1255,2683725#1255,2683726
+object_oid          | 2685492
+dependencies        | 1247,2685459#1255,2685490#1255,2685491
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
 identifier          | ae_weighted_avg_sfunc
@@ -3724,7 +3804,7 @@ paramnames          | state,value,weight
 parammodes          | 
 paramtypes          | numeric[],numeric,numeric
 class_oid           | 1255
-object_oid          | 2683728
+object_oid          | 2685493
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3738,7 +3818,7 @@ paramnames          | state
 parammodes          | 
 paramtypes          | numeric[]
 class_oid           | 1255
-object_oid          | 2683729
+object_oid          | 2685494
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | a
@@ -3752,8 +3832,8 @@ paramnames          |
 parammodes          | 
 paramtypes          | numeric,numeric
 class_oid           | 1255
-object_oid          | 2683730
-dependencies        | 1255,2683728#1255,2683729
+object_oid          | 2685495
+dependencies        | 1255,2685493#1255,2685494
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
 identifier          | ae_distribute_enum_sfunc
@@ -3766,7 +3846,7 @@ paramnames          | state,key,weight
 parammodes          | 
 paramtypes          | numeric[],anyenum,numeric
 class_oid           | 1255
-object_oid          | 2683731
+object_oid          | 2685496
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | a
@@ -3780,8 +3860,8 @@ paramnames          |
 parammodes          | 
 paramtypes          | anyenum,numeric
 class_oid           | 1255
-object_oid          | 2683732
-dependencies        | 1255,2683731
+object_oid          | 2685497
+dependencies        | 1255,2685496
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
 identifier          | setup.ae_synchronize_all_serials
@@ -3794,7 +3874,7 @@ paramnames          |
 parammodes          | 
 paramtypes          | 
 class_oid           | 1255
-object_oid          | 2683733
+object_oid          | 2685498
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3808,7 +3888,7 @@ paramnames          |
 parammodes          | 
 paramtypes          | 
 class_oid           | 1255
-object_oid          | 2683734
+object_oid          | 2685499
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3822,8 +3902,8 @@ paramnames          | validaton_result_id,validation_run_id,name,result
 parammodes          | t,t,t,t
 paramtypes          | integer,integer,regproc,setup.validation_result_type
 class_oid           | 1255
-object_oid          | 2683735
-dependencies        | 1247,2683695
+object_oid          | 2685500
+dependencies        | 1247,2685461
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
 identifier          | setup.ae_list_unittest_functions
@@ -3836,7 +3916,7 @@ paramnames          | v_prefix,name,args,returns
 parammodes          | i,t,t,t
 paramtypes          | text,regproc,text,text
 class_oid           | 1255
-object_oid          | 2683736
+object_oid          | 2685501
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3850,7 +3930,7 @@ paramnames          | v_function,errcode,message,linenr,context
 parammodes          | i,t,t,t,t
 paramtypes          | regproc,text,text,integer,text
 class_oid           | 1255
-object_oid          | 2683737
+object_oid          | 2685502
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3864,7 +3944,7 @@ paramnames          | v_excluded_data_tables,objecttype,description,checksum
 parammodes          | i,t,t,t
 paramtypes          | regclass[],text,text,bigint
 class_oid           | 1255
-object_oid          | 2683738
+object_oid          | 2685503
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3878,7 +3958,7 @@ paramnames          | tablename,filespec,use_pretty_csv_format,document_metadata
 parammodes          | 
 paramtypes          | regclass,text,boolean,boolean
 class_oid           | 1255
-object_oid          | 2683740
+object_oid          | 2685505
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3892,7 +3972,7 @@ paramnames          | queryname,sql_in,filespec,use_pretty_csv_format
 parammodes          | 
 paramtypes          | text,text,text,boolean
 class_oid           | 1255
-object_oid          | 2683741
+object_oid          | 2685506
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3906,7 +3986,7 @@ paramnames          | tablename,filespec,ordered,use_pretty_csv_format
 parammodes          | 
 paramtypes          | regclass,text,boolean,boolean
 class_oid           | 1255
-object_oid          | 2683742
+object_oid          | 2685507
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3920,7 +4000,7 @@ paramnames          | anyarray,anyelement
 parammodes          | 
 paramtypes          | anyarray,anyelement
 class_oid           | 1255
-object_oid          | 2683743
+object_oid          | 2685508
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3934,7 +4014,7 @@ paramnames          | anyenum
 parammodes          | 
 paramtypes          | anyenum
 class_oid           | 1255
-object_oid          | 2683744
+object_oid          | 2685509
 dependencies        | 
 --------------------+-----------------------------------------------------------------------------------------------------------------
 prokind             | f
@@ -3948,15 +4028,43 @@ paramnames          | anyenum,index
 parammodes          | 
 paramtypes          | anyenum,integer
 class_oid           | 1255
-object_oid          | 2683745
+object_oid          | 2685510
+dependencies        | 
+--------------------+-----------------------------------------------------------------------------------------------------------------
+prokind             | f
+identifier          | system.checksum_table
+identifier_noschema | checksum_table
+schema              | system
+arguments           | (v_table text)
+arguments_nodefault | (v_table text)
+returns             | SETOF bigint
+paramnames          | v_table
+parammodes          | 
+paramtypes          | text
+class_oid           | 1255
+object_oid          | 2685862
+dependencies        | 
+--------------------+-----------------------------------------------------------------------------------------------------------------
+prokind             | f
+identifier          | system.fill_metadata_checksum
+identifier_noschema | fill_metadata_checksum
+schema              | system
+arguments           | ()
+arguments_nodefault | ()
+returns             | void
+paramnames          | 
+parammodes          | 
+paramtypes          | 
+class_oid           | 1255
+object_oid          | 2685863
 dependencies        | 
 
 Exit code: 0
 
 
 **************************************************
-[14-03-2025 09:20:24] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --tuples-only --expanded
+[14-03-2025 14:51:35] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --tuples-only --expanded
 **************************************************
 Output:
 typtype             | e
@@ -3964,7 +4072,7 @@ identifier          | constant_type
 identifier_noschema | constant_type
 schema              | public
 class_oid           | 1247
-object_oid          | 2683614
+object_oid          | 2685398
 dependencies        | 
 --------------------+-----------------------------
 typtype             | d
@@ -3972,7 +4080,7 @@ identifier          | posint
 identifier_noschema | posint
 schema              | public
 class_oid           | 1247
-object_oid          | 2683650
+object_oid          | 2685434
 dependencies        | 
 --------------------+-----------------------------
 typtype             | d
@@ -3980,7 +4088,7 @@ identifier          | posreal
 identifier_noschema | posreal
 schema              | public
 class_oid           | 1247
-object_oid          | 2683653
+object_oid          | 2685437
 dependencies        | 
 --------------------+-----------------------------
 typtype             | d
@@ -3988,7 +4096,7 @@ identifier          | fraction
 identifier_noschema | fraction
 schema              | public
 class_oid           | 1247
-object_oid          | 2683656
+object_oid          | 2685440
 dependencies        | 
 --------------------+-----------------------------
 typtype             | d
@@ -3996,7 +4104,7 @@ identifier          | year_type
 identifier_noschema | year_type
 schema              | public
 class_oid           | 1247
-object_oid          | 2683659
+object_oid          | 2685443
 dependencies        | 
 --------------------+-----------------------------
 typtype             | e
@@ -4004,7 +4112,7 @@ identifier          | year_category_type
 identifier_noschema | year_category_type
 schema              | public
 class_oid           | 1247
-object_oid          | 2683662
+object_oid          | 2685446
 dependencies        | 
 --------------------+-----------------------------
 typtype             | c
@@ -4012,7 +4120,7 @@ identifier          | ae_key_value_rs
 identifier_noschema | ae_key_value_rs
 schema              | public
 class_oid           | 1247
-object_oid          | 2683675
+object_oid          | 2685459
 dependencies        | 
 --------------------+-----------------------------
 typtype             | e
@@ -4020,7 +4128,7 @@ identifier          | setup.validation_result_type
 identifier_noschema | validation_result_type
 schema              | setup
 class_oid           | 1247
-object_oid          | 2683695
+object_oid          | 2685461
 dependencies        | 
 --------------------+-----------------------------
 typtype             | c
@@ -4028,25 +4136,25 @@ identifier          | setup.validation_result
 identifier_noschema | validation_result
 schema              | setup
 class_oid           | 1247
-object_oid          | 2683705
+object_oid          | 2685471
 dependencies        | 
 
 Exit code: 0
 
 
 **************************************************
-[14-03-2025 09:20:24] 
-"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-fa7b481" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
+[14-03-2025 14:51:35] 
+"D:/Postgres15/bin/psql" --port "5432" --username "aerius" --set ON_ERROR_STOP=1 --dbname "AERIUS-er-emissions-4a97531" --file "C:/git/database-er-emissions/source/er-emissions/target/temp/execute_sql_command.tmp" --echo-all
 **************************************************
-COMMENT ON DATABASE "AERIUS-er-emissions-fa7b481" IS 'fa7b481
-Database created on: Friday 14 March 2025 09:20
-Dumpfile: AERIUS-er-emissions-fa7b481.backup'
+COMMENT ON DATABASE "AERIUS-er-emissions-4a97531" IS '4a97531
+Database created on: Friday 14 March 2025 14:51
+Dumpfile: AERIUS-er-emissions-4a97531.backup'
 COMMENT
 
 
 **************************************************
-[14-03-2025 09:20:24] C:/git/database-er-emissions/source/er-emissions/target/build/AERIUS-er-emissions-fa7b481.backup
-"D:/Postgres15/bin/pg_dump" --port "5432" --username "aerius" --format custom --blobs --verbose --file "C:/git/database-er-emissions/source/er-emissions/target/build/AERIUS-er-emissions-fa7b481.backup" "AERIUS-er-emissions-fa7b481"
+[14-03-2025 14:51:35] C:/git/database-er-emissions/source/er-emissions/target/build/AERIUS-er-emissions-4a97531.backup
+"D:/Postgres15/bin/pg_dump" --port "5432" --username "aerius" --format custom --blobs --verbose --file "C:/git/database-er-emissions/source/er-emissions/target/build/AERIUS-er-emissions-4a97531.backup" "AERIUS-er-emissions-4a97531"
 **************************************************
 pg_dump: last built-in OID is 16383
 pg_dump: reading extensions
