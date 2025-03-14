@@ -28,4 +28,4 @@ $common_data_paths =
     File.expand_path(source_path + data_path + '/common/').fix_pathname,                             # /src/main/sql/common/
   ] 
   
-$product_data_path = File.expand_path(source_path + data_path).fix_pathname      					
+$product_data_path = File.expand_path(source_path + data_path + '/er-emissions/').fix_pathname       					

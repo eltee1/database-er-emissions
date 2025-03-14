@@ -13,5 +13,5 @@ SELECT setup.ae_store_query('agg_aggregated_brn_road_freeway_final',
 
 	FROM freeway.agg_aggregated_brn_road_freeway_final
 	$$,
-	'{data_folder}/{queryname}_{datesuffix}.txt'
+	'{data_folder}/export/{queryname}_{datesuffix}.txt'
 );

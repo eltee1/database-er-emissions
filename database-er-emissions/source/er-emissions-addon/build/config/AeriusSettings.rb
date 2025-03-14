@@ -12,7 +12,7 @@ $pg_username = 'aerius' # Added for old repo's
 $pg_password = 'aerius'
 
 
-$dbdata_dir = 'dbdata/er-aggregatie/'
+$dbdata_dir = 'dbdata/er-emissions/'
 $dbdata_path = File.expand_path(File.dirname(__FILE__) + '/../../../../../../' + $dbdata_dir).fix_pathname
 
 

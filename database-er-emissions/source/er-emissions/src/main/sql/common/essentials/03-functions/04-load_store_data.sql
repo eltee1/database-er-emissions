@@ -1,14 +1,16 @@
 /*
- * ae_load_table
- * -------------
+ * load_table
+ * ----------
  * Function to copy the data of the supplied file to the supplied table.
- * The file should contain tab-separated text without a header, or tab-separated text with a header when the optional parameter is set to true.
+ * The file should contain tab-separated text with a header.
+ * This function is extended with the option to write the loaded file-version to the metadata- table.
  *
  * @param tablename The table to copy to.
  * @param filespec The file to copy from
- * @param use_pretty_csv_format Optional parameter to specify if file contains a header (true) or not (false). Default false.
+ * @param use_pretty_csv_format Optional parameter to specify if file contains a header (true) or not (false). Default true.
+ * @param document_metadata Optional parameter to specify if the version of the loaded table must documented in the metadata- table. Default false
  */
-CREATE OR REPLACE FUNCTION setup.ae_load_table(tablename regclass, filespec text, use_pretty_csv_format boolean = FALSE)
+CREATE OR REPLACE FUNCTION system.load_table(tablename regclass, filespec text, use_pretty_csv_format boolean = TRUE, document_metadata boolean = FALSE)
 	RETURNS void AS
 $BODY$
 DECLARE
@@ -26,7 +28,7 @@ BEGIN
 	filename := replace(filename, '{datesuffix}', to_char(current_timestamp, 'YYYYMMDD'));
 
 	IF filename LIKE '%{revision}%' THEN
-		filename := replace(filename, '{revision}', system.ae_get_git_revision());
+		filename := replace(filename, '{revision}', system.get_git_revision());
 	END IF;
 
 	IF use_pretty_csv_format THEN
@@ -38,6 +40,17 @@ BEGIN
 	RAISE NOTICE '% Starting @ %', sql, timeofday();
 	EXECUTE sql;
 	RAISE NOTICE '% Done @ %', sql, timeofday();
+
+	IF document_metadata THEN
+		RAISE NOTICE '% Insert new or update existing imported file in metadata table @ %', sql, timeofday();
+		sql:= 'DO $$ BEGIN IF EXISTS (SELECT table_name FROM metadata WHERE table_name = ''' || tablename || ''') THEN
+				UPDATE metadata SET filename = SPLIT_PART(''' || filename || ''', ''/'', -1),
+				timestamp = to_char(clock_timestamp(), ''DD-MM-YYYY HH24:MI:SS.MS'') WHERE table_name = ''' || tablename || ''';
+				ELSE INSERT INTO metadata (table_name, filename) VALUES (''' || tablename || ''', SPLIT_PART(''' || filename || ''', ''/'', -1)); 
+				END IF ; 
+				END $$';
+		EXECUTE sql;
+	END IF;
 
 	-- reset encoding
 	EXECUTE 'SET client_encoding TO ' || current_encoding;

@@ -7,7 +7,7 @@ $runscripts_path = File.expand_path(File.dirname(__FILE__) + '/../scripts/').fix
 $pg_username = 'aerius'
 $pg_password = '...' # Override in AeriusSettings.User.rb
 
-$dbdata_dir = 'dbdata/er-aggregatie/'
+$dbdata_dir = 'dbdata/er-emissions/'
 # Default data path is next to the root of the checked out project.
 $dbdata_path = File.expand_path(File.dirname(__FILE__) + '/../../../../../../../' + $dbdata_dir).fix_pathname
 

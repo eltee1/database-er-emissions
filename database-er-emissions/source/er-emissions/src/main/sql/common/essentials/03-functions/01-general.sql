@@ -114,3 +114,38 @@ $BODY$
 	SELECT CASE WHEN ABS(x) > threshold THEN x ELSE NULL END;
 $BODY$
 LANGUAGE SQL IMMUTABLE;
+
+
+/*
+ * cluster_all_tables
+ * ------------------
+ * Function to cluster all tables in the database based on their primary key.
+ * Once the constraint (in this case the primary key) has been set, in the future clustering can be done by using: CLUSTER databasename.
+ */
+CREATE OR REPLACE FUNCTION system.cluster_all_tables()
+	RETURNS void AS
+$BODY$
+DECLARE
+	pkey_constraints record;
+	sql text;
+BEGIN
+	FOR pkey_constraints IN
+		SELECT
+			(nspname || '.' || relname)::regclass::text AS tablename,
+			conname::text AS pkey_name
+
+			FROM pg_constraint
+				INNER JOIN pg_class ON (pg_class.oid = pg_constraint.conrelid)
+				INNER JOIN pg_namespace ON (pg_namespace.oid = pg_class.relnamespace)
+
+			WHERE pg_class.relkind = 'r' AND pg_constraint.contype = 'p' AND pg_class.relisshared IS FALSE AND relname NOT LIKE 'pg_%'
+
+			ORDER BY tablename
+	LOOP
+		sql := 'CLUSTER ' || pkey_constraints.tablename || ' USING ' || pkey_constraints.pkey_name;
+		RAISE NOTICE '%', sql;
+		EXECUTE sql;
+	END LOOP;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;

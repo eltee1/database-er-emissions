@@ -50,8 +50,8 @@ CREATE TABLE gcn_sectors (
 	gcn_sector_id integer NOT NULL,
 	sector_id integer NOT NULL,
 	description text NOT NULL,
-	er_indeling_code text,
-	er_er_indeling_naam text,
+	--er_indeling_code text,
+	--er_er_indeling_naam text,
 
 	CONSTRAINT gcn_sectors_pkey PRIMARY KEY (gcn_sector_id),
 	CONSTRAINT gcn_sectors_fkey_sectors FOREIGN KEY (sector_id) REFERENCES sectors
