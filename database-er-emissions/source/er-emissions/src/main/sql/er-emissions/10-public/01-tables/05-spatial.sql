@@ -239,4 +239,3 @@ CREATE TABLE recreatievaart (
 
 	CONSTRAINT recreatievaart_key PRIMARY KEY (ai_code)
 );
-
