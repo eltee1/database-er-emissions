@@ -15,6 +15,6 @@ CREATE SCHEMA system;
 /*
  * report
  * ------
- * The report schema contains tables and views used fot rapporting purposes.
+ * The report schema contains tables and views used for rapporting purposes.
  */
 CREATE SCHEMA report;
