@@ -7,9 +7,9 @@ CREATE OR REPLACE FUNCTION ae_percentile_sorted_array(sorted_array numeric[], pe
 	RETURNS numeric AS
 $BODY$
 DECLARE
-	array_size 		int;
-	index 			int;
-	percentile_by_index 	real;
+	array_size int;
+	index int;
+	percentile_by_index real;
 BEGIN
 	IF array_length(sorted_array, 1) IS NULL THEN -- No empty arrays
 		RETURN NULL;
@@ -66,7 +66,6 @@ END;
 $BODY$
 LANGUAGE plpgsql IMMUTABLE RETURNS NULL ON NULL INPUT;
 
----------------------------------------------------------------------------------------------
 
 /*
  * ae_max_with_key_sfunc
@@ -117,7 +116,6 @@ CREATE AGGREGATE ae_max_with_key(numeric, numeric) (
 	INITCOND = '{NULL,NULL}'
 );
 
----------------------------------------------------------------------------------------------
 
 /*
  * ae_weighted_avg_sfunc
@@ -169,7 +167,6 @@ CREATE AGGREGATE ae_weighted_avg(numeric, numeric) (
 	INITCOND = '{NULL,NULL}'
 );
 
----------------------------------------------------------------------------------------------
 
 /*
  * ae_distribute_enum_sfunc

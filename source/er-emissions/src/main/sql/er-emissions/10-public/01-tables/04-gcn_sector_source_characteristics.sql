@@ -20,6 +20,11 @@ CREATE TABLE gcn_sector_source_characteristics (
 --CREATE UNIQUE INDEX idx_gcn_sector_source_characteristics ON gcn_sector_source_characteristics (gcn_sector_id, substance_id); -- is dubbel, er is ook al een PKEY met dezelfde kolommen.
 
 
+/*
+ * emission_diurnal_variations
+ * ---------------------------
+ * 
+ */
 CREATE TABLE emission_diurnal_variations (
 	emission_diurnal_variation_id integer  NOT NULL,
 	code text NOT NULL,

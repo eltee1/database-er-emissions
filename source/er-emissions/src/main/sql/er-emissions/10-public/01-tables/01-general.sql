@@ -61,7 +61,7 @@ CREATE TABLE gcn_sectors (
 /*
  * sectorgroups
  * ------------
- *Koppeltabel voor sector en sectorgroep.
+ * Koppeltabel voor sector en sectorgroep.
  */
 CREATE TABLE sectorgroups (
 	sector_id integer NOT NULL,
