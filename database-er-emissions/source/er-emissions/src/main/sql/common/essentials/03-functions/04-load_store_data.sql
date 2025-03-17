@@ -10,7 +10,7 @@
  * @param use_pretty_csv_format Optional parameter to specify if file contains a header (true) or not (false). Default true.
  * @param document_metadata Optional parameter to specify if the version of the loaded table must documented in the metadata- table. Default false
  */
-CREATE OR REPLACE FUNCTION system.load_table(tablename regclass, filespec text, use_pretty_csv_format boolean = TRUE, document_metadata boolean = FALSE)
+CREATE OR REPLACE FUNCTION system.load_table(tablename regclass, filespec text, use_pretty_csv_format boolean = TRUE, document_metadata boolean = TRUE)
 	RETURNS void AS
 $BODY$
 DECLARE

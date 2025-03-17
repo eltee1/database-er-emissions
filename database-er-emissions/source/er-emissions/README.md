@@ -19,7 +19,7 @@ From the folder `/database-er-emissions/source/er-emissions/`:
 
 Standard datbase name (adjusted in default.rb: add line: [default_database_name "database_name"]) is "aggregation": 
 ```sh
-ruby ../../../database-build/bin/Build.rb default.rb ./settings.rb
+ruby ../../../database-build/bin/Build.rb default.rb ./settings.rb --version '#'
 ```
 
 Explanation: 
