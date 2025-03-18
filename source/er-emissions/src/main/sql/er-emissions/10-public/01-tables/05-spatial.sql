@@ -1,7 +1,7 @@
 /*
  * geo_vierkanten
  * --------------
- * -
+ * 
  */
 CREATE TABLE geo_vierkanten (
 	tle_id integer NOT NULL,
@@ -154,8 +154,7 @@ CREATE TABLE initiator (
 	geometry geometry NOT NULL,
 
 	CONSTRAINT initiator_key PRIMARY KEY (ai_code)
-)
-;
+);
 
 
 /*

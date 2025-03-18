@@ -41,8 +41,8 @@ SELECT
       (SELECT 
          emissiejaar,
          er_stof_code,
-         "left"(er_indeling_code, 4)::integer AS gcn_sector_id,
-         round(emissie_kg::numeric, 3) AS em_nt
+         LEFT(er_indeling_code, 4)::integer AS gcn_sector_id,
+         ROUND(emissie_kg::numeric, 3) AS em_nt
       
          FROM er_emissie_nationaal_erc
       ) AS nt
@@ -52,12 +52,12 @@ SELECT
             emissiejaar,
             gcn_sector_id,
             er_stof_code,
-            round(sum(emissie_kg)::numeric, 3) AS em_reg
+            ROUND(sum(emissie_kg)::numeric, 3) AS em_reg
          
             FROM verfijnde_emissies_geregionaliseerd_view
             
             GROUP BY emissiejaar, gcn_sector_id, er_stof_code
-         )AS reg USING (emissiejaar, gcn_sector_id, er_stof_code)
+         ) AS reg USING (emissiejaar, gcn_sector_id, er_stof_code)
    
       INNER JOIN substances USING (er_stof_code)
 ;
