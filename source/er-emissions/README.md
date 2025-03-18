@@ -1,6 +1,6 @@
 # er-emissions database
 
-This is the emissions database, based on the data from the "emissie registratie" (er).
+This is the er-emissions database, based on the data from the "emissie registratie" (er).
 
 ## File structure
 
@@ -17,7 +17,7 @@ This can be done with the following commands (might have to change `/` to `\` if
 Build database:
 From the folder `/database-er-emissions/source/er-emissions/`:
 
-Standard datbase name (adjusted in default.rb: add line: [default_database_name "database_name"]) is "aggregation": 
+Standard database name is "er-emissions", with the option --version '#', this is complemented with the git-hash: 
 ```sh
 ruby ../../../database-build/bin/Build.rb default.rb ./settings.rb --version '#'
 ```

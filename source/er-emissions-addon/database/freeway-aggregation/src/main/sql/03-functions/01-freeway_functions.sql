@@ -5,7 +5,7 @@
  * 
  */
 CREATE OR REPLACE FUNCTION freeway.build_aggregated_brn_road_freeway_final(v_groupid integer)
-RETURNS VOID
+	RETURNS VOID
 AS 
 $BODY$
 DECLARE 

@@ -4,8 +4,7 @@
  * Tabel waarin de road_freeway emissies staan, mxx wordt gebruikt omdat dit generiek is voor elke Monitor-versie.
  *
  */
-CREATE TABLE IF NOT EXISTS aerius_mxx_brn_road_freeway
-(
+CREATE TABLE IF NOT EXISTS aerius_mxx_brn_road_freeway (
     snr bigint,
     x_m bigint,
     y_m bigint,
@@ -24,8 +23,7 @@ CREATE TABLE IF NOT EXISTS aerius_mxx_brn_road_freeway
  * Tabel met daarin de n2000 grid clusters.
  *
  */
-CREATE TABLE IF NOT EXISTS agg_grid_n2k_clusters
-(
+CREATE TABLE IF NOT EXISTS agg_grid_n2k_clusters (
     groupid bigint,
     buffer_id bigint,
     grid_size_id bigint,
@@ -53,8 +51,7 @@ CREATE INDEX IF NOT EXISTS agg_grid_n2k_clusters_cluster_id_idx ON agg_grid_n2k_
  * Na de insert wordt er een index gezet op grid_size_id; pk is waarschijnlijk niet nodig.
  *
  */
-CREATE TABLE IF NOT EXISTS freeway.agg_aggregated_brn_road_freeway_final
-(
+CREATE TABLE IF NOT EXISTS freeway.agg_aggregated_brn_road_freeway_final (
     snr bigint,
     x_m bigint,
     y_m bigint,
@@ -75,7 +72,6 @@ CREATE TABLE IF NOT EXISTS freeway.agg_aggregated_brn_road_freeway_final
  * Schijnbaar kan er geen DISTINCT select worden gebruikt bij selecteren van id's, deze tabel komt daarvoor in de plaats.
  *
  */
-CREATE TABLE IF NOT EXISTS temp_groupids
-(
+CREATE TABLE IF NOT EXISTS temp_groupids (
     groupid bigint
 );
