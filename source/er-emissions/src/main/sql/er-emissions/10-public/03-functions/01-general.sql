@@ -77,7 +77,7 @@ $BODY$
 
 /*
  * create_checksum_triggers
- * ------------------------------
+ * ------------------------
  * Trigger-functie op elke tabel in het public-schema, muv de metadata-tabel, een trigger zet die automatisch de checksum in de metadata-tabel update voor
  * de betreffende tabel.
  */

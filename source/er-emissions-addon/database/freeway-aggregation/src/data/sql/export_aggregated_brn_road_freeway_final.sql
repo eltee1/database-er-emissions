@@ -1,4 +1,4 @@
-SELECT setup.ae_store_query('agg_aggregated_brn_road_freeway_final',
+SELECT system.store_query('agg_aggregated_brn_road_freeway_final',
 	$$ SELECT
 		snr,
 		x_m,

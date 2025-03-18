@@ -1,6 +1,6 @@
 --inladen data
-BEGIN; SELECT setup.ae_load_table('aerius_mxx_brn_road_freeway', '{data_folder}/m25_brn_road_freeway_export_20241206.csv', FALSE); COMMIT;
-BEGIN; SELECT setup.ae_load_table('agg_grid_n2k_clusters', '{data_folder}/agg_grid_n2k_clusters_20241119.csv', FALSE); COMMIT;
+BEGIN; SELECT system.load_table('aerius_mxx_brn_road_freeway', '{data_folder}/m25_brn_road_freeway_export_20241206.csv', FALSE, TRUE); COMMIT;
+BEGIN; SELECT system.load_table('agg_grid_n2k_clusters', '{data_folder}/agg_grid_n2k_clusters_20241119.csv', FALSE, TRUE); COMMIT;
 
 --maak de geom kolom aan in aerius_mxx_brn_road_freeway
 BEGIN; ALTER TABLE aerius_mxx_brn_road_freeway ADD COLUMN geom geometry; COMMIT;

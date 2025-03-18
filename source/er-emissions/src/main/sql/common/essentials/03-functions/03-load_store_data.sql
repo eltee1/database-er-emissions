@@ -60,8 +60,8 @@ LANGUAGE plpgsql VOLATILE;
 
 
 /*
- * ae_store_query
- * --------------
+ * store_query
+ * -----------
  * Function to store the results of the supplied query string to the supplied file.
  * In the filename the parts {tablename} or {queryname} can be used, these will be replaced by the supplied queryname.
  * Additionally, the part {datesuffix} can be used, which will be replaced with the current date in YYYYMMDD format.
@@ -74,7 +74,7 @@ LANGUAGE plpgsql VOLATILE;
  * @param filespec The file to export to.
  * @param use_pretty_csv_format Optional parameter to specify if file is generated with a header (true) or not (false). Default false.
  */
-CREATE OR REPLACE FUNCTION setup.ae_store_query(queryname text, sql_in text, filespec text, use_pretty_csv_format boolean = FALSE)
+CREATE OR REPLACE FUNCTION system.store_query(queryname text, sql_in text, filespec text, use_pretty_csv_format boolean = FALSE)
 	RETURNS void AS
 $BODY$
 DECLARE
@@ -116,8 +116,8 @@ LANGUAGE plpgsql VOLATILE;
 
 
 /*
- * ae_store_table
- * --------------
+ * store_table
+ * -----------
  * Copies the data of the supplied table to the supplied file.
  * In the filename the parts {tablename} or {queryname} can be used, these will be replaced by the supplied table name.
  * Additionally, the part {datesuffix} can be used, which will be replaced with the current date in YYYYMMDD format.
@@ -130,7 +130,7 @@ LANGUAGE plpgsql VOLATILE;
  * @param ordered Optional parameter to indicate if export should be ordered or not. If true, the table is sorted by all columns, starting with the first column. Default false.
  * @param use_pretty_csv_format Optional parameter to specify if file is generated with a header (true) or not (false). Default false.
  */
-CREATE OR REPLACE FUNCTION setup.ae_store_table(tablename regclass, filespec text, ordered bool = FALSE, use_pretty_csv_format boolean = FALSE)
+CREATE OR REPLACE FUNCTION system.store_table(tablename regclass, filespec text, ordered bool = FALSE, use_pretty_csv_format boolean = FALSE)
 	RETURNS void AS
 $BODY$
 DECLARE
@@ -153,7 +153,7 @@ BEGIN
 		tableselect := tableselect || ' ORDER BY ' || ordered_columns_string || '';
 	END IF;
 
-	PERFORM setup.ae_store_query(tablename::text, tableselect, filespec, use_pretty_csv_format);
+	PERFORM system.store_query(tablename::text, tableselect, filespec, use_pretty_csv_format);
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;

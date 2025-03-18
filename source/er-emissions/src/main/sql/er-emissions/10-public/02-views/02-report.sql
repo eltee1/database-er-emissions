@@ -37,7 +37,6 @@ sector_emissions_per_sector AS (
 		GROUP BY dataset_omschrijving, jaar, gcn_sectors.sector_id, substance_id
 
 ),
-
 total_emissions AS (
 	SELECT 
 		dataset,

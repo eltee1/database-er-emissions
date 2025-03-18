@@ -140,7 +140,6 @@ CREATE TABLE giab (
 );
 
 
-
 /*
  * initiator
  * ---------
@@ -184,7 +183,6 @@ CREATE TABLE mestverwerkers (
 );
 
 
-
 /*
  * spoorwegen
  * ----------
@@ -198,7 +196,6 @@ CREATE TABLE spoorwegen (
 
 	CONSTRAINT spoorwegen_key PRIMARY KEY (ai_code)
 );
-
 
 
 /*
