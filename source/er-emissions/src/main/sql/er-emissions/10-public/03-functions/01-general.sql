@@ -54,27 +54,22 @@ CREATE OR REPLACE FUNCTION system.fill_metadata_checksum_trigger()
 	RETURNS trigger AS
 $BODY$
 DECLARE
-	v_checksum bigint;
+	v_checksum bigint := system.checksum_table(TG_RELNAME::text);
 BEGIN
 	IF EXISTS (SELECT * FROM metadata WHERE table_name = TG_RELNAME::text) THEN
 		BEGIN
-			v_checksum:= system.checksum_table(TG_RELNAME::text);
-			
 			UPDATE metadata SET checksum_hash = v_checksum 
 				WHERE table_name = TG_RELNAME::text;
 			RETURN NULL;
 		END;
 	ELSE
 		BEGIN
-			INSERT INTO metadata (table_name, filename) VALUES (TG_RELNAME::text, 'data niet via load_table geimporteerd of handmatig aangepast');
-			v_checksum:= system.checksum_table(TG_RELNAME::text);
-			
-			UPDATE metadata SET checksum_hash = v_checksum 
-				WHERE table_name = TG_RELNAME::text;
+			INSERT INTO metadata (table_name, filename, checksum_hash)
+				VALUES (TG_RELNAME::text, 'data niet via load_table geimporteerd of handmatig aangepast', v_checksum);
 			RETURN NULL;
 		END;
 	END IF;
-END
+END;
 
 $BODY$
 	LANGUAGE plpgsql;
