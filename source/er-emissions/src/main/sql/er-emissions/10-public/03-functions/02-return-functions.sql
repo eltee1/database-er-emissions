@@ -29,7 +29,6 @@ BEGIN
 				scale_factors.scenario_id = 1 
 				AND year_to = v_year
 	)
-
 	SELECT 
 		scale_factors.year_to AS snr,
 		em.x_m,

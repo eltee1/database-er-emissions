@@ -2,7 +2,7 @@
 # Product specific settings.
 #
 
-$product = :"er-addon"    # The product these settings are for.
+$product = :"freeway-aggrigation"    # The product these settings are for.
 
 #-------------------------------------
 
@@ -16,15 +16,16 @@ settings_file = 'AeriusSettings.rb'
 
 $project_settings_file = File.expand_path(source_path + config_path + settings_file).fix_pathname
 
+$product_sql_path = File.expand_path(source_path + sql_path).fix_pathname           # src/main/sql/
+
 $common_sql_paths = 
   [
-    File.expand_path(source_path + '../../../modules/' + sql_path).fix_pathname      # ../../../modules/src/main/sql/
+    $product_sql_path #temp build script required common path
   ]
 
-$product_sql_path = File.expand_path(source_path + sql_path).fix_pathname
+$product_data_path = File.expand_path(source_path + data_path).fix_pathname         # src/data/sql/
 
 $common_data_paths =
   [
-    File.expand_path(source_path + '../../../modules/' + data_path).fix_pathname    # ../../../modules/src/data/sql/
+    $product_data_path #temp build script required common path
   ]
-$product_data_path = File.expand_path(source_path + data_path).fix_pathname         # src/data/sql/monitor/

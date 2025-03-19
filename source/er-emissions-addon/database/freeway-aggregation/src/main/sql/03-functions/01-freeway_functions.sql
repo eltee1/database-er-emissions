@@ -29,8 +29,8 @@ BEGIN
 			grid_id,
 			grid_n2k_cluster_id
 					
-		FROM agg_grid_n2k_clusters AS grid
-			INNER JOIN aerius_mxx_brn_road_freeway AS brn ON st_intersects(grid.geom, brn.geom)
+		FROM freeway.agg_grid_n2k_clusters AS grid
+			INNER JOIN freeway.aerius_mxx_brn_road_freeway AS brn ON st_intersects(grid.geom, brn.geom)
 		WHERE groupid = '||v_groupid||'
 		),
 		agg_aggregated_brn_road_freeway AS (
@@ -65,3 +65,5 @@ END;
 	
 $BODY$
 LANGUAGE plpgsql VOLATILE;
+
+COMMENT ON FUNCTION freeway.build_aggregated_brn_road_freeway_final IS 'Functie die per groupid de tabel agg_aggregated_brn_road_freeway_final vult met de juiste data.';
