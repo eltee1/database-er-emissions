@@ -149,3 +149,21 @@ BEGIN
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
+
+
+/*
+ * assert_true
+ * -----------
+ * Function to assert that the supplied condition is true.
+ * This assertion is useful for different types of checks.
+ */
+CREATE OR REPLACE FUNCTION system.assert_true(v_condition boolean, v_message text = NULL)
+	RETURNS void AS
+$BODY$
+BEGIN
+	IF v_condition IS NOT TRUE THEN
+		RAISE EXCEPTION 'assert_true: condition=% %', v_condition, COALESCE('[' || v_message || ']', '');
+	END IF;
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE;

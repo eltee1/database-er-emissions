@@ -1,12 +1,10 @@
---het buildscript kan niet omgaan met het IF EXISTS- statement in CREATE TABLE, dan crasht de build op het genereren van het comment. Dit is nu opgelost door de comment apart aan te maken.
-
 /*
  * aerius_mxx_brn_road_freeway
  * ---------------------------
  * Tabel waarin de road_freeway emissies staan, mxx wordt gebruikt omdat dit generiek is voor elke Monitor-versie.
  *
  */
-CREATE TABLE IF NOT EXISTS freeway.aerius_mxx_brn_road_freeway (
+CREATE TABLE freeway.aerius_mxx_brn_road_freeway (
     snr bigint,
     x_m bigint,
     y_m bigint,
@@ -18,8 +16,6 @@ CREATE TABLE IF NOT EXISTS freeway.aerius_mxx_brn_road_freeway (
     CONSTRAINT aerius_mxx_brn_road_freeway_pkey PRIMARY KEY (brn_road_freeway_id)
 );
 
-COMMENT ON TABLE freeway.aerius_mxx_brn_road_freeway IS 'Tabel waarin de road_freeway emissies staan, mxx wordt gebruikt omdat dit generiek is voor elke Monitor-versie.';
-
 
 /*
  * agg_grid_n2k_clusters
@@ -27,7 +23,7 @@ COMMENT ON TABLE freeway.aerius_mxx_brn_road_freeway IS 'Tabel waarin de road_fr
  * Tabel met daarin de n2000 grid clusters.
  *
  */
-CREATE TABLE IF NOT EXISTS freeway.agg_grid_n2k_clusters (
+CREATE TABLE freeway.agg_grid_n2k_clusters (
     groupid bigint,
     buffer_id bigint,
     grid_size_id bigint,
@@ -42,10 +38,8 @@ CREATE TABLE IF NOT EXISTS freeway.agg_grid_n2k_clusters (
 
 ALTER TABLE freeway.agg_grid_n2k_clusters ALTER COLUMN geom SET STORAGE EXTERNAL;
 
-CREATE INDEX IF NOT EXISTS agg_grid_n2k_clusters_geom_idx ON freeway.agg_grid_n2k_clusters USING GIST (geom);
-CREATE INDEX IF NOT EXISTS agg_grid_n2k_clusters_cluster_id_idx ON freeway.agg_grid_n2k_clusters USING btree (grid_n2k_cluster_id);
-
-COMMENT ON TABLE freeway.agg_grid_n2k_clusters IS 'Tabel met daarin de n2000 grid clusters.';
+CREATE INDEX agg_grid_n2k_clusters_geom_idx ON freeway.agg_grid_n2k_clusters USING GIST (geom);
+CREATE INDEX agg_grid_n2k_clusters_cluster_id_idx ON freeway.agg_grid_n2k_clusters USING btree (grid_n2k_cluster_id);
 
 
 /*
@@ -57,7 +51,7 @@ COMMENT ON TABLE freeway.agg_grid_n2k_clusters IS 'Tabel met daarin de n2000 gri
  * Na de insert wordt er een index gezet op grid_size_id; pk is waarschijnlijk niet nodig.
  *
  */
-CREATE TABLE IF NOT EXISTS freeway.agg_aggregated_brn_road_freeway_final (
+CREATE TABLE freeway.agg_aggregated_brn_road_freeway_final (
     snr bigint,
     x_m bigint,
     y_m bigint,
@@ -70,11 +64,6 @@ CREATE TABLE IF NOT EXISTS freeway.agg_aggregated_brn_road_freeway_final (
     grid_n2k_cluster_id integer
 );
 
-COMMENT ON TABLE freeway.agg_aggregated_brn_road_freeway_final IS 'Eindtabel agg_aggregated_brn_road_freeway_final. Hierin komt data van agg_grid_n2k_clusters en aerius_mxx_brn_road_freeway samen,
-gelinkt door de tussen-child tabel grid_n2k_clusters_to_brn_road_freeway_groupid_xx.
-Er komen nog geen pkey of indexen op ivm de snelheid van vullen van deze tabel.
-Na de insert wordt er een index gezet op grid_size_id; pk is waarschijnlijk niet nodig.';
-
 
 /*
  * temp_groupids
@@ -83,9 +72,6 @@ Na de insert wordt er een index gezet op grid_size_id; pk is waarschijnlijk niet
  * Schijnbaar kan er geen DISTINCT select worden gebruikt bij selecteren van id's, deze tabel komt daarvoor in de plaats.
  *
  */
-CREATE TABLE IF NOT EXISTS freeway.temp_groupids (
+CREATE TABLE freeway.temp_groupids (
     groupid bigint
 );
-
-COMMENT ON TABLE freeway.temp_groupids IS 'Temp-tabel met alle groupids, wordt gebruikt tijdens de build voor de multithread.
-Schijnbaar kan er geen DISTINCT select worden gebruikt bij selecteren van id''s, deze tabel komt daarvoor in de plaats.';
