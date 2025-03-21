@@ -1,10 +1,10 @@
 /*
  * build_aggregated_brn_road_freeway_final
- * ---------------------------------------------
+ * ---------------------------------------
  * Functie die per groupid de tabel agg_aggregated_brn_road_freeway_final vult met de juiste data.
  * 
  */
-CREATE OR REPLACE FUNCTION freeway.build_aggregated_brn_road_freeway_final(v_groupid integer)
+CREATE FUNCTION freeway.build_aggregated_brn_road_freeway_final(v_groupid integer)
 	RETURNS VOID
 AS 
 $BODY$
@@ -65,5 +65,3 @@ END;
 	
 $BODY$
 LANGUAGE plpgsql VOLATILE;
-
-COMMENT ON FUNCTION freeway.build_aggregated_brn_road_freeway_final IS 'Functie die per groupid de tabel agg_aggregated_brn_road_freeway_final vult met de juiste data.';

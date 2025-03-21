@@ -107,9 +107,35 @@ CREATE TABLE substances (
  * De beschikbare datasets in de database.
  */
 CREATE TABLE dataset (
-	dataset_id integer NOT NULL,
-	dataset_omschrijving text NOT NULL,
+	dataset_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ,
+	dataset_omschrijving text NOT NULL UNIQUE,
 	datum_levering date NOT NULL,
 
 	CONSTRAINT dataset_pkey primary key (dataset_id)
+);
+
+
+/*
+ * basename
+ * --------
+ * De beschikbare basenames in de database.
+ */
+CREATE TABLE basename (
+    basename_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+    basename_omschrijving text UNIQUE,
+
+    CONSTRAINT basename_pkey PRIMARY KEY (basename_id)
+);
+
+
+/*
+ * bron
+ * ----
+ * De beschikbare bronomschrijvingen in de database.
+ */
+CREATE TABLE bron (
+    bron_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY,
+    bron_omschrijving text UNIQUE,
+    
+    CONSTRAINT bron_pkey PRIMARY KEY (bron_id)
 );

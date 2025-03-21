@@ -8,6 +8,4 @@ Het schema 'freeway' moet dus eerst bewust handmatig verwijderd worden.*/
  * The freeway schema contains tables, functions and views for the determination of the freeway aggregation.
  */
 CREATE SCHEMA freeway;
-
-COMMENT ON SCHEMA freeway IS 'The freeway schema contains tables, functions and views for the determination of the freeway aggregation.';
  
