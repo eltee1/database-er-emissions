@@ -1,6 +1,6 @@
 clear_log
 
-default_database_name "er-emissions_"
+default_database_name "m25_er-emissions"
 
 create_database :overwrite_existing
 

@@ -167,7 +167,7 @@ CREATE INDEX IF NOT EXISTS brn_road_transportation_geom_idx ON brn_road_transpor
  * ------------
  * 
  */
-CREATE TABLE IF NOT EXISTS brn_shipping
+CREATE TABLE brn_shipping
 (
     snr bigint,
     x_m bigint,
