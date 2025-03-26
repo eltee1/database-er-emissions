@@ -2,7 +2,7 @@
 # Product specific settings.
 #
 
-$product = :"er-emissions"    # The product these settings are for.
+$product = :"m25_er-emissions"    # The product these settings are for.
 
 #-------------------------------------
 

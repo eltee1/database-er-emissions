@@ -1,9 +1,10 @@
 /*
  * brn_textcolumns_toid
  * --------------------
- * Procedure die de kolommen dataset, basename en bronomscrhijving van de meegegeven tabel in koppel tabellen zet en vervangt door id's. Na deze actie worden de foreign_keys gezet naar de 
+ * Procedure die de kolommen dataset, basename en bronomschrijving van de meegegeven tabel in koppel tabellen zet en vervangt door id's. Na deze actie worden er foreign_keys gezet naar de 
  * tabellen dataset, basename en bron via de id's en vindt er een check plaats op inhoud. Klopt deze niet, dan wordt de hele actie teruggedraaid.
- * Hierdoor worden deze tabellen ongeveer 56% kleiner, hierdoor worden queries op de tabellen sneller uitgevoerd.
+ * Ook wordt een view aangemaakt die de originele data teruggeeft.
+ * Door deze actie worden de tabellen ongeveer 56% kleiner, naast de afname in grootte is een bijkomend voordeel dat queries op deze tabellen (veel) sneller worden uitgevoerd.
  * @param v_tablename De tabel waar de acties op moeten worden uitgevoerd.
  */
 CREATE OR REPLACE PROCEDURE brn_textcolumns_toid (v_tablename text)
@@ -14,7 +15,7 @@ DECLARE
 	v_verdict text;
 
 BEGIN
-	--aanmaken twee id-kolommen voor dataset en basename in de doeltabel
+	--aanmaken drie id-kolommen voor dataset, basename en bron in de doeltabel
 	RAISE NOTICE 'Maak de id-kolommen dataset_id, basename_id en bron_id aan in tabel % als deze nog niet bestaan...', v_tablename;
 	
 	v_sql := 'ALTER TABLE ' || v_tablename || ' ADD COLUMN IF NOT EXISTS dataset_id integer;';
@@ -96,15 +97,31 @@ BEGIN
 
 	IF v_verdict = 'true' THEN
 		BEGIN	
+			RAISE NOTICE 'check geslaagd; id-kolommen succesvol aangemaakt. Nu kolommen dataset, basename en bronomschrijving verwijderen uit % , en een view aanmaken die de brontabel aanvult met de texten ipv de ids.', v_tablename;
 			v_sql := 'ALTER TABLE ' || v_tablename || ' DROP COLUMN dataset;';
 			EXECUTE v_sql;
 			v_sql := 'ALTER TABLE ' || v_tablename || ' DROP COLUMN basename;';
 			EXECUTE v_sql;
 			v_sql := 'ALTER TABLE ' || v_tablename || ' DROP COLUMN bronomschrijving;';
 			EXECUTE v_sql;
-			
+
+			v_sql :=
+				'CREATE OR REPLACE VIEW ' || v_tablename || '_view AS
+				SELECT 
+					snr, x_m, y_m, q_g_s, hc_mw, h_m, r_m, s_m, dv, cat, area, ps, component, bron.bron_omschrijving as bronomschrijving, gcn_sector_id, substance_id, 
+					dataset.dataset_omschrijving as dataset, basename.basename_omschrijving as basename
+		
+				FROM ' || v_tablename || '
+					INNER JOIN dataset USING (dataset_id)
+					INNER JOIN basename USING (basename_id)
+					INNER JOIN bron USING (bron_id)
+				;';
+			EXECUTE v_sql;
+			v_sql := 'COMMENT ON VIEW ' || v_tablename || '_view IS ''View die de data terugeeft uit ' || v_tablename || ' , aangevuld met de bron-, dataset- en basename omschrijvingen ipv de ids.'';';
+			EXECUTE v_sql;
+		
 			COMMIT;
-			RAISE NOTICE 'check geslaagd; id-kolommen aangemaakt en kolommen dataset, basename en bronomschrijving verwijderd uit % , wijzigingen gecommit!', v_tablename;
+			RAISE NOTICE 'wijzigingen gecommit voor tabel %!', v_tablename;
 		END;
 	ELSE
 		BEGIN

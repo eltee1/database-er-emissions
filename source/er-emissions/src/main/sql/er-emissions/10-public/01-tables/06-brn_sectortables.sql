@@ -28,7 +28,7 @@ CREATE TABLE brn_agriculture (
 );
 
 CREATE INDEX IF NOT EXISTS brn_agriculture_idx ON brn_agriculture USING btree (gcn_sector_id ASC NULLS LAST, substance_id ASC NULLS LAST);
-CREATE INDEX IF NOT EXISTS brn_agriculture_geom_idx ON public.m25_brn_agriculture USING gist(st_setsrid(st_point((x_m::numeric + 0.1)::double precision, (y_m::numeric + 0.1)::double precision), 28992));
+CREATE INDEX IF NOT EXISTS brn_agriculture_geom_idx ON brn_agriculture USING gist(st_setsrid(st_point((x_m::numeric + 0.1)::double precision, (y_m::numeric + 0.1)::double precision), 28992));
 
 
 /*
@@ -158,8 +158,8 @@ CREATE TABLE brn_road_transportation (
     CONSTRAINT scale_factorss_fkey_substances FOREIGN KEY (substance_id) REFERENCES substances
 );
 
-CREATE INDEX IF NOT EXISTS brn_road_transportation_idx ON public.m25_brn_road_transportation USING btree (gcn_sector_id ASC NULLS LAST, substance_id ASC NULLS LAST)
-CREATE INDEX IF NOT EXISTS brn_road_transportation_geom_idx ON public.m25_brn_road_transportation USING gist (st_setsrid(st_point((x_m::numeric + 0.1)::double precision, (y_m::numeric + 0.1)::double precision), 28992));
+CREATE INDEX IF NOT EXISTS brn_road_transportation_idx ON brn_road_transportation USING btree (gcn_sector_id ASC NULLS LAST, substance_id ASC NULLS LAST);
+CREATE INDEX IF NOT EXISTS brn_road_transportation_geom_idx ON brn_road_transportation USING gist (st_setsrid(st_point((x_m::numeric + 0.1)::double precision, (y_m::numeric + 0.1)::double precision), 28992));
 
 
 /*
@@ -192,5 +192,5 @@ CREATE TABLE IF NOT EXISTS brn_shipping
     CONSTRAINT scale_factorss_fkey_substances FOREIGN KEY (substance_id) REFERENCES substances
 );
 
-CREATE INDEX IF NOT EXISTS brn_shipping_idx ON public.m25_brn_shipping USING btree (gcn_sector_id ASC NULLS LAST, substance_id ASC NULLS LAST);
-CREATE INDEX IF NOT EXISTS brn_shipping_geom_idx ON public.m25_brn_shipping USING gist (st_setsrid(st_point((x_m::numeric + 0.1)::double precision, (y_m::numeric + 0.1)::double precision), 28992));
+CREATE INDEX IF NOT EXISTS brn_shipping_idx ON brn_shipping USING btree (gcn_sector_id ASC NULLS LAST, substance_id ASC NULLS LAST);
+CREATE INDEX IF NOT EXISTS brn_shipping_geom_idx ON brn_shipping USING gist (st_setsrid(st_point((x_m::numeric + 0.1)::double precision, (y_m::numeric + 0.1)::double precision), 28992));
