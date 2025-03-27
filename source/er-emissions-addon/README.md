@@ -1,6 +1,6 @@
 # er-emissions-addon
 
-From here, the addon builds can be performed on a ER-emissions database. All addons are added in seperate schemas in the base-database.
+From here, the addon builds can be performed on a mxx-er-emissions base-database. All addons are added in seperate schemas in the base-database.
 
 
 ## File structure

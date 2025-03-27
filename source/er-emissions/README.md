@@ -1,6 +1,6 @@
-# er-emissions database
+# er-emissions
 
-This is the er-emissions database, based on the data from the "emissie registratie" (er).
+This is the mxx-er-emissions database, based on the data from the "emissie registratie" (er).
 
 ## File structure
 
@@ -17,9 +17,9 @@ This can be done with the following commands (might have to change `/` to `\` if
 Build database:
 From the folder `/database-er-emissions/source/er-emissions/`:
 
-Standard database name is "er-emissions", with the option --version '#', this is complemented with the git-hash: 
+Standard database name is "m25-er-emissions", with '-#', this is complemented with the git-hash: 
 ```sh
-ruby ../../../database-build/bin/Build.rb default.rb ./settings.rb --version '#'
+ruby ../../../database-build/bin/Build.rb default.rb ./settings.rb --database-name 'm25-er-emissions-#'
 ```
 
 Explanation: 
