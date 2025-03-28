@@ -7,9 +7,10 @@
 CREATE TABLE metadata (
 	table_name text NOT NULL,
 	filename text NOT NULL,
-	timestamp text DEFAULT to_char(clock_timestamp(), 'DD-MM-YYYY HH24:MI:SS.MS'),
+	timestamp_import text DEFAULT to_char(clock_timestamp(), 'DD-MM-YYYY HH24:MI:SS.MS'),
+	checksum_import bigint NULL,
+	checksum_change bigint NULL,
 	remarks text NULL,
-	checksum_hash bigint NULL,
 
 	CONSTRAINT metadata_pkey PRIMARY KEY (table_name)
 );

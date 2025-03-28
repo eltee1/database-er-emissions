@@ -196,7 +196,7 @@ LANGUAGE 'plpgsql';
  * Retourneert een tabel met geschaalde emissies van scenario 2 van gcn brondata per opgegeven jaar. 
  * @param v_year Het jaar waarvoor de data moet worden geretourneerd.
  */
- CREATE OR REPLACE FUNCTION gcn_brn_hist(v_year integer)
+CREATE OR REPLACE FUNCTION gcn_brn_hist(v_year integer)
 	RETURNS TABLE(snr bigint, x_m bigint, y_m bigint, hc_mw double precision, h_m real, r_m real, s_m real, dv smallint, cat bigint, 
 					area smallint, ps smallint, component character varying, bronomschrijving character varying, q_g_s double precision, 
 					gcn_sector_id integer, substance_id smallint, scale_factor double precision, scenario_id bigint, q_g_s_scaled double precision) AS

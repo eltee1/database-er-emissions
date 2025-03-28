@@ -63,6 +63,7 @@ CREATE TABLE brn_industry (
 CREATE INDEX IF NOT EXISTS brn_industry_idx ON brn_industry USING btree (gcn_sector_id ASC NULLS LAST, substance_id ASC NULLS LAST);
 CREATE INDEX IF NOT EXISTS brn_industry_geom_idx ON brn_industry USING gist (st_setsrid(st_point((x_m::numeric + 0.1)::double precision, (y_m::numeric + 0.1)::double precision), 28992));
 
+
 /*
  * brn_other
  * ---------
