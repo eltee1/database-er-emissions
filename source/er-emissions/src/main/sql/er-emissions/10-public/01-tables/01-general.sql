@@ -110,7 +110,7 @@ CREATE TABLE dataset (
 	dataset_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ,
 	dataset_omschrijving text NOT NULL UNIQUE,
 	basename_omschrijving text NOT NULL UNIQUE,
-	datum_levering date NOT NULL,
+	datum_levering date NULL,
 
 	CONSTRAINT dataset_pkey primary key (dataset_id)
 );

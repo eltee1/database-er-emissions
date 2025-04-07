@@ -18,11 +18,11 @@ LANGUAGE plpgsql IMMUTABLE;
 
 
 /*
- * fill_metadata_checksum
- * ----------------------
+ * checksum_change
+ * ---------------
  * Functie die de checksum_change- kolom in de metadata-tabel vult aan de hand van de corresponderende table_name kolom, met de waarde zoals gegeven door de functie system.checksum_table.
  */
-CREATE OR REPLACE FUNCTION system.fill_metadata_checksum()
+CREATE OR REPLACE FUNCTION system.checksum_metadata()
 	RETURNS VOID AS
 $BODY$
 DECLARE
@@ -48,7 +48,7 @@ $BODY$
  * ------------
  * Functie die voor alle tabellen in het public-schema de checksum_change- kolom in de metadata-tabel vult, met de waarde zoals gegeven door de functie system.checksum_table..
  */
-CREATE OR REPLACE FUNCTION system.checksum_all()
+CREATE OR REPLACE FUNCTION system.checksum_public_all()
 	RETURNS void AS
 $BODY$
 DECLARE

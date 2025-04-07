@@ -1,4 +1,22 @@
 /*
+ * checksum_table
+ * --------------
+ * Functie die een checksum-waarde retourneert voor een gegeven table_name. 
+ * Wordt gebruikt door system.fill_metadata_checksum, om tabellen op inhoud en structuur te kunnen vergelijk tussen databases op verschillende locaties.
+ * @param v_table De tabelnaam waarvan de checksum moet worden gegenereerd.
+ */
+CREATE OR REPLACE FUNCTION system.checksum_table(v_table text)
+	RETURNS SETOF bigint AS
+$BODY$
+BEGIN
+	RETURN QUERY EXECUTE
+		format('SELECT COALESCE(SUM(hashtext((checksum_table.*)::text)), 0)::bigint AS checksum FROM %I AS checksum_table', v_table);
+END;
+	
+$BODY$
+LANGUAGE plpgsql IMMUTABLE;
+
+/*
  * load_table
  * ----------
  * Function to copy the data of the supplied file to the supplied table.
@@ -19,6 +37,7 @@ DECLARE
 	extra_options text = '';
 	delimiter_to_use text = E'\t';
 	sql text;
+	v_checksum bigint;
 BEGIN
 	-- set encoding
 	EXECUTE 'SHOW client_encoding' INTO current_encoding;
@@ -42,11 +61,14 @@ BEGIN
 	RAISE NOTICE '% Done @ %', sql, timeofday();
 
 	IF document_metadata THEN
+		v_checksum := system.checksum_table(tablename::text);
 		RAISE NOTICE '% Insert new or update existing imported file in metadata table @ %', sql, timeofday();
 		sql:= 'DO $$ BEGIN IF EXISTS (SELECT table_name FROM metadata WHERE table_name = ''' || tablename || ''') THEN
 				UPDATE metadata SET filename = SPLIT_PART(''' || filename || ''', ''/'', -1),
-				timestamp = to_char(clock_timestamp(), ''DD-MM-YYYY HH24:MI:SS.MS'') WHERE table_name = ''' || tablename || ''';
-				ELSE INSERT INTO metadata (table_name, filename) VALUES (''' || tablename || ''', SPLIT_PART(''' || filename || ''', ''/'', -1)); 
+				timestamp = to_char(clock_timestamp(), ''DD-MM-YYYY HH24:MI:SS.MS'') ,
+				checksum_import = ' || v_checksum || '
+				WHERE table_name = ''' || tablename || ''';
+				ELSE INSERT INTO metadata (table_name, filename, checksum_import) VALUES (''' || tablename || ''', SPLIT_PART(''' || filename || ''', ''/'', -1), ' || v_checksum || '); 
 				END IF ; 
 				END $$';
 		EXECUTE sql;
