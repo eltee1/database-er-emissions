@@ -1,22 +1,4 @@
 /*
- * checksum_table
- * --------------
- * Functie die een checksum-waarde retourneert voor een gegeven table_name. 
- * Wordt gebruikt door system.fill_metadata_checksum, om tabellen op inhoud en structuur te kunnen vergelijk tussen databases op verschillende locaties.
- * @param v_table De tabelnaam waarvan de checksum moet worden gegenereerd.
- */
-CREATE OR REPLACE FUNCTION system.checksum_table(v_table text)
-	RETURNS SETOF bigint AS
-$BODY$
-BEGIN
-	RETURN QUERY EXECUTE
-		format('SELECT COALESCE(SUM(hashtext((checksum_table.*)::text)), 0)::bigint AS checksum FROM %I AS checksum_table', v_table);
-END;
-	
-$BODY$
-LANGUAGE plpgsql IMMUTABLE;
-
-/*
  * load_table
  * ----------
  * Function to copy the data of the supplied file to the supplied table.
