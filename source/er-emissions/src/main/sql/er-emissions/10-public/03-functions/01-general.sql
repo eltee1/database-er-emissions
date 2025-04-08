@@ -20,10 +20,10 @@ LANGUAGE plpgsql IMMUTABLE;
 /*
  * checksum_metadata
  * -----------------
- * Functie die de checksum_change- kolom in de metadata-tabel vult aan de hand van de corresponderende table_name kolom, met de waarde zoals gegeven door de functie system.checksum_table.
+ * Functie die de checksum_change- kolom in de metadata-tabel vult voor alle tabellen die in de metadata tabel staan, met de waarde zoals gegeven door de functie system.checksum_table.
  */
 CREATE OR REPLACE FUNCTION system.checksum_metadata()
-	RETURNS VOID AS
+	RETURNS void AS
 $BODY$
 DECLARE
 	v_tablename text;
@@ -46,6 +46,34 @@ END;
 $BODY$
 	LANGUAGE plpgsql volatile;
 
+
+/*
+ * checksum_singe_table
+ * --------------------
+ * Functie die voor een specifieke tabel de checksum_change- kolom in de metadata-tabel vult met de waarde zoals gegeven door de functie system.checksum_table.
+ */
+CREATE OR REPLACE FUNCTION system.checksum_singe_table(v_tablename text)
+	RETURNS void AS
+$BODY$
+DECLARE
+	v_checksum bigint;
+BEGIN
+	RAISE NOTICE 'checksum_change bepalen voor: %...', v_tablename;
+		
+	v_checksum:= system.checksum_table(v_tablename);
+	
+	IF EXISTS (SELECT * FROM metadata WHERE table_name = v_tablename) THEN
+		UPDATE metadata 
+			SET 
+				checksum_change = v_checksum,
+				timestamp_checksum_change = to_char(clock_timestamp(), 'DD-MM-YYYY HH24:MI:SS.MS')
+			WHERE table_name = v_tablename;
+	ELSE
+		INSERT INTO metadata (table_name, checksum_change, timestamp_checksum_change) VALUES (v_tablename, v_checksum, to_char(clock_timestamp(), 'DD-MM-YYYY HH24:MI:SS.MS'));
+	END IF;
+END;
+$BODY$
+	LANGUAGE plpgsql volatile;
 
 /*
  * checksum_public_tables

@@ -71,7 +71,7 @@ BEGIN
 
 	IF v_verdict = 'true' THEN
 		BEGIN	
-			RAISE NOTICE 'check geslaagd; id-kolom succesvol aangemaakt. Nu kolommen dataset, basename verwijderen uit % , en een view aanmaken die de brontabel aanvult met de texten ipv de ids.', v_tablename;
+			RAISE NOTICE 'check geslaagd; id-kolom succesvol aangemaakt. Nu kolommen dataset en basename verwijderen uit %, en een view aanmaken die de brontabel aanvult met de texten ipv de ids.', v_tablename;
 			v_sql := 'ALTER TABLE ' || v_tablename || ' DROP COLUMN dataset;';
 			EXECUTE v_sql;
 			v_sql := 'ALTER TABLE ' || v_tablename || ' DROP COLUMN basename;';

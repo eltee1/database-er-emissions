@@ -155,7 +155,7 @@ CREATE TABLE emissie_totalen (
     emissie_kg double precision NOT NULL,
 
     CONSTRAINT emissie_totalen_pkey PRIMARY KEY (dataset_id),
-    CONSTRAINT emissie_totalen_fkey_dataset FOREIGN KEY (dataset_id) REFERENCES dataset,
+    --CONSTRAINT emissie_totalen_fkey_dataset FOREIGN KEY (dataset_id) REFERENCES dataset,
     CONSTRAINT emissie_totalen_fkey_substances FOREIGN KEY (substance_id) REFERENCES substances,
     CONSTRAINT emissie_totalen_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors
 );
