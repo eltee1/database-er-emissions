@@ -2,7 +2,7 @@
  * checksum_table
  * --------------
  * Functie die een checksum-waarde retourneert voor een gegeven table_name. 
- * Wordt gebruikt door system.fill_metadata_checksum, om tabellen op inhoud en structuur te kunnen vergelijk tussen databases op verschillende locaties.
+ * Wordt gebruikt door functies die de checksum invullen in de metadata tabel, om hiermee tabellen op inhoud te kunnen vergelijken tussen databases op verschillende locaties.
  * @param v_table De tabelnaam waarvan de checksum moet worden gegenereerd.
  */
 CREATE OR REPLACE FUNCTION system.checksum_table(v_table text)
@@ -26,18 +26,19 @@ CREATE OR REPLACE FUNCTION system.checksum_metadata()
 	RETURNS VOID AS
 $BODY$
 DECLARE
-	v_table text;
+	v_tablename text;
 	v_checksum bigint;
 BEGIN
 	FOR v_table IN 
 		SELECT table_name FROM metadata
 	LOOP
-		v_checksum:= system.checksum_table(v_table);
+		RAISE NOTICE 'checksum_change bepalen voor: %...', v_tablename;
+		
+		v_checksum:= system.checksum_table(v_tablename);
 		
 		UPDATE metadata SET checksum_change = v_checksum 
-			WHERE table_name = v_table;
+			WHERE table_name = v_tablename;
 	END LOOP;
-
 END;
 $BODY$
 	LANGUAGE plpgsql volatile;
@@ -46,9 +47,9 @@ $BODY$
 /*
  * checksum_all
  * ------------
- * Functie die voor alle tabellen in het public-schema de checksum_change- kolom in de metadata-tabel vult, met de waarde zoals gegeven door de functie system.checksum_table..
+ * Functie die voor alle tabellen in het public-schema de checksum_change- kolom in de metadata-tabel vult, met de waarde zoals gegeven door de functie system.checksum_table.
  */
-CREATE OR REPLACE FUNCTION system.checksum_public_all()
+CREATE OR REPLACE FUNCTION system.checksum_public_tables()
 	RETURNS void AS
 $BODY$
 DECLARE
@@ -66,7 +67,9 @@ BEGIN
 			ORDER BY table_name
 	LOOP
 		RAISE NOTICE 'checksum_change bepalen voor: %...', v_tablename;
+		
 		v_checksum := system.checksum_table(v_tablename);
+		
 		IF EXISTS (SELECT * FROM metadata WHERE table_name = v_tablename) THEN
 			UPDATE metadata SET checksum_change = v_checksum WHERE table_name = v_tablename;
 		ELSE
@@ -77,35 +80,3 @@ BEGIN
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
-
-
-/*
- * fill_metadata_checksum_trigger
- * ------------------------------
- * Trigger-functie die de checksum_hash- kolomn in de metadata-tabel vult aan de hand vanuit de trigger op elke tabel in het public-schema.
- * Als de inhoud van een tabel in public wordt aangepast, dan gaat de trigger af en wordt de checksum-hash van de betreffende tabel in tabel metadata geupdated.
- * TG_RELNAME = de tabelnaam die via de trigger wordt doorgegeven.
- */
-CREATE OR REPLACE FUNCTION system.fill_metadata_checksum_trigger()
-	RETURNS trigger AS
-$BODY$
-DECLARE
-	v_checksum bigint := system.checksum_table(TG_RELNAME::text);
-BEGIN
-	IF EXISTS (SELECT * FROM metadata WHERE table_name = TG_RELNAME::text) THEN
-		BEGIN
-			UPDATE metadata SET checksum_hash = v_checksum 
-				WHERE table_name = TG_RELNAME::text;
-			RETURN NULL;
-		END;
-	ELSE
-		BEGIN
-			INSERT INTO metadata (table_name, filename, checksum_hash)
-				VALUES (TG_RELNAME::text, 'data niet via load_table geimporteerd of handmatig aangepast', v_checksum);
-			RETURN NULL;
-		END;
-	END IF;
-END;
-
-$BODY$
-	LANGUAGE plpgsql;

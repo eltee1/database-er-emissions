@@ -64,11 +64,11 @@ BEGIN
 		v_checksum := system.checksum_table(tablename::text);
 		RAISE NOTICE '% Insert new or update existing imported file in metadata table @ %', sql, timeofday();
 		sql:= 'DO $$ BEGIN IF EXISTS (SELECT table_name FROM metadata WHERE table_name = ''' || tablename || ''') THEN
-				UPDATE metadata SET filename = SPLIT_PART(''' || filename || ''', ''/'', -1),
-				timestamp = to_char(clock_timestamp(), ''DD-MM-YYYY HH24:MI:SS.MS'') ,
+				UPDATE metadata SET filename_import = SPLIT_PART(''' || filename || ''', ''/'', -1),
+				timestamp_import = to_char(clock_timestamp(), ''DD-MM-YYYY HH24:MI:SS.MS'') ,
 				checksum_import = ' || v_checksum || '
 				WHERE table_name = ''' || tablename || ''';
-				ELSE INSERT INTO metadata (table_name, filename, checksum_import) VALUES (''' || tablename || ''', SPLIT_PART(''' || filename || ''', ''/'', -1), ' || v_checksum || '); 
+				ELSE INSERT INTO metadata (table_name, filename_import, checksum_import, timestamp_import) VALUES (''' || tablename || ''', SPLIT_PART(''' || filename || ''', ''/'', -1), ' || v_checksum || ', to_char(clock_timestamp(), ''DD-MM-YYYY HH24:MI:SS.MS'')); 
 				END IF ; 
 				END $$';
 		EXECUTE sql;

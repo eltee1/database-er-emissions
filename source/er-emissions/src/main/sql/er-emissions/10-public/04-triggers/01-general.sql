@@ -1,4 +1,4 @@
-/*
+ /*
  * fill_metadata_checksum_trigger
  * ------------------------------
  * Trigger-functie die de checksum_hash- kolom in de metadata-tabel vult op elke tabel in het public-schema.
@@ -13,15 +13,17 @@ DECLARE
 BEGIN
 	IF EXISTS (SELECT * FROM metadata WHERE table_name = TG_RELNAME::text) THEN
 		BEGIN
-						
-			UPDATE metadata SET checksum_hash = v_checksum 
+			UPDATE metadata 
+				SET 
+					checksum_change = v_checksum,
+					timestamp_checksum_change = to_char(clock_timestamp(), 'DD-MM-YYYY HH24:MI:SS.MS')
 				WHERE table_name = TG_RELNAME::text;
 			RETURN NULL;
 		END;
 	ELSE
 		BEGIN
-			INSERT INTO metadata (table_name, filename, checksum_hash) 
-				VALUES (TG_RELNAME::text, 'niet via load_table geimporteerd', v_checksum);
+			INSERT INTO metadata (table_name, checksum_change, timestamp_checksum_change) 
+				VALUES (TG_RELNAME::text, v_checksum, to_char(clock_timestamp(), 'DD-MM-YYYY HH24:MI:SS.MS'));
 			RETURN NULL;
 		END;
 	END IF;
