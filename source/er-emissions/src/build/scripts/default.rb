@@ -1,7 +1,5 @@
 clear_log
 
-default_database_name "m25-er-emissions"
-
 create_database :overwrite_existing
 
 check_datasources
