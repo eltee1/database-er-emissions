@@ -20,8 +20,7 @@ CREATE TABLE brn_agriculture_m25 (
     bronomschrijving character varying(110),
     gcn_sector_id integer,
     substance_id smallint,
-    basename character varying(150),
-    dataset character varying(350),
+    dataset_id integer,
 
     CONSTRAINT scale_factors_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors,
     CONSTRAINT scale_factorss_fkey_substances FOREIGN KEY (substance_id) REFERENCES substances
@@ -53,8 +52,7 @@ CREATE TABLE brn_industry_m25 (
     bronomschrijving character varying(110),
     gcn_sector_id integer,
     substance_id smallint,
-    basename character varying(150),
-    dataset character varying(350),
+    dataset_id integer,
 
     CONSTRAINT scale_factors_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors,
     CONSTRAINT scale_factorss_fkey_substances FOREIGN KEY (substance_id) REFERENCES substances
@@ -86,8 +84,7 @@ CREATE TABLE brn_other_m25 (
     bronomschrijving character varying(110),
     gcn_sector_id integer,
     substance_id smallint,
-    basename character varying(150),
-    dataset character varying(350),
+    dataset_id integer,
 
     CONSTRAINT scale_factors_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors,
     CONSTRAINT scale_factorss_fkey_substances FOREIGN KEY (substance_id) REFERENCES substances
@@ -119,9 +116,7 @@ CREATE TABLE brn_road_freeway_m25 (
     bronomschrijving character varying(110),
     gcn_sector_id integer,
     substance_id smallint,
-    basename character varying(150),
-    dataset character varying(350),
-    brn_road_freeway_id integer, 
+    dataset_id integer,
 
     CONSTRAINT scale_factors_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors,
     CONSTRAINT scale_factorss_fkey_substances FOREIGN KEY (substance_id) REFERENCES substances
@@ -153,8 +148,7 @@ CREATE TABLE brn_road_transportation_m25 (
     bronomschrijving character varying(110),
     gcn_sector_id integer,
     substance_id smallint,
-    basename character varying(150),
-    dataset character varying(350),
+    dataset_id integer,
 
     CONSTRAINT scale_factors_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors,
     CONSTRAINT scale_factorss_fkey_substances FOREIGN KEY (substance_id) REFERENCES substances
@@ -187,8 +181,7 @@ CREATE TABLE brn_shipping_m25
     bronomschrijving character varying(110),
     gcn_sector_id integer,
     substance_id smallint,
-    basename character varying(150),
-    dataset character varying(350),
+    dataset_id integer,
 
     CONSTRAINT scale_factors_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES gcn_sectors,
     CONSTRAINT scale_factorss_fkey_substances FOREIGN KEY (substance_id) REFERENCES substances
