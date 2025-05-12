@@ -67,7 +67,7 @@ SELECT
  * source_characteristics_view
  * ---------------------------
  * View die
- */  
+ */
 CREATE OR REPLACE VIEW source_characteristics_view AS
 SELECT 
    gcn_sector_id,

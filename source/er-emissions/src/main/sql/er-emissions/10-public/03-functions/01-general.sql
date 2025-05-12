@@ -75,6 +75,7 @@ END;
 $BODY$
 	LANGUAGE plpgsql volatile;
 
+
 /*
  * checksum_public_tables
  * ----------------------

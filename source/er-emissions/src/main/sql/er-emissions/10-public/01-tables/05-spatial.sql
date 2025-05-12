@@ -9,7 +9,7 @@ CREATE TABLE geo_vierkanten (
 	r_m integer NOT NULL,
 	geometry geometry NOT NULL,
 
-	CONSTRAINT geo_vierkanten_pkey PRIMARY KEY (ai_code)
+	CONSTRAINT geo_vierkanten_pkey PRIMARY KEY (tle_id, ai_code)
 );
 
 
@@ -23,11 +23,9 @@ CREATE TABLE geo_verfijnd (
 	ai_code text NOT NULL,
 	geometry geometry NOT NULL,
 
-	CONSTRAINT geo_verfijnd_pkey PRIMARY KEY (ai_code)
-
+	CONSTRAINT geo_verfijnd_pkey PRIMARY KEY (tle_id, ai_code)
 );
 
-CREATE UNIQUE INDEX idx_geo_verfijnd ON geo_verfijnd (tle_id,ai_code);
 CREATE INDEX idx_geo_verfijnd_gist ON geo_verfijnd USING GIST (geometry);
 
 
@@ -55,7 +53,7 @@ CREATE TABLE geo_eri (
 	uitstroomopening_m2 integer NOT NULL,
 	geometry geometry NOT NULL,
 
-	CONSTRAINT geo_eri_pkey PRIMARY KEY (ai_code)
+	CONSTRAINT geo_eri_pkey PRIMARY KEY (tle_id, ai_code)
 );
 
 
@@ -68,7 +66,7 @@ CREATE TABLE geo_vliegvelden (
 	tle_id integer NOT NULL, 
 	ai_code text NOT NULL, 
 	naam text NOT NULL, 
-	nic  text NOT NULL, 
+	nic text NOT NULL, 
 	volgnummer integer NOT NULL,
 	soort text NOT NULL, 
 	lengte integer NOT NULL,
@@ -78,7 +76,7 @@ CREATE TABLE geo_vliegvelden (
 	ymidden integer NOT NULL,
 	geometry geometry NOT NULL,
 
-	CONSTRAINT geo_vliegvelden_pkey PRIMARY KEY (ai_code)
+	CONSTRAINT geo_vliegvelden_pkey PRIMARY KEY (tle_id, ai_code)
 );
 
 
@@ -92,9 +90,9 @@ CREATE TABLE verfijning_type (
 	geo_layer text NOT NULL, 
 	geo_fclass_er text NOT NULL,
 	geo_set_type text NOT NULL,
-	levering text NOT NULL--,
+	levering text NOT NULL,
 
-	--CONSTRAINT verfijning_type_pkey PRIMARY KEY () --UNIEKE IDENTITY kolom aanmaken voor PKEY?
+	CONSTRAINT verfijning_type_pkey PRIMARY KEY (tle_id)
 );
 
 
@@ -113,7 +111,7 @@ CREATE TABLE wegen (
 	shape_length double precision NOT NULL,
 	geometry geometry NOT NULL,
 
-	CONSTRAINT wegen_pkey PRIMARY KEY (ai_code)
+	CONSTRAINT wegen_pkey PRIMARY KEY (tle_id, ai_code)
 );
 
 
@@ -123,7 +121,7 @@ CREATE TABLE wegen (
  * 
  */
 CREATE TABLE giab (
-	tle_id  integer NOT NULL,
+	tle_id integer NOT NULL,
 	ai_code text NOT NULL,
 	xco integer NOT NULL,
 	yco integer NOT NULL,
@@ -136,7 +134,7 @@ CREATE TABLE giab (
 	giabstatus text NOT NULL,
 	geometry geometry NOT NULL,
 
-	CONSTRAINT giab_pkey PRIMARY KEY (ai_code)
+	CONSTRAINT giab_pkey PRIMARY KEY (tle_id, ai_code)
 );
 
 
@@ -146,13 +144,13 @@ CREATE TABLE giab (
  * 
  */
 CREATE TABLE initiator (
-	tle_id  integer NOT NULL,
+	tle_id integer NOT NULL,
 	ai_code text NOT NULL,
 	zone_12_mijl text NOT NULL,
 	r_m integer NOT NULL,
 	geometry geometry NOT NULL,
 
-	CONSTRAINT initiator_key PRIMARY KEY (ai_code)
+	CONSTRAINT initiator_key PRIMARY KEY (tle_id, ai_code)
 );
 
 
@@ -162,7 +160,7 @@ CREATE TABLE initiator (
  * 
  */
 CREATE TABLE mestverwerkers (
-	tle_id  integer NOT NULL,
+	tle_id integer NOT NULL,
 	ai_code text NOT NULL,
 	nummer integer NOT NULL,
 	vnr integer NOT NULL,
@@ -179,7 +177,7 @@ CREATE TABLE mestverwerkers (
 	sbi_code text NOT NULL,
 	geometry geometry NOT NULL,
 
-	CONSTRAINT mestverwerkers_key PRIMARY KEY (ai_code)
+	CONSTRAINT mestverwerkers_key PRIMARY KEY (tle_id, ai_code)
 );
 
 
@@ -194,7 +192,7 @@ CREATE TABLE spoorwegen (
 	shape_length double precision NOT NULL,
 	geometry geometry NOT NULL,
 
-	CONSTRAINT spoorwegen_key PRIMARY KEY (ai_code)
+	CONSTRAINT spoorwegen_key PRIMARY KEY (tle_id, ai_code)
 );
 
 
@@ -211,7 +209,7 @@ CREATE TABLE binnenvaart (
 	shape_length double precision NOT NULL,
 	geometry geometry NOT NULL,
 
-	CONSTRAINT binnenvaart_key PRIMARY KEY (ai_code)
+	CONSTRAINT binnenvaart_key PRIMARY KEY (tle_id, ai_code)
 );
 
 
@@ -233,5 +231,5 @@ CREATE TABLE recreatievaart (
 	vwv_naam text NOT NULL,
 	geometry geometry NOT NULL,
 
-	CONSTRAINT recreatievaart_key PRIMARY KEY (ai_code)
+	CONSTRAINT recreatievaart_key PRIMARY KEY (tle_id, ai_code)
 );

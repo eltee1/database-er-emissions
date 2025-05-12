@@ -70,7 +70,7 @@ SELECT
 	emission_year,
 	sector,
 	'NH3' AS substance,
-	total_summed_emission / 1000000  AS emissie_in_kton
+	total_summed_emission / 1000000 AS emissie_in_kton
 
 	FROM total_emissions
 

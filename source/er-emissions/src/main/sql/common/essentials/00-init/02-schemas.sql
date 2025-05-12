@@ -12,3 +12,11 @@ CREATE SCHEMA system;
  * The report schema contains tables and views used for rapporting purposes.
  */
 CREATE SCHEMA report;
+
+
+/*
+ * check
+ * -----
+ * The check schema...
+ */
+CREATE SCHEMA check;

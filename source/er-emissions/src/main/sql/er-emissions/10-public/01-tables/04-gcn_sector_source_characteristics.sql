@@ -14,10 +14,8 @@ CREATE TABLE gcn_sector_source_characteristics (
 
 	CONSTRAINT gcn_sector_source_characteristics_pkey PRIMARY KEY (gcn_sector_id, substance_id),
 	CONSTRAINT gcn_sector_source_characteristics_fkey_gcn_sectors FOREIGN KEY (gcn_sector_id) REFERENCES public.gcn_sectors (gcn_sector_id),
-    CONSTRAINT gcn_sector_source_characteristics_fkey_gcn_substances FOREIGN KEY (substance_id) REFERENCES public.substances (substance_id) 
+	CONSTRAINT gcn_sector_source_characteristics_fkey_gcn_substances FOREIGN KEY (substance_id) REFERENCES public.substances (substance_id) 
 );
-
---CREATE UNIQUE INDEX idx_gcn_sector_source_characteristics ON gcn_sector_source_characteristics (gcn_sector_id, substance_id); -- is dubbel, er is ook al een PKEY met dezelfde kolommen.
 
 
 /*

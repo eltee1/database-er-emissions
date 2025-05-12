@@ -50,7 +50,7 @@ CREATE DOMAIN year_type AS smallint
  * Het referentie jaar kan hierdoor afwijken van het achtergrond-depositie jaar
  */
 CREATE TYPE year_category_type AS ENUM
-    ('source', 'past', 'last', 'future', 'reference');
+	('source', 'past', 'last', 'future', 'reference');
 
 
 /*
