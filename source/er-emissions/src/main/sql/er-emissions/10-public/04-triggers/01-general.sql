@@ -9,11 +9,11 @@ CREATE OR REPLACE FUNCTION system.fill_metadata_checksum_trigger()
 	RETURNS trigger AS
 $BODY$
 DECLARE
-	v_checksum bigint:= system.checksum_table(TG_RELNAME::text);
+	v_checksum bigint:= checks.checksum_table(TG_RELNAME::text);
 BEGIN
-	IF EXISTS (SELECT * FROM metadata WHERE table_name = TG_RELNAME::text) THEN
+	IF EXISTS (SELECT * FROM checks.metadata WHERE table_name = TG_RELNAME::text) THEN
 		BEGIN
-			UPDATE metadata 
+			UPDATE checks.metadata 
 				SET 
 					checksum_change = v_checksum,
 					timestamp_checksum_change = to_char(clock_timestamp(), 'DD-MM-YYYY HH24:MI:SS.MS')
@@ -22,7 +22,7 @@ BEGIN
 		END;
 	ELSE
 		BEGIN
-			INSERT INTO metadata (table_name, checksum_change, timestamp_checksum_change) 
+			INSERT INTO checks.metadata (table_name, checksum_change, timestamp_checksum_change) 
 				VALUES (TG_RELNAME::text, v_checksum, to_char(clock_timestamp(), 'DD-MM-YYYY HH24:MI:SS.MS'));
 			RETURN NULL;
 		END;
@@ -52,7 +52,6 @@ BEGIN
 			WHERE
 				table_type = 'BASE TABLE'
 				AND table_schema IN ('public')
-				AND table_name <> 'metadata'
 			ORDER BY table_name
 	LOOP
 		v_sql := 'CREATE TRIGGER iut_' || v_table_name || '_metadata_update' || ' AFTER INSERT OR UPDATE ON public.' 
@@ -83,7 +82,6 @@ BEGIN
 			WHERE
 				table_type = 'BASE TABLE'
 				AND table_schema IN ('public')
-				AND table_name <> 'metadata'
 			ORDER BY table_name
 	LOOP
 		v_sql := 'DROP TRIGGER IF EXISTS iut_' || v_table_name || '_metadata_update ON ' || v_table_name || ' ;' ;

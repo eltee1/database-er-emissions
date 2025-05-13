@@ -20,46 +20,26 @@ SELECT
       INNER JOIN geo_verfijnd USING (tle_id, ai_code)
 ;
 
-
 /*
- * check_totals_view
- * -----------------
- * View die
- */ 
-CREATE OR REPLACE VIEW check_totals_view AS
+ * vierkanten_emissies_geregionaliseerd_view
+ * -----------------------------------------
+ * View die (zit ook SO2 en PM10)
+ */
+CREATE OR REPLACE VIEW vierkanten_emissies_geregionaliseerd_view AS
 SELECT 
-   emissiejaar,
-   gcn_sector_id,
-   er_stof_code,
-   substance_id,
-   gcn_stof_code,
-   em_nt,
-   em_reg,
-   (em_nt - em_reg) AS verschil
+   em.tle_id,
+   em.ai_code,
+   substances.substance_id,
+   substances.gcn_stof_code,
+   em.er_stof_code,
+   em.gcn_sector_id,
+   em.emissiejaar,
+   em.emissie_kg,
+   geo_vierkanten.geometry
 
-   FROM 
-      (SELECT 
-         emissiejaar,
-         er_stof_code,
-         LEFT(er_indeling_code, 4)::integer AS gcn_sector_id,
-         ROUND(emissie_kg::numeric, 3) AS em_nt
-      
-         FROM er_emissie_nationaal_erc
-      ) AS nt
-
-      INNER JOIN 
-         (SELECT 
-            emissiejaar,
-            gcn_sector_id,
-            er_stof_code,
-            ROUND(sum(emissie_kg)::numeric, 3) AS em_reg
-         
-            FROM verfijnde_emissies_geregionaliseerd_view
-            
-            GROUP BY emissiejaar, gcn_sector_id, er_stof_code
-         ) AS reg USING (emissiejaar, gcn_sector_id, er_stof_code)
-   
+   FROM er_emissie_vierkanten AS em
       INNER JOIN substances USING (er_stof_code)
+      INNER JOIN geo_vierkanten USING (tle_id, ai_code)
 ;
 
 

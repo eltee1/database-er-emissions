@@ -22,9 +22,9 @@ sector_emissions_per_sector AS (
 			WHEN gcn_sectors.sector_id = 4112 THEN 'Stallen Varkens'
 			ELSE CAST(gcn_sectors.sector_id AS text)
 		END AS sector,
-		SUM(emissie_kg) AS summed_emission 
+		SUM(emissie_kg) AS summed_emission
 		
-		FROM emissie_totalen 
+		FROM er_emissie_totalen
 			INNER JOIN gcn_sectors USING (gcn_sector_id)
 			INNER JOIN pbl_sectors USING (gcn_sector_id)
 			INNER JOIN dataset USING (dataset_id)
@@ -37,6 +37,7 @@ sector_emissions_per_sector AS (
 		GROUP BY dataset_omschrijving, jaar, gcn_sectors.sector_id, substance_id
 
 ),
+
 total_emissions AS (
 	SELECT 
 		dataset,
@@ -70,7 +71,7 @@ SELECT
 	emission_year,
 	sector,
 	'NH3' AS substance,
-	total_summed_emission / 1000000 AS emissie_in_kton
+	total_summed_emission / 1000000  AS emissie_in_kton
 
 	FROM total_emissions
 
@@ -101,7 +102,7 @@ sector_emissions_per_sector AS (
 		END AS sector,
 		SUM(emissie_kg) AS summed_emission --m25: kolomnaam emissie_kg
 		
-		FROM emissie_totalen 
+		FROM er_emissie_totalen 
 			INNER JOIN gcn_sectors USING (gcn_sector_id)
 			INNER JOIN pbl_sectors USING (gcn_sector_id)
 			INNER JOIN dataset USING (dataset_id)
@@ -167,7 +168,7 @@ WITH emissions_all_sectors AS (
 		substance_id,
 		sum(emissie_kg) AS summed_emission
 
-		FROM emissie_totalen
+		FROM er_emissie_totalen
 			INNER JOIN pbl_sectors USING (gcn_sector_id)
 			INNER JOIN dataset USING (dataset_id)
 			
@@ -228,7 +229,7 @@ WITH emissions_all_sectors AS (
 		substance_id,
 		sum(emissie_kg) AS summed_emission
 
-		FROM emissie_totalen
+		FROM er_emissie_totalen
 			INNER JOIN pbl_sectors USING (gcn_sector_id)
 			INNER JOIN dataset USING (dataset_id)
 		

@@ -102,15 +102,29 @@ CREATE TABLE substances (
 
 
 /*
- * dataset
- * -------
- * De beschikbare datasets/baasename combinaties in de database.
+ * brnset
+ * ------
+ * De beschikbare datasets/baasename combinaties in de database. De oorspronkelijk bedachte naam was "dataset", echter deze wordt al gebruikt door de levering van de er-data.
  */
-CREATE TABLE dataset (
-	dataset_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ,
+CREATE TABLE brnset (
+	bnrset_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ,
 	dataset_omschrijving text NOT NULL UNIQUE,
 	basename_omschrijving text NOT NULL UNIQUE,
 	datum_levering date NULL,
 
-	CONSTRAINT dataset_pkey primary key (dataset_id)
+	CONSTRAINT brnset_pkey primary key (bnrset_id)
+);
+
+
+/*
+ * dataset
+ * -------
+ * De beschikbare datasets van de er-leveringen.
+ */
+CREATE TABLE dataset (
+    dataset_id integer NOT NULL,
+    dataset_omschrijving text,
+    datum_levering text,
+    
+    CONSTRAINT dataset_pkey PRIMARY KEY (dataset_id)
 );
