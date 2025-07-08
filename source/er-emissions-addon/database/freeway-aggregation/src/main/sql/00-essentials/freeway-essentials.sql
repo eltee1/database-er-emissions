@@ -1,6 +1,6 @@
 /*de volgende regel staat expliciet uit, zodat de build faalt als het schema al bestaat; zo is degene die de build start, zich ervan bewust dat hij/zij op het punt staat een lange build opnieuw te starten. 
 Het schema 'freeway' moet dus eerst bewust handmatig verwijderd worden.*/
---DROP SCHEMA IF EXISTS freeway; 
+-- DROP SCHEMA IF EXISTS freeway; 
 
 /*
  * freeway

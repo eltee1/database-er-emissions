@@ -2,7 +2,7 @@
 # Product specific settings.
 #
 
-$product = :"freeway-aggregation"    # The product these settings are for.
+$product = :"shipping-aggregation"    # The product these settings are for.
 
 #-------------------------------------
 
