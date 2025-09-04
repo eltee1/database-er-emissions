@@ -101,7 +101,7 @@ SELECT
          component,
          SUM(q_g_s) AS q_g_s
       
-         FROM brn.agriculture_m26
+         FROM brn.m26_agriculture
       
          GROUP BY gcn_sector_id, substance_id, component
       
@@ -113,7 +113,7 @@ SELECT
          component,
          SUM(q_g_s) AS q_g_s
         
-         FROM brn.other_m26
+         FROM brn.m26_other
       
          GROUP BY gcn_sector_id, substance_id, component
      
@@ -125,7 +125,7 @@ SELECT
          component,
          SUM(q_g_s) AS q_g_s
 
-         FROM brn.industry_m26
+         FROM brn.m26_industry
          
          GROUP BY gcn_sector_id, substance_id, component
       
@@ -138,7 +138,7 @@ SELECT
          component,
          SUM(q_g_s) AS q_g_s
 
-         FROM brn.road_freeway_m26
+         FROM brn.m26_road_freeway
       
          GROUP BY gcn_sector_id, substance_id, component
 
@@ -150,7 +150,7 @@ SELECT
          component,
          SUM(q_g_s) AS q_g_s
 
-         FROM brn.road_transportation_m26
+         FROM brn.m26_road_transportation
          
          GROUP BY gcn_sector_id, substance_id, component
 
@@ -162,6 +162,6 @@ SELECT
          component,
          SUM(q_g_s) AS q_g_s
 
-         FROM brn.shipping_m26
+         FROM brn.m26_shipping
          GROUP BY gcn_sector_id, substance_id, component) AS brn
 ;

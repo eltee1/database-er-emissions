@@ -108,8 +108,8 @@ CREATE TABLE substances (
  */
 CREATE TABLE brnset (
 	bnrset_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ,
-	dataset_omschrijving text NOT NULL UNIQUE,
-	basename_omschrijving text NOT NULL UNIQUE,
+	dataset text NOT NULL UNIQUE,
+	basename text NOT NULL UNIQUE,
 	datum_levering date NULL,
 
 	CONSTRAINT brnset_pkey primary key (bnrset_id)
