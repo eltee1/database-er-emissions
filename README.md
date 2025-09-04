@@ -1,5 +1,11 @@
 # database-er-emissions
 
-This repositiory contains:
-* [`er-emissions`](source/er-emissions/): the database in which the N-emission data from "Emissie Registratie" is collected. This data is also processed in this database, so this database is gradular filled in time. The aim is that all the structure to do this, is generated during the database-build.
-* [`er-emissions-addon`](source/er-emissions-addon/): from here, addons can be buildt on top of a mxx-er-emissions database. All addons are added in seperate schemas in the base-database.
+Deze repositiory bevat:
+* [`er-emissions`](source/er-emissions/): de database waarin de stikstof-emissiedata van de Emissie Registratie wordt verzameld. In de loop van tijd wordt deze database verder gevuld met nieuwe data zodra deze aangeleverd wordt; het is dus niet zo dat gelijk vanuit hier en volledig gevulde database kan worden gebouwd.
+Het doel van de initiele database build is dat de structuur voor deze aan te leveren data, al aanwezig is in de database.
+* [`er-emissions-addon`](source/er-emissions-addon/): vanuit hier kunnen addons gebouwd worden bovenop een mxx-er-emissions database. Alle addons worden toegevoegd in aparte schema's in de basis-database.
+
+Huidige addons: 
+* freeway-aggregation: aggregatie van emissiebronnen op afstand van natuurgebieden voor de sectorgroep Wegverkeer-Snelwegen.
+
+* shipping-aggregation: aggregatie van emissiebronnen op afstand van natuurgebieden voor de sectorgroep scheepvaart.
