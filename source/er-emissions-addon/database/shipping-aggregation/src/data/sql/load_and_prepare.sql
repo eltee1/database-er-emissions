@@ -19,7 +19,6 @@ COMMIT;
 SELECT ae_raise_notice('Zet een GIST-index op kolom geom in shipping.mxx_brn_shipping @ ' || timeofday());
 BEGIN; CREATE INDEX idx_mxx_brn_shipping_gist ON shipping.mxx_brn_shipping USING GIST (geom); COMMIT;
 
--- Workaround om de multithread werkend te krijgen: temp-tabel maken met alle groupid's. schijnbaar kan er geen DISTINCT select 
--- Worden gebruikt bij selecteren van id's.
+-- Workaround om de multithread werkend te krijgen: temp-tabel maken met alle groupid's. schijnbaar kan er geen DISTINCT select worden gebruikt bij selecteren van id's.
 SELECT ae_raise_notice('Vul temp- tabel voor de groupids: temp_groupids @ ' || timeofday());
 BEGIN; INSERT INTO shipping.temp_groupids (groupid) SELECT DISTINCT groupid FROM shipping.agg_grid_n2k_clusters ORDER BY groupid; COMMIT;
