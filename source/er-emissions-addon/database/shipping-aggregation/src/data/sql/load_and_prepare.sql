@@ -1,6 +1,6 @@
 -- Inladen data
-BEGIN; SELECT system.load_table('shipping.mxx_brn_shipping', '{data_folder}/m25_brn_shipping_export_20250707.csv', TRUE, FALSE); COMMIT;
-BEGIN; SELECT system.load_table('shipping.agg_grid_n2k_clusters', '{data_folder}/agg_grid_n2k_clusters_20250707.csv', TRUE, FALSE); COMMIT;
+BEGIN; SELECT system.load_table('shipping.mxx_brn_shipping', '{data_folder}/load/m25_brn_shipping_export_20250707.csv', TRUE, FALSE); COMMIT;
+BEGIN; SELECT system.load_table('shipping.agg_grid_n2k_clusters', '{data_folder}/load/agg_grid_n2k_clusters_20250707.csv', TRUE, FALSE); COMMIT;
 
 -- Maak de geom kolom aan in aerius_mxx_brn_shipping
 BEGIN; ALTER TABLE shipping.mxx_brn_shipping ADD COLUMN geom geometry; COMMIT;
@@ -9,7 +9,7 @@ BEGIN; ALTER TABLE shipping.mxx_brn_shipping ADD COLUMN geom geometry; COMMIT;
 BEGIN; ALTER TABLE shipping.mxx_brn_shipping ALTER COLUMN geom SET STORAGE EXTERNAL; COMMIT;
 
 -- Vul geometry kolom van mxx_brn_shipping
-SELECT ae_raise_notice('Vul de geom-kolom in aerius_mxx_brn_road_freeway @ ' || timeofday());
+SELECT ae_raise_notice('Vul de geom-kolom in aerius_mxx_brn_shipping @ ' || timeofday());
 BEGIN; 
 	UPDATE shipping.mxx_brn_shipping
 		SET geom = st_setsrid(st_point((x_m::numeric + 0.1)::double precision, (y_m::numeric + 0.1)::double precision), 28992);
